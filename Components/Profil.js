@@ -2,13 +2,17 @@ import * as React from 'react'
 import { ScrollView, View, Text, Image, Pressable, StyleSheet, StatusBar, TouchableOpacity } from 'react-native'
 import SafeAreaView from 'react-native-safe-area-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { AuthContext } from './Context'
 
 class Profil extends React.Component {
+    static contextType = AuthContext
+
     constructor(props) {
         super(props)
 
     }
     render() {
+        const { signOut } = this.context;
         return (    
             <View style={styles.main_container}>
                 <StatusBar barStyle="light-content" backgroundColor="#6a51ae" />
@@ -42,14 +46,14 @@ class Profil extends React.Component {
                         <MaterialCommunityIcons style={styles.icon_list_item_next} 
                             name="chevron-right" size={28} color="#CFCFCF" />
                     </View>
-                    <View style={styles.list_item}>
-                        <MaterialCommunityIcons name="credit-card-outline" size={28} color="#EEEEEE" />
-                        <Text style={styles.list_item_text}>
-                            Abonnement
-                        </Text>
-                        <MaterialCommunityIcons style={styles.icon_list_item_next} 
-                            name="chevron-right" size={28} color="#CFCFCF" />
-                    </View>
+                    <Pressable style={styles.list_item} onPress={() => this.props.navigation.navigate('Abonnement')}>
+                            <MaterialCommunityIcons name="credit-card-outline" size={28} color="#EEEEEE" />
+                            <Text style={styles.list_item_text}>
+                                Abonnement
+                            </Text>
+                            <MaterialCommunityIcons style={styles.icon_list_item_next} 
+                                name="chevron-right" size={28} color="#CFCFCF" />
+                    </Pressable>
                     <View style={[styles.list_item, {borderBottomWidth: 1, borderColor: '#B8B8B8',}]}>
                         <MaterialCommunityIcons name="lock" size={28} color="#EEEEEE" />
                         <Text style={styles.list_item_text}>
@@ -60,7 +64,7 @@ class Profil extends React.Component {
                     </View>
                 </View>
                     <TouchableOpacity style={styles.logout_item}
-                        onPress={() => this.props.navigation.navigate('Auth', {screen: 'Connexion'})}>
+                        onPress={() => signOut()}>
                         <MaterialCommunityIcons name="power" size={28} color="#444444" />
                         <Text style={styles.logout_item_text}>
                             Deconnexion

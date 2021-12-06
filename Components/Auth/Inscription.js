@@ -1,8 +1,11 @@
 import * as React from 'react'
 import { ScrollView, View, Text, Image, TextInput, Pressable, StyleSheet, ActivityIndicator } from 'react-native'
 import { register } from '../../API/DiabaraniApi'
+import { AuthContext } from '../Context'
 
 class Inscription extends React.Component {
+    static contextType = AuthContext
+
     constructor(props) {
         super(props)
         this.prenomText = ""
@@ -38,21 +41,25 @@ class Inscription extends React.Component {
 
     _register() {
         if(this.phoneText.length > 0 && this.passwordText.length > 0) {
-            if (this.passwordText = this.passwordConfirmText) {
-                if (this.passwordText.length >= 8) {
+            if (this.passwordText.length >= 8) {
+                if (this.passwordText == this.passwordConfirmText) {
                     this.setState({ isLoading: true });
                     register(this.prenomText, this.nomText, this.phoneText, this.emailText, this.passwordText, this.passwordConfirmText).then(data => {
-                        console.log(data);
+                        if(data.code == 1) {
+                            alert('User inscrit');
+                        } else {
+                            alert(data.message);
+                        }
                         this.setState({ isLoading: false });
                     })
                 } else {
-                    alert('Mot de passe doit être supérieur ou égal à 8 caractères')
+                    alert('Les mots de passe doivent être identique');
                 }
             } else {
-                alert('Les mots de passe doivent être identique');
+                alert('Mot de passe doit être supérieur ou égal à 8 caractères');
             }
         } else {
-            alert ('Telephone et Mot de passe réquis');
+            alert ('Les champs téléphone et Mot de passe réquis');
         }
     }
 
@@ -68,6 +75,7 @@ class Inscription extends React.Component {
 
 
     render() {
+        const { signUp } = this.context
         return (
             <ScrollView style={styles.main_container}>
                 <Text style={styles.auth_title}>Inscription</Text>
@@ -87,15 +95,17 @@ class Inscription extends React.Component {
                     style={styles.text_input}
                     placeholderTextColor="#AAAAAA"
                     onChangeText={(text) => this._phoneTextInputChanged(text)} />
-                    <TextInput placeholder="Mot de passe"
-                        style={styles.text_input}
-                        placeholderTextColor="#AAAAAA"
-                        onChangeText={(text) => this._passwordTextInputChanged(text)} />
-                <TextInput placeholder="Mot de passe confirmer"
+                <TextInput secureTextEntry
+                    placeholder="Mot de passe"
+                    style={styles.text_input}
+                    placeholderTextColor="#AAAAAA"
+                    onChangeText={(text) => this._passwordTextInputChanged(text)} />
+                <TextInput secureTextEntry
+                    placeholder="Mot de passe confirmer"
                     style={styles.text_input}
                     placeholderTextColor="#AAAAAA"
                     onChangeText={(text) => this._passwordConfirmTextInputChanged(text)} />
-                <Pressable style={styles.button} onPress={() => this._register()}>
+                <Pressable style={styles.button} onPress={() => signUp(this.prenomText, this.nomText, this.phoneText, this.emailText, this.passwordText, this.passwordConfirmText)}>
                     <Text style={styles.button_text}>INSCRIPTION</Text>
                 </Pressable>
                 <View style={styles.auth_media_container}>

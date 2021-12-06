@@ -1,7 +1,7 @@
 const TOKEN = "b2768876ee710b2e8476da4f1138403b";
 
 export function login (login, password) {
-    url = 'http://192.168.1.26/diabarani-api/index.php?action=login';
+    url = 'http://192.168.1.17/diabarani-api/index.php?action=login';
     return fetch(url, {
         method: 'POST',
         headers: {
@@ -21,7 +21,7 @@ export function login (login, password) {
 }
 
 export function register (first_name, last_name, phone, email, password, password_confirm) {
-    url = 'http://192.168.1.26/diabarani-api/index.php?action=register';
+    url = 'http://192.168.1.17/diabarani-api/index.php?action=register';
     return fetch(url, {
         method: 'POST',
         headers: {
@@ -38,8 +38,8 @@ export function register (first_name, last_name, phone, email, password, passwor
         })
     })
     .then((response) => response.json())
-    .then((json) => {
-        return json
+    .then((data) => {
+        return data
         
     })
     .catch((error) => console.log(error))

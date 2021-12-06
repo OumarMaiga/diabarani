@@ -6,9 +6,9 @@ class MotDePasseOublie extends React.Component {
         return (
             <View style={styles.main_container}>
                 <Text style={styles.auth_title}>Mot de passe oublié</Text>
-                <TextInput placeholder="Telephone"
+                <TextInput placeholder="Email / Telephone"
                     style={styles.text_input}
-                    placeholderTextColor="#AAAAAA"  />
+                    placeholderTextColor="#AAAAAA" />
                 <Pressable style={styles.button} onPress={() => this.props.navigation.navigate('Verification')}>
                     <Text style={styles.button_text}>ENVOYER</Text>
                 </Pressable>

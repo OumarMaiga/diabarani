@@ -1,18 +1,26 @@
 import * as React from 'react'
 import { ScrollView, View, Text, Image, TextInput, Pressable, StyleSheet, ActivityIndicator } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { login } from '../../API/DiabaraniApi'
+import { getToken, storeToken } from '../../utils/localStorage'
+
+import { AuthContext } from '../Context'
 
 class Connexion extends React.Component {
+    static contextType = AuthContext
+
     constructor(props) {
         super(props)
         this.loginText = ""
         this.passwordText = ""
         this.state = {
+            userData: {},
             isLoading: false,
             errorMessage: ""
         }
+        
     }
-    
+
     _loginTextInputChanged(text) {
         this.loginText = text
     }
@@ -23,20 +31,22 @@ class Connexion extends React.Component {
     _login() {
         if(this.loginText.length > 0 && this.passwordText.length > 0) {
             this.setState({ isLoading: true });
-            login(this.loginText, this.passwordText).then(data => {
+            signIn(this.loginText, this.passwordText)
+            /*login(this.loginText, this.passwordText).then(data => {
                 if(data.code == 1) {
-                    alert('User LogIn');
-                } else if(data.code == 0) {
+                    //console.log('User LogIn');
+                    storeToken(data.user);
+                } else {
                     alert('Identifiant non trouvé');
-                    console.log(data.error_message)
+                    console.log(data.error_message);
                 }
-            })
+            })*/
             this.setState({ isLoading: false });
         } else {
             alert('Veuillez remplir les champs');
         }
     }
-
+    
     _displayLoading() {
         if(this.state.isLoading) {
             return(
@@ -59,7 +69,9 @@ class Connexion extends React.Component {
         }
     }
 
+
     render() {
+        const { signIn } = this.context;
         return (
             <ScrollView style={styles.main_container}>
                 <Text style={styles.auth_title}>Connexion</Text>
@@ -67,17 +79,19 @@ class Connexion extends React.Component {
                     style={styles.text_input}
                     placeholderTextColor="#AAAAAA"
                     onChangeText={(text) => this._loginTextInputChanged(text)}  />
-                <TextInput placeholder="Mot de passe"
+                <TextInput secureTextEntry
+                    placeholder="Mot de passe"
                     style={styles.text_input}
                     placeholderTextColor="#AAAAAA"
-                    onChangeText={(text) => this._passwordTextInputChanged(text)} />
+                    onChangeText={(text) => this._passwordTextInputChanged(text)}
+                    onSubmitEditing={() => signIn(this.loginText, this.passwordText)} />
                 <Pressable onPress={() => this.props.navigation.navigate('MotDePasseOublie')}>
                     <Text style={styles.forget_password_link}
                         textContentType='password'>
                         Mot de passe oublié ?
                     </Text>
                 </Pressable>
-                <Pressable style={styles.button} onPress={() => this._login()}>
+                <Pressable style={styles.button} onPress={() => signIn(this.loginText, this.passwordText )}>
                     <Text style={styles.button_text}>CONNEXION</Text>
                 </Pressable>
                 {this._displayError()}

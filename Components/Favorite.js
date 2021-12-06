@@ -45,11 +45,9 @@ class Favorite extends React.Component {
             <View style={styles.main_container}>
                 <StatusBar barStyle="light-content" backgroundColor="#6a51ae" />
                 <ScrollView showsVerticalScrollIndicator={false}>
-                    <View style={styles.title_container}>
-                        <Text style={styles.title}>
-                            Favorie
-                        </Text>
-                    </View>
+                    <Text style={styles.title}>
+                        Favorie
+                    </Text>
                     {this._displayFilmList()}
                     {this._displayFilmList()}
                     {this._displayFilmList()}
@@ -66,10 +64,8 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#4D4D4D',
     },
-    title_container: {
-        paddingTop: 10,
-    },
     title: {
+        marginTop: 10,
         marginLeft: 10,
         marginRight: 10,
         fontSize: 32,
