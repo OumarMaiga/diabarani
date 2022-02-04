@@ -1,4 +1,5 @@
 const initialLoginState = {
+    isAuthenticated: false,
     isLoading: true,
     userToken: null,
 };

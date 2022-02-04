@@ -3,15 +3,11 @@ import { ScrollView, View, Text, Image, TouchableOpacity, StyleSheet, StatusBar 
 import SafeAreaView from 'react-native-safe-area-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-class Favorite extends React.Component {
-    constructor(props) {
-        super(props)
+const Favorite = ({ navigation }) => {
 
-    }
-
-    _displayFilmList() {
+    const _displayFilmList = () => {
         return(
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('FilmDetail') }>
+            <TouchableOpacity onPress={() => navigation.navigate('FilmDetail') }>
                 <View style={styles.item_container}>
                     <Image style={styles.item_image} source={require("../Images/movie-2.jpg")} />
                     <View style={styles.item_content}>
@@ -40,23 +36,21 @@ class Favorite extends React.Component {
     }
 
 
-    render() {
-        return (    
-            <View style={styles.main_container}>
-                <StatusBar barStyle="light-content" backgroundColor="#6a51ae" />
-                <ScrollView showsVerticalScrollIndicator={false}>
-                    <Text style={styles.title}>
-                        Favorie
-                    </Text>
-                    {this._displayFilmList()}
-                    {this._displayFilmList()}
-                    {this._displayFilmList()}
-                    {this._displayFilmList()}
-                    {this._displayFilmList()}
-                </ScrollView>
-            </View>
-        )
-    }
+    return (    
+        <View style={styles.main_container}>
+            <StatusBar barStyle="light-content" backgroundColor="#6a51ae" />
+            <ScrollView showsVerticalScrollIndicator={false}>
+                <Text style={styles.title}>
+                    Favorie
+                </Text>
+                {_displayFilmList}
+                {_displayFilmList}
+                {_displayFilmList}
+                {_displayFilmList}
+                {_displayFilmList}
+            </ScrollView>
+        </View>
+    )
 }
 
 const styles = StyleSheet.create({

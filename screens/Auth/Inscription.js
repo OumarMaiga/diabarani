@@ -1,10 +1,8 @@
 import * as React from 'react'
 import { ScrollView, View, Text, Image, TextInput, Pressable, StyleSheet, ActivityIndicator } from 'react-native'
 import { register } from '../../API/DiabaraniApi'
-import { AuthContext } from '../Context'
 
 class Inscription extends React.Component {
-    static contextType = AuthContext
 
     constructor(props) {
         super(props)
@@ -116,7 +114,7 @@ class Inscription extends React.Component {
                         <Image source={require("../../Images/facebook.jpg")}
                             style={styles.icon_social} />
                     </View>
-                        <Text  style={styles.auth_media_text}>Vous êtes déjà inscrit ? <Pressable onPress={() => this.props.navigation.navigate('Connexion')}><Text style={styles.link_underscore}>Connexion</Text></Pressable></Text>
+                        <Text  style={styles.auth_media_text}>Vous êtes déjà inscrit ? <Pressable onPress={() => navigation.navigate('Connexion')}><Text style={styles.link_underscore}>Connexion</Text></Pressable></Text>
                 </View>
                 {this._displayLoading()}
             </ScrollView>

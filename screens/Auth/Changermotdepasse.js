@@ -1,23 +1,21 @@
 import * as React from 'react'
 import { View, Text, Image, TextInput, Pressable, StyleSheet } from 'react-native'
 
-class ChangerMotDePasse extends React.Component {
-    render() {
-        return (
-            <View style={styles.main_container}>
-                <Text style={styles.auth_title}>Changer le mot de passe</Text>
-                <TextInput placeholder="Nouveau mot de passe"
-                    style={styles.text_input}
-                    placeholderTextColor="#AAAAAA" />
-                <TextInput placeholder="Nouveau mot de passe confirmé"
-                    style={styles.text_input}
-                    placeholderTextColor="#AAAAAA" />
-                <Pressable style={styles.button} onPress={() => this.props.navigation.navigate('Connexion')}>
-                    <Text style={styles.button_text}>CHANGER</Text>
-                </Pressable>
-            </View>
-        )
-    }
+const ChangerMotDePasse = ({ navigation }) => {
+    return (
+        <View style={styles.main_container}>
+            <Text style={styles.auth_title}>Changer le mot de passe</Text>
+            <TextInput placeholder="Nouveau mot de passe"
+                style={styles.text_input}
+                placeholderTextColor="#AAAAAA" />
+            <TextInput placeholder="Nouveau mot de passe confirmé"
+                style={styles.text_input}
+                placeholderTextColor="#AAAAAA" />
+            <Pressable style={styles.button} onPress={navigation.navigate('Connexion')}>
+                <Text style={styles.button_text}>CHANGER</Text>
+            </Pressable>
+        </View>
+    )
 }
 
 const styles = StyleSheet.create({

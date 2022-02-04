@@ -3,20 +3,16 @@ import { ScrollView, View, Text, Image, StyleSheet, StatusBar, TouchableOpacity 
 import SafeAreaView from 'react-native-safe-area-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-class Bibliotheque extends React.Component {
-    constructor(props) {
-        super(props)
+const Bibliotheque = ({ navigation }) => {
 
-    }
-
-    _historique() {
+    const _historique = () => {
         return(
                 <View style={styles.section_container}>
                     <Text style={styles.subtitle_text}>
                         Recent
                     </Text>
                     <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('FilmDetail') }>
+                        <TouchableOpacity onPress={() => navigation.navigate('FilmDetail') }>
                             <Image style={styles.historique_image}
                                 source={require("../Images/image-1.jpg")} />
                         </TouchableOpacity>
@@ -31,7 +27,7 @@ class Bibliotheque extends React.Component {
         )
     }
 
-    _toWatch() {
+    const _toWatch = () => {
         return(
                 <View style={styles.section_container}>
                     <Text style={styles.subtitle_text}>
@@ -53,22 +49,20 @@ class Bibliotheque extends React.Component {
         )
     }
 
-    render() {
-        return (    
-            <View style={styles.main_container}>
-                <StatusBar barStyle="light-content" backgroundColor="#6a51ae" />
-                <ScrollView showsVerticalScrollIndicator={false}>
-                    <View style={styles.title_container}>
-                        <Text style={styles.title}>
-                            Bibliotheque
-                        </Text>
-                    </View>
-                    {this._historique()}
-                    {this._toWatch()}
-                </ScrollView>
-            </View>
-        )
-    }
+    return (    
+        <View style={styles.main_container}>
+            <StatusBar barStyle="light-content" backgroundColor="#6a51ae" />
+            <ScrollView showsVerticalScrollIndicator={false}>
+                <View style={styles.title_container}>
+                    <Text style={styles.title}>
+                        Bibliotheque
+                    </Text>
+                </View>
+                {_historique}
+                {_toWatch}
+            </ScrollView>
+        </View>
+    )
 }
 
 const styles = StyleSheet.create({

@@ -2,21 +2,18 @@ import * as React from 'react'
 import { ScrollView, View, Text, Image, TouchableOpacity, StyleSheet, StatusBar } from 'react-native'
 import SafeAreaView from 'react-native-safe-area-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { getToken } from '../utils/token'
 
-class Accueil extends React.Component {
-    constructor(props) {
-        super(props)
-
-    }
-
-    _coming_soon() {
+const Accueil = ({ navigation }) => {
+    console.log(getToken);
+    const _coming_soon = () => {
 		return(
             <View style={styles.section_container}>
                 <Text style={styles.coming_title}>
                     Bientôt
                 </Text>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('FilmDetail') }>
+                    <TouchableOpacity onPress={() => navigation.navigate('FilmDetail') }>
                         <Image style={styles.coming_image}
                             source={require("../Images/movie-2.jpg")} />
                     </TouchableOpacity>
@@ -31,14 +28,14 @@ class Accueil extends React.Component {
 		)
     }
 
-    _historique() {
+    const _historique = () => {
 		return(
             <View style={styles.section_container}>
                 <Text style={styles.subtitle_text}>
                     Continuer à regarder
                 </Text>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('FilmDetail') }>
+                    <TouchableOpacity onPress={() => navigation.navigate('FilmDetail') }>
                         <Image style={styles.historique_image}
                             source={require("../Images/image-1.jpg")} />
                     </TouchableOpacity>
@@ -49,7 +46,7 @@ class Accueil extends React.Component {
 		)
     }
 
-    _new() {
+    const _new = () => {
 		return(
             <View style={styles.section_container}>
                 <Text style={styles.subtitle_text}>
@@ -69,7 +66,7 @@ class Accueil extends React.Component {
 		)
     }
 
-    _genre() {
+    const _genre = () => {
 		return(
             <View style={styles.section_container}>
                 <View style={styles.subtitle}>
@@ -92,21 +89,19 @@ class Accueil extends React.Component {
 		)
     }
 
-    render() {
-        return (    
-            <SafeAreaView style={styles.main_container}>
-                <StatusBar barStyle="light-content" backgroundColor="#6a51ae" />
-                <ScrollView showsVerticalScrollIndicator={false}>
-                    {this._coming_soon()}
-                    {this._historique()}
-                    {this._new()}
-                    {this._genre()}
-                    {this._genre()}
-                    {this._genre()}
-                </ScrollView>
-            </SafeAreaView>
-        )
-    }
+    return (    
+        <SafeAreaView style={styles.main_container}>
+            <StatusBar barStyle="light-content" backgroundColor="#6a51ae" />
+            <ScrollView showsVerticalScrollIndicator={false}>
+                {_coming_soon}
+                {_historique}
+                {_new}
+                {_genre}
+                {_genre}
+                {_genre}
+            </ScrollView>
+        </SafeAreaView>
+    )
 }
 
 const styles = StyleSheet.create({
