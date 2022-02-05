@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { useState } from 'react'
 import { ScrollView, View, Text, Image, TouchableOpacity, StyleSheet, StatusBar } from 'react-native'
 import SafeAreaView from 'react-native-safe-area-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -6,7 +6,7 @@ import { getToken } from '../utils/token'
 
 const Accueil = ({ navigation }) => {
     console.log(getToken);
-    const _coming_soon = () => {
+    const Coming_soon = () => {
 		return(
             <View style={styles.section_container}>
                 <Text style={styles.coming_title}>
@@ -28,7 +28,7 @@ const Accueil = ({ navigation }) => {
 		)
     }
 
-    const _historique = () => {
+    const Historique = () => {
 		return(
             <View style={styles.section_container}>
                 <Text style={styles.subtitle_text}>
@@ -46,7 +46,7 @@ const Accueil = ({ navigation }) => {
 		)
     }
 
-    const _new = () => {
+    const New = () => {
 		return(
             <View style={styles.section_container}>
                 <Text style={styles.subtitle_text}>
@@ -66,7 +66,7 @@ const Accueil = ({ navigation }) => {
 		)
     }
 
-    const _genre = () => {
+    const Genre = () => {
 		return(
             <View style={styles.section_container}>
                 <View style={styles.subtitle}>
@@ -93,12 +93,12 @@ const Accueil = ({ navigation }) => {
         <SafeAreaView style={styles.main_container}>
             <StatusBar barStyle="light-content" backgroundColor="#6a51ae" />
             <ScrollView showsVerticalScrollIndicator={false}>
-                {_coming_soon}
-                {_historique}
-                {_new}
-                {_genre}
-                {_genre}
-                {_genre}
+                <Coming_soon/>
+                <Historique/>
+                <New/>
+                <Genre/>
+                <Genre/>
+                <Genre/>
             </ScrollView>
         </SafeAreaView>
     )

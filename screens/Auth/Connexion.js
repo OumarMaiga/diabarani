@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { useState } from 'react'
 import { ScrollView, View, Text, Image, TextInput, Pressable, StyleSheet, ActivityIndicator } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { login } from '../../API/DiabaraniApi'
@@ -14,7 +14,7 @@ const Connexion = ({navigation}) => {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
-    const onLogin = () => {
+    const onLoginPress = () => {
         if(username.length > 0 && password.length > 0) {
             setIsLoading(true);
             let data = dispatch(login({username, password}))
@@ -31,7 +31,7 @@ const Connexion = ({navigation}) => {
         }
     }
     
-    const _displayLoading = () => {
+    const DisplayLoading = () => {
         if(isLoading) {
             return(
                 <View style={styles.loading_container}>
@@ -41,7 +41,7 @@ const Connexion = ({navigation}) => {
         }
     }
 
-    const _displayError = () => {
+    const DisplayError = () => {
         if(errorMessage.length > 0) {
             return(
                 <View>
@@ -65,17 +65,17 @@ const Connexion = ({navigation}) => {
                 style={styles.text_input}
                 placeholderTextColor="#AAAAAA"
                 onChangeText={(text) => setPassword(text)}
-                onSubmitEditing={onLogin} />
+                onSubmitEditing={onLoginPress} />
             <Pressable onPress={() => navigation.navigate('MotDePasseOublie')}>
                 <Text style={styles.forget_password_link}
                     textContentType='password'>
                     Mot de passe oublié ?
                 </Text>
             </Pressable>
-            <Pressable style={styles.button} onPress={onLogin}>
+            <Pressable style={styles.button} onPress={onLoginPress}>
                 <Text style={styles.button_text}>CONNEXION</Text>
             </Pressable>
-            {_displayError}
+            <DisplayError/>
             <View style={styles.auth_media_container}>
                 <Text style={styles.auth_media_text}>-- Ou avec --</Text>
                 <View style={styles.media_image_container}>
@@ -86,7 +86,7 @@ const Connexion = ({navigation}) => {
                 </View>
                     <Text  style={styles.auth_media_text}>Vous n'avez pas de compte ? <Pressable onPress={() => navigation.navigate('Inscription')}><Text style={styles.link_underscore}>Inscription</Text></Pressable></Text>
             </View>
-            {_displayLoading}
+            <DisplayLoading/>
         </ScrollView>
     )
 }

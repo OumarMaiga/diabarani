@@ -1,11 +1,11 @@
-import * as React from 'react'
+import React, { useState } from 'react'
 import { ScrollView, View, Text, Image, StyleSheet, StatusBar, TouchableOpacity } from 'react-native'
 import SafeAreaView from 'react-native-safe-area-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Bibliotheque = ({ navigation }) => {
 
-    const _historique = () => {
+    const Historique = () => {
         return(
                 <View style={styles.section_container}>
                     <Text style={styles.subtitle_text}>
@@ -27,7 +27,7 @@ const Bibliotheque = ({ navigation }) => {
         )
     }
 
-    const _toWatch = () => {
+    const ToWatch = () => {
         return(
                 <View style={styles.section_container}>
                     <Text style={styles.subtitle_text}>
@@ -58,8 +58,8 @@ const Bibliotheque = ({ navigation }) => {
                         Bibliotheque
                     </Text>
                 </View>
-                {_historique}
-                {_toWatch}
+                <Historique/>
+                <ToWatch/>
             </ScrollView>
         </View>
     )

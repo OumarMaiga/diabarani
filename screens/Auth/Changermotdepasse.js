@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { useState } from 'react'
 import { View, Text, Image, TextInput, Pressable, StyleSheet } from 'react-native'
 
 const ChangerMotDePasse = ({ navigation }) => {

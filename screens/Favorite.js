@@ -1,11 +1,11 @@
-import * as React from 'react'
+import React, { useState } from 'react'
 import { ScrollView, View, Text, Image, TouchableOpacity, StyleSheet, StatusBar } from 'react-native'
 import SafeAreaView from 'react-native-safe-area-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Favorite = ({ navigation }) => {
 
-    const _displayFilmList = () => {
+    const DisplayFilmList = () => {
         return(
             <TouchableOpacity onPress={() => navigation.navigate('FilmDetail') }>
                 <View style={styles.item_container}>
@@ -43,11 +43,11 @@ const Favorite = ({ navigation }) => {
                 <Text style={styles.title}>
                     Favorie
                 </Text>
-                {_displayFilmList}
-                {_displayFilmList}
-                {_displayFilmList}
-                {_displayFilmList}
-                {_displayFilmList}
+                <DisplayFilmList/>
+                <DisplayFilmList/>
+                <DisplayFilmList/>
+                <DisplayFilmList/>
+                <DisplayFilmList/>
             </ScrollView>
         </View>
     )

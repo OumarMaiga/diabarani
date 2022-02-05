@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { TextInput, View, Text, Image, Pressable, StyleSheet, StatusBar, Dimensions, ScrollView } from 'react-native'
 import SafeAreaView from 'react-native-safe-area-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -36,7 +36,7 @@ export default ({ navigation }) => {
         }
     });
 
-    const displayLoading = () => {
+    const DisplayLoading = () => {
         if(isLoading) {
             return(
                 <View style={styles.loading_container}>
@@ -56,7 +56,7 @@ export default ({ navigation }) => {
         setLoading(false);
     };
 
-    const displayProfile = () => {
+    const DisplayProfile = () => {
         console.log("EditProfile::_displayProfile()");
         if(user != undefined) {
         //console.log("User => "+user);
@@ -106,8 +106,8 @@ export default ({ navigation }) => {
 
     return (
         <View style={styles.main_container}>
-            {displayProfile}
-            {displayLoading}
+            <DisplayProfile/>
+            <DisplayLoading/>
         </View>
     );
 }

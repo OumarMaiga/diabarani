@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ScrollView, StatusBar, StyleSheet, View, Image, Text,  } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -52,18 +52,18 @@ export default ({ navigation }) => {
                     </Text>
                     <View style={styles.detail_simulaire_container}>
                         <Text style={styles.detail_simulaire_title}>Vidéos simulaires</Text>
-                        <View style={styles.detail_simulaire_image_container}>
-                            <Image style={styles.detail_simulaire_image}
+                        <View style={styles.detail_similaire_image_container}>
+                            <Image style={styles.detail_similaire_image}
                                 source={require('../Images/movie-4.jpg')} />
-                            <Image style={styles.detail_simulaire_image}
+                            <Image style={styles.detail_similaire_image}
                                 source={require('../Images/movie-6.jpg')} />
-                            <Image style={styles.detail_simulaire_image}
+                            <Image style={styles.detail_similaire_image}
                                 source={require('../Images/movie.jpg')} />
-                            <Image style={styles.detail_simulaire_image}
+                            <Image style={styles.detail_similaire_image}
                                 source={require('../Images/movie-2.jpg')} />
-                            <Image style={styles.detail_simulaire_image}
+                            <Image style={styles.detail_similaire_image}
                                 source={require('../Images/movie-3.jpg')} />
-                            <Image style={styles.detail_simulaire_image}
+                            <Image style={styles.detail_similaire_image}
                                 source={require('../Images/movie-5.jpg')} />
                         </View>
                     </View>
@@ -141,11 +141,11 @@ const styles = StyleSheet.create({
         color: "#EEEEEE",
         marginBottom: 5
     },
-    detail_simulaire_image_container: {
+    detail_similaire_image_container: {
         flexDirection: 'row',
         flexWrap: 'wrap',
     },
-    detail_simulaire_image: {
+    detail_similaire_image: {
         marginBottom: 5,
         marginLeft: 5,
         marginRight: 5,

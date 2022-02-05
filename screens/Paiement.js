@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { useState } from 'react'
 import { View, Text, Pressable, StyleSheet, StatusBar } from 'react-native'
 
 const Paiement = ({ navigation }) => {
