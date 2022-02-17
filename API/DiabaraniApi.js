@@ -4,7 +4,7 @@ import * as GLOBAL from "../data/global.js";
 
 //const TOKEN = "b2768876ee710b2e8476da4f1138403b";
 
-export const login = (value) => async(dispatch) => {
+export const login = async (value) => {
     if (global.debug >= GLOBAL.LOG.DEBUG) {
         console.log("API:login()");
     }
@@ -16,31 +16,23 @@ export const login = (value) => async(dispatch) => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            login: value.login,
+            login: value.username,
             password: value.password
         })
     });
-    let sts = res.code;
-    if(sts == 1) 
+
+    const data = await res.json();
+
+    if (global.debug >= GLOBAL.LOG.TRACE) 
     {
-        const data = await res.json();
-        
-        dispatch({
-            type: "LOGIN",
-            payload: data
-        });
-        
-        console.log(data);
-        if (global.debug >= GLOBAL.LOG.DEBUG) 
-        {
-            console.log("API:login()::sts", sts);
-        }
+        console.log("API:login()::code", data.code);
     }
+    return data;
 }
 
-export const logOut = () => async (dispatch) => {
+export const logout = () => async (dispatch) => {
     if (global.debug >= GLOBAL.LOG.DEBUG) {
-        console.log("API:logOut()");
+        console.log("API:logout()");
     }
     return dispatch({
         type: "LOGOUT",
@@ -49,6 +41,9 @@ export const logOut = () => async (dispatch) => {
 };
 
 export const register = (value) => {
+    if (global.debug >= GLOBAL.LOG.DEBUG) {
+        console.log("API::register()");
+    }
     url = `${global.SERVER_ADDRESS}`+'index.php?action=register';
     return fetch(url, {
         method: 'POST',
@@ -57,11 +52,12 @@ export const register = (value) => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            first_name: value.first_name,
-            last_name: value.last_name,
+            first_name: value.prenom,
+            last_name: value.nom,
             phone: value.phone,
             email: value.email,
-            password: value.password
+            password: value.password,
+            password_confirm: value.passwordConfirm
         })
     })
     .then((response) => response.json())

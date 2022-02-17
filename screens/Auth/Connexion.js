@@ -1,34 +1,47 @@
 import React, { useState } from 'react'
 import { ScrollView, View, Text, Image, TextInput, Pressable, StyleSheet, ActivityIndicator } from 'react-native'
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { login } from '../../API/DiabaraniApi'
-import { setToken } from '../../utils/token'
-import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux"
+import * as GLOBAL from '../../data/global'
+import '../../data/global';
 
 
 const Connexion = ({navigation}) => {
 
     const dispatch = useDispatch();
+
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
-    const onLoginPress = () => {
-        if(username.length > 0 && password.length > 0) {
-            setIsLoading(true);
-            let data = dispatch(login({username, password}))
-            if(data.code == 1) {
-                //console.log('User LogIn');
-                setToken(data.token);
-            } else {
-                alert('Identifiant non trouvé');
-                console.log(data.error_message);
-            }
-            setIsLoading(false);
-        } else {
-            alert('Veuillez remplir les champs');
+    const onLoginPress = async () => {
+        if (global.debug >= GLOBAL.LOG.DEBUG) 
+        {
+            console.log("Connexion:onLoginPress()");
         }
+        if (username.length == 0 || password.length == 0) 
+        {
+            alert('Veuillez remplir les champs');
+            return;
+        }
+
+        setIsLoading(true);
+        let data = await login({username, password})
+
+        if(data.code == 1) 
+        {
+            dispatch({
+                type: "LOGIN",
+                payload: data
+            });
+        }
+         else 
+        {
+            alert('Identifiant non trouvé');
+            //console.log(data.error_message);
+        }
+        setIsLoading(false);
     }
     
     const DisplayLoading = () => {
@@ -38,7 +51,7 @@ const Connexion = ({navigation}) => {
                     <ActivityIndicator size="large"/>
                 </View>
             )
-        }
+        } else return null
     }
 
     const DisplayError = () => {
@@ -50,9 +63,8 @@ const Connexion = ({navigation}) => {
                     </Text>
                 </View>
             )
-        }
+        } else return null
     }
-
     return (
         <ScrollView style={styles.main_container}>
             <Text style={styles.auth_title}>Connexion</Text>
@@ -88,7 +100,7 @@ const Connexion = ({navigation}) => {
             </View>
             <DisplayLoading/>
         </ScrollView>
-    )
+    );
 }
 
 const styles = StyleSheet.create({

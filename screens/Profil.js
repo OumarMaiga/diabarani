@@ -1,15 +1,22 @@
 import React, { useState } from 'react'
 import { ScrollView, View, Text, Image, Pressable, StyleSheet, StatusBar, TouchableOpacity } from 'react-native'
-import SafeAreaView from 'react-native-safe-area-view';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { logOut } from "../API/DiabaraniApi";
-import { useDispatch } from "react-redux";
+import SafeAreaView from 'react-native-safe-area-view'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import { logout } from "../API/DiabaraniApi"
+import { useDispatch } from "react-redux"
+import * as GLOBAL from '../data/global'
+import '../data/global'
 
 
 const Profil = ({ navigation }) => {
     const dispatch = useDispatch();
-    const onSignOut = () => {
-        dispatch(logOut())
+    const onLogoutPress = () => {
+        if (global.debug >= GLOBAL.LOG.DEBUG) 
+        {
+            console.log("Profil:onLogoutPress()");
+        }
+
+        dispatch(logout())
     }
     return (    
         <View style={styles.main_container}>
@@ -63,7 +70,7 @@ const Profil = ({ navigation }) => {
                 </View>
             </View>
                 <TouchableOpacity style={styles.logout_item}
-                    onPress={onSignOut}>
+                    onPress={onLogoutPress}>
                     <MaterialCommunityIcons name="power" size={28} color="#444444" />
                     <Text style={styles.logout_item_text}>
                         Deconnexion

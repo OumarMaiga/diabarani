@@ -1,37 +1,57 @@
 import React, { useState } from 'react'
 import { ScrollView, View, Text, Image, TextInput, Pressable, StyleSheet, ActivityIndicator } from 'react-native'
 import { register } from '../../API/DiabaraniApi'
+import { useDispatch } from "react-redux"
+import * as GLOBAL from '../../data/global'
+import '../../data/global'
 
 const Inscription = ({ navigation }) => {
+    
+    const dispatch = useDispatch();
+
     const [prenom, setPrenom] = useState("")
     const [nom, setNom] = useState("")
     const [email, setEmail] = useState("")
     const [phone, setPhone] = useState("")
     const [password, setPassword] = useState("")
     const [passwordConfirm, setPasswordConfirm] = useState("")
+    const [isLoading, setIsLoading] = useState(true)
 
-    const onRegisterPress = () => {
-        if(phone.length > 0 && password.length > 0) {
-            if (password.length >= 8) {
-                if (password == passwordConfirm) {
-                    this.setState({ isLoading: true });
-                    register(prenom, nom, phone, email, password, passwordConfirm).then(data => {
-                        if(data.code == 1) {
-                            alert('User inscrit');
-                        } else {
-                            alert(data.message);
-                        }
-                        this.setState({ isLoading: false });
-                    })
-                } else {
-                    alert('Les mots de passe doivent être identique');
-                }
-            } else {
-                alert('Mot de passe doit être supérieur ou égal à 8 caractères');
-            }
-        } else {
-            alert ('Les champs téléphone et Mot de passe réquis');
+    const onRegisterPress = async () => {
+        
+        if (global.debug >= GLOBAL.LOG.DEBUG) {
+            console.log("Inscription:onRegisterPress()");
         }
+
+        if(phone.length == 0 || password.length == 0) {
+            alert ('Les champs téléphone et Mot de passe réquis');
+            return;
+        }
+
+        if (password.length < 8) {
+            alert('Mot de passe doit être supérieur ou égal à 8 caractères');
+            return;
+        }
+
+        if (password != passwordConfirm) {
+            alert('Les mots de passe doivent être identique');
+            return;
+        }
+
+        setIsLoading(true);
+        let data = await register({prenom, nom, phone, email, password, passwordConfirm})
+        console.log(data)
+
+        if(data.code == 1) {
+            dispatch({
+                type: "LOGIN",
+                payload: data
+            })
+        } else {
+            alert(data.message);
+        }
+        setIsLoading(false);
+        console.log("Holla")
     }
 
     const DisplayLoading = () => {
@@ -41,7 +61,7 @@ const Inscription = ({ navigation }) => {
                     <ActivityIndicator size="large"/>
                 </View>
             )
-        }
+        } else return null
     }
 
 

@@ -7,7 +7,7 @@ import reduxStore from "./store/store";
 export default () => {
   
   const { store, persistor } = reduxStore();
-
+  const isAuthenticated = null
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>

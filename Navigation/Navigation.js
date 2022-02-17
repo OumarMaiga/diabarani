@@ -99,9 +99,11 @@ const Navigation = () => {
     
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
+    console.log("isAuth: "+isAuthenticated);
+
     return (
         <NavigationContainer>
-            { isAuthenticated != null ? (
+            { isAuthenticated != false ? (
             <Tab.Navigator initialRouteName="Home"
                 screenOptions={({ route }) => ({
                     tabBarIcon: ({focused, color, size}) => {

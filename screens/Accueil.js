@@ -3,9 +3,11 @@ import { ScrollView, View, Text, Image, TouchableOpacity, StyleSheet, StatusBar 
 import SafeAreaView from 'react-native-safe-area-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { getToken } from '../utils/token'
+import * as GLOBAL from '../data/global'
+import '../data/global'
 
 const Accueil = ({ navigation }) => {
-    console.log(getToken);
+
     const Coming_soon = () => {
 		return(
             <View style={styles.section_container}>
