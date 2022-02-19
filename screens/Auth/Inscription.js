@@ -19,9 +19,7 @@ const Inscription = ({ navigation }) => {
 
     const onRegisterPress = async () => {
         
-        if (global.debug >= GLOBAL.LOG.DEBUG) {
-            console.log("Inscription:onRegisterPress()");
-        }
+        if (global.debug >= GLOBAL.LOG.DEBUG) console.log("Inscription:onRegisterPress()");
 
         if(phone.length == 0 || password.length == 0) {
             alert ('Les champs téléphone et Mot de passe réquis');
@@ -40,7 +38,7 @@ const Inscription = ({ navigation }) => {
 
         setIsLoading(true);
         let data = await register({prenom, nom, phone, email, password, passwordConfirm})
-        console.log(data)
+        if (global.debug >= GLOBAL.LOG.INFO)  console.log("Inscription:onRegisterPress()::data "+JSON.stringify(data));
 
         if(data.code == 1) {
             dispatch({
@@ -51,7 +49,7 @@ const Inscription = ({ navigation }) => {
             alert(data.message);
         }
         setIsLoading(false);
-        console.log("Holla")
+
     }
 
     const DisplayLoading = () => {

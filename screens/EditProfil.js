@@ -3,9 +3,14 @@ import { TextInput, View, Text, Image, Pressable, StyleSheet, StatusBar, Dimensi
 import SafeAreaView from 'react-native-safe-area-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getUser, updateUser } from '../API/DiabaraniApi'
+import { getUser, updateUser } from '../API/DiabaraniApi';
+import { getToken } from "../utils/token";
+import { useSelector } from 'react-redux';
 
 export default ({ navigation }) => {
+    
+    const auth = useSelector((state) => state.auth);
+    console.log(auth);
 
     const [first_name, setFirst_name] = React.useState("");
     const [last_name, setLast_name] = React.useState("");
@@ -19,19 +24,26 @@ export default ({ navigation }) => {
     setRightPosition((width/2)-67.5)
 
     React.useEffect(() => {
-        console.log("EditProfile::componentDidMount()");
+        if (global.debug >= GLOBAL.LOG.DEBUG) 
+        {
+            console.log("EditProfile::useEffect()");
+        }
         token = null;
         async () => {
             try {
-                token = await AsyncStorage.getItem('userToken');
+                token = await AsyncStorage.getToken('@token');
             } catch(e) {
                 console.log(e);
             }
-            let data = await getUser(token);
-            if(data.code == 1) {
-                setUser(data.user);
-            } else {
-                alert ("Utilisateur introuvable");
+            if(token != null)
+            {
+                let data = await getUser(token, auth.id);
+                console.log(data);
+                if(data.code == 1) {
+                    setUser(data.user);
+                } else {
+                    alert ("Utilisateur introuvable");
+                }
             }
         }
     });
@@ -43,7 +55,7 @@ export default ({ navigation }) => {
                     <ActivityIndicator size="large"/>
                 </View>
             )
-        }
+        } else return null
     };
     
             /* Sign Up with Backend API */
@@ -51,13 +63,15 @@ export default ({ navigation }) => {
                 email: email, password: password, birthday: birthday, gender: genderBackend});*/
     const onUpdateButtonPress = async () => {
         setLoading(true);
-        rc = await updateUser({ first_name: first_name, last_name: last_name, email: email, phone: phone });
-        console.log(rc);
+        data = await updateUser({ first_name: first_name, last_name: last_name, email: email, phone: phone });
+        if (global.debug >= GLOBAL.LOG.INFO) 
+        {
+            console.log("EditProfil:onUpdateButtonPress()::rc "+JSON.stringify(data));
+        }
         setLoading(false);
     };
 
     const DisplayProfile = () => {
-        console.log("EditProfile::_displayProfile()");
         if(user != undefined) {
         //console.log("User => "+user);
             return (
@@ -101,7 +115,7 @@ export default ({ navigation }) => {
                 </View>
             </ScrollView>
             )
-        }
+        } else return null
     }
 
     return (

@@ -68,15 +68,17 @@ export const register = (value) => {
     .catch((error) => console.log(error))
 }
 
-export const getUser = (id) => {
-    /*if(global.debug){
+export const getUser = (token, id) => {
+
+    if (global.debug >= GLOBAL.LOG.DEBUG) {
         console.log("Api::getUser()");
-    }*/
-    url = `${global.SERVER_ADDRESS}`+'index.php?action=getUser&id='+id;
+    }
+
+    url = `${global.SERVER_ADDRESS}`+'index.php?action=get_user&id='+id;
     return fetch(url, {
         method: 'GET',
         headers: {
-            Accept: 'application/json',
+            Authorization: token,
             'Content-Type': 'application/json'
         }
     })
@@ -87,12 +89,17 @@ export const getUser = (id) => {
     .catch((error) => console.log(error))
 }
 
-export function updateUser(id, value) {
-    url = `${global.SERVER_ADDRESS}`+'index.php?action=updateUser&id='+id+'';
+export function updateUser(token, value) {
+    
+    if (global.debug >= GLOBAL.LOG.DEBUG) {
+        console.log("Api::getUser()");
+    }
+    
+    url = `${global.SERVER_ADDRESS}`+'index.php?action=update_user';
     return fetch(url, {
-        method: 'POST',
+        method: 'PUT',
         headers: {
-            Accept: 'application/json',
+            Authorization: token,
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(value)
