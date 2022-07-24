@@ -7,7 +7,7 @@ const MotDePasseOublie = ({ navigation }) => {
             <Text style={styles.auth_title}>Mot de passe oublié</Text>
             <TextInput placeholder="Email / Telephone"
                 style={styles.text_input}
-                placeholderTextColor="#AAAAAA" />
+                placeholderTextColor={global.gray} />
             <Pressable style={styles.button} onPress={() => navigation.navigate('Verification')}>
                 <Text style={styles.button_text}>ENVOYER</Text>
             </Pressable>
@@ -18,7 +18,7 @@ const MotDePasseOublie = ({ navigation }) => {
 const styles = StyleSheet.create({
     main_container: {
         flex: 1,
-        backgroundColor: '#4D4D4D',
+        backgroundColor: global.darkGray,
         marginTop: 20,
         paddingLeft: 20,
         paddingRight: 20,
@@ -27,20 +27,20 @@ const styles = StyleSheet.create({
         marginTop: 20,
         marginBottom: 20,
         fontSize: 32,
-        color: '#EEEEEE'
+        color: global.white
       },
       text_input: {
           marginTop: 10,
           paddingLeft: 5,
-          borderBottomColor: '#CFCFCF',
+          borderBottomColor: global.lightGray,
           height: 50,
           borderBottomWidth: 1,
           fontSize: 18,
-          color: '#EEEEEE'
+          color: global.white
       },
       button: {
           width: '100%',
-          backgroundColor: '#ECBB04',
+          backgroundColor: global.darkYellow,
           textAlign: 'center',
           borderRadius: 7,
           padding: 10,
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
       },
       button_text: {
           textAlign: 'center',
-          color: '#fff',
+          color: global.white,
           fontSize: 24,
           fontWeight: '600',
       }

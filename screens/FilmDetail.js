@@ -23,25 +23,25 @@ export default ({ navigation }) => {
                     </Text>
                     <View style={{ flexDirection: "row", alignItems: 'center', marginTop: 5, marginBottom: 5 }}>
                         <View style={styles.detail_rate}>
-                            <MaterialCommunityIcons name="star" size={28} color="#FFFFFF" />
+                            <MaterialCommunityIcons name="star" size={28} color={global.white} />
                             <Text style={styles.detail_rate_text}>
                                 6.4
                             </Text>
                         </View>
-                        <MaterialCommunityIcons name="eye" size={28} color="#CFCFCF" />
+                        <MaterialCommunityIcons name="eye" size={28} color={global.lightGray} />
                         <Text style={styles.detail_view_count}>6.015</Text>
                     </View>
                     <View style={{ flexDirection: "row", marginTop: 10 }}>
                         <View style={{ marginRight: 10, alignItems: 'center' }}>
-                            <MaterialCommunityIcons name="heart" size={28} color="#CFCFCF" />
+                            <MaterialCommunityIcons name="heart" size={28} color={global.lightGray} />
                             <Text style={styles.detail_icon_text}>Aimer</Text>
                         </View>
                         <View style={{ marginLeft: 10, marginRight: 10, alignItems: 'center' }}>
-                            <MaterialCommunityIcons name="share" size={28} color="#CFCFCF" />
+                            <MaterialCommunityIcons name="share" size={28} color={global.lightGray} />
                             <Text style={styles.detail_icon_text}>Partager</Text>
                         </View>
                         <View style={{ marginLeft: 10, marginRight: 10, alignItems: 'center'  }}>
-                            <MaterialCommunityIcons name="heart" size={28} color="#CFCFCF" />
+                            <MaterialCommunityIcons name="heart" size={28} color={global.lightGray} />
                             <Text style={styles.detail_icon_text}>A régarder</Text>
                         </View>
                     </View>
@@ -76,12 +76,12 @@ export default ({ navigation }) => {
 const styles = StyleSheet.create({
     main_container: {
         flex: 1,
-        backgroundColor: '#4D4D4D',
+        backgroundColor: global.darkGray,
     },
     detail_movie: {
         height: 190,
         width: '100%',
-        backgroundColor: '#242424'
+        backgroundColor: global.gray
     },
     detail_container: {
         marginLeft: 10,
@@ -92,14 +92,14 @@ const styles = StyleSheet.create({
     detail_title: {
         fontWeight: 'bold',
         fontSize: 24,
-        color: "#EEEEEE",
+        color: global.white,
         fontFamily: "Helvetica",
     },
     detail_time: {
-        color: "#B5B5B5",
+        color: global.darkGray,
     },
     detail_genre: {
-        color: '#C79D02',
+        color: global.Yellow,
         fontFamily: 'Helvetica',
         fontSize: 14,
         marginTop: 5,
@@ -107,30 +107,30 @@ const styles = StyleSheet.create({
     detail_rate: {
         flexDirection: "row",
         alignItems: 'center',
-        backgroundColor: '#ECBB04',
+        backgroundColor: global.darkYellow,
         padding: 2,
         marginRight: 10
     },
     detail_rate_text: {
-        color: '#FFFFFF',
+        color: global.white,
         paddingRight: 4,
         paddingLeft: 2,
         fontSize: 18,
     },
     detail_view_count: {
         marginLeft: 5,
-        color: '#CFCFCF',
+        color: global.lightGray,
         fontSize: 18,
         fontWeight: 'bold',
     },
     detail_icon_text: {
         fontSize: 14,
-        color: "#CFCFCF",
+        color: global.lightGray,
     },
     detail_overview: {
         marginTop: 10,
         fontSize: 18,
-        color: "#CFCFCF",
+        color: global.lightGray,
     },
     detail_simulaire_container: {
         marginTop: 30,
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
     detail_simulaire_title: {
         fontSize: 22,
         fontFamily: 'Helvetica',
-        color: "#EEEEEE",
+        color: global.white,
         marginBottom: 5
     },
     detail_similaire_image_container: {
@@ -151,6 +151,6 @@ const styles = StyleSheet.create({
         marginRight: 5,
         height: 120,
         width: '30%',
-        backgroundColor: '#EEEEEE',
+        backgroundColor: global.white,
     }
 });

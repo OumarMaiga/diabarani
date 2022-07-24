@@ -16,5 +16,5 @@ export async function initService(data)
     global.currentUser.gender           = data.gender;
     global.currentUser.token            = data.token;
     global.currentUser.state            = data.state;
-    global.currentUser.category            = data.category;
+    global.currentUser.category         = data.category;
 }

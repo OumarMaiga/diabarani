@@ -74,7 +74,7 @@ const Profil = ({ navigation }) => {
                         <Image style={styles.profil_image}
                         source={require("../Images/movie-6.jpg")} />
                         <MaterialCommunityIcons style={styles.icon_camera} 
-                            name="camera" size={36} color="#B8B8B8" />
+                            name="camera" size={36} color={global.gray} />
                     </View>
                     <View style={styles.info_user}>
                         <Text style={styles.username}>
@@ -88,28 +88,28 @@ const Profil = ({ navigation }) => {
                 <View style={styles.list_item_section}>
                     <Pressable style={styles.list_item}
                         onPress={() => navigation.navigate('EditProfil')}>
-                        <MaterialCommunityIcons name="account" size={28} color="#EEEEEE" />
+                        <MaterialCommunityIcons name="account" size={28} color={global.white} />
                         <Text style={styles.list_item_text}>
                             Modifier le profil
                         </Text>
                         <MaterialCommunityIcons style={styles.icon_list_item_next} 
-                            name="chevron-right" size={28} color="#CFCFCF" />
+                            name="chevron-right" size={28} color={global.lightGray} />
                     </Pressable>
                     <Pressable style={styles.list_item} onPress={() => navigation.navigate('Abonnement')}>
-                            <MaterialCommunityIcons name="credit-card-outline" size={28} color="#EEEEEE" />
+                            <MaterialCommunityIcons name="credit-card-outline" size={28} color={global.white} />
                             <Text style={styles.list_item_text}>
                                 Abonnement
                             </Text>
                             <MaterialCommunityIcons style={styles.icon_list_item_next} 
-                                name="chevron-right" size={28} color="#CFCFCF" />
+                                name="chevron-right" size={28} color={global.lightGray} />
                     </Pressable>
-                    <View style={[styles.list_item, {borderBottomWidth: 1, borderColor: '#B8B8B8',}]}>
-                        <MaterialCommunityIcons name="lock" size={28} color="#EEEEEE" />
+                    <View style={[styles.list_item, {borderBottomWidth: 1, borderColor: global.gray,}]}>
+                        <MaterialCommunityIcons name="lock" size={28} color={global.white} />
                         <Text style={styles.list_item_text}>
                             Changer de mot de passe
                         </Text>
                         <MaterialCommunityIcons style={styles.icon_list_item_next} 
-                            name="chevron-right" size={28} color="#CFCFCF" />
+                            name="chevron-right" size={28} color={global.lightGray} />
                     </View>
                 </View>
                     <TouchableOpacity style={styles.logout_item}
@@ -127,7 +127,7 @@ const Profil = ({ navigation }) => {
 const styles = StyleSheet.create({
     main_container: {
         flex: 1,
-        backgroundColor: '#4D4D4D',
+        backgroundColor: global.darkGray,
     },
     title_container: {
         paddingTop: 10,
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         marginRight: 10,
         fontSize: 32,
-        color: '#EEEEEE',
+        color: global.white,
         fontWeight: 'bold',
         marginBottom: 10,
     },
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
         height: 120,
         width: 120,
         borderRadius: 75,
-        backgroundColor: '#EEEEEE'
+        backgroundColor: global.white
     },
     icon_camera: {
         position: 'absolute',
@@ -166,12 +166,12 @@ const styles = StyleSheet.create({
     },
     username: {
         fontWeight: '600',
-        color: '#CFCFCF',
+        color: global.lightGray,
         fontSize: 22
     },
     phone: {
         marginTop: 5,
-        color: '#CFCFCF',
+        color: global.lightGray,
         fontSize: 18
     },
     list_item_section: {
@@ -183,12 +183,12 @@ const styles = StyleSheet.create({
         paddingRight: 20,
         paddingBottom: 10,
         borderTopWidth: 1,
-        borderColor: '#B8B8B8',
+        borderColor: global.gray,
         flexDirection: 'row',
         alignItems: 'center',
     },
     list_item_text: {
-        color: '#CFCFCF',
+        color: global.lightGray,
         fontSize: 18,
         marginLeft: 55,
         position: 'absolute',
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
         paddingBottom: 10,
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#EEEEEE',
+        backgroundColor: global.white,
         position: 'absolute',
         width: '100%',
         bottom: 0,

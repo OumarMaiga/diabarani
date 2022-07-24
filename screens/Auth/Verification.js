@@ -5,11 +5,11 @@ const Verification = ({ navigation }) => {
     return (
         <View style={styles.main_container}>
             <Text style={styles.auth_title}>Verification de numéro</Text>
-            <Text style={{ color: '#fff' }}>Un code de 4 chiffres vous a été envoyer au 223 71 31 65 44</Text>
+            <Text style={{ color: global.white }}>Un code de 4 chiffres vous a été envoyer au 223 71 31 65 44</Text>
             <View style={styles.number_container}>
                 <TextInput 
                     style={styles.number_input}
-                    placeholderTextColor="#EEEEEE"
+                    placeholderTextColor={global.white}
                     autoFocus='true'
                     maxLength='1'
                     textContentType='telephoneNumber'
@@ -41,7 +41,7 @@ const Verification = ({ navigation }) => {
 const styles = StyleSheet.create({
     main_container: {
         flex: 1,
-        backgroundColor: '#4D4D4D',
+        backgroundColor: global.darkGray,
         marginTop: 20,
         paddingLeft: 20,
         paddingRight: 20,
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
         marginBottom: 20,
         fontSize: 32,
-        color: '#EEEEEE'
+        color: global.white
       },
       number_container: {
           flexDirection: 'row',
@@ -60,23 +60,23 @@ const styles = StyleSheet.create({
           marginLeft: 10,
           marginRight: 10,
           textAlign: 'center',
-          backgroundColor: '#AAAAAA',
+          backgroundColor: global.gray,
           width: 60,
           height: 80,
-          color: '#EEEEEE',
+          color: global.white,
           fontSize: 32
       },
       send_link: {
         textAlign: 'right',
         marginTop: 10,
-        color: '#3A96F2',
+        color: global.darkBlue,
         textDecorationLine: 'underline',
         fontSize: 14,
         fontStyle: 'italic'
       },
       button: {
           width: '100%',
-          backgroundColor: '#ECBB04',
+          backgroundColor: global.darkYellow,
           textAlign: 'center',
           borderRadius: 7,
           padding: 10,
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
       },
       button_text: {
           textAlign: 'center',
-          color: '#fff',
+          color: global.white,
           fontSize: 24,
           fontWeight: '600',
       }

@@ -98,22 +98,22 @@ const EditProfil = ({ navigation }) => {
                     <View style={styles.form_container}>
                         <TextInput placeholder="Prenom"
                             style={styles.text_input}
-                            placeholderTextColor="#AAAAAA"
+                            placeholderTextColor={global.gray}
                             value={user.first_name}
                             onChangeText={setFirst_name} />
                         <TextInput placeholder="Nom"
                             style={styles.text_input}
-                            placeholderTextColor="#AAAAAA"
+                            placeholderTextColor={global.gray}
                             value={user.last_name}
                             onChangeText={setLast_name} />
                         <TextInput placeholder="Email"
                             style={styles.text_input}
-                            placeholderTextColor="#AAAAAA"
+                            placeholderTextColor={global.gray}
                             value={user.email}
                             onChangeText={setEmail} />
                         <TextInput placeholder="Telephone"
                             style={styles.text_input}
-                            placeholderTextColor="#AAAAAA"
+                            placeholderTextColor={global.gray}
                             value={user.phone}
                             onChangeText={setPhone} />
                         <Pressable style={styles.button} onPress={onUpdateButtonPress}>
@@ -136,7 +136,7 @@ const EditProfil = ({ navigation }) => {
 const styles = StyleSheet.create({
     main_container: {
         flex: 1,
-        backgroundColor: '#4D4D4D',
+        backgroundColor: global.darkGray,
     },
     title_container: {
         paddingTop: 10,
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         marginRight: 10,
         fontSize: 32,
-        color: '#EEEEEE',
+        color: global.white,
         fontWeight: 'bold',
         marginBottom: 10,
     },
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
         height: 120,
         width: 120,
         borderRadius: 75,
-        backgroundColor: '#EEEEEE'
+        backgroundColor: global.white
     },
     icon_camera: {
         position: 'absolute',
@@ -172,15 +172,15 @@ const styles = StyleSheet.create({
     text_input: {
         marginTop: 10,
         paddingLeft: 5,
-        borderBottomColor: '#CFCFCF',
+        borderBottomColor: global.lightGray,
         height: 50,
         borderBottomWidth: 1,
         fontSize: 18,
-        color: '#EEEEEE'
+        color: global.white
     },
     button: {
         width: '100%',
-        backgroundColor: '#ECBB04',
+        backgroundColor: global.darkYellow,
         textAlign: 'center',
         borderRadius: 7,
         padding: 10,
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
     },
     button_text: {
         textAlign: 'center',
-        color: '#fff',
+        color: global.white,
         fontSize: 24,
         fontWeight: '600',
     },

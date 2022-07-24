@@ -74,7 +74,7 @@ const Accueil = ({ navigation }) => {
                     <Text style={styles.subtitle_text}>
                         Drame
                     </Text>
-                    <MaterialCommunityIcons name='chevron-right' size={22} color='#EEEEEE' />
+                    <MaterialCommunityIcons name='chevron-right' size={22} color={global.white} />
                 </View>
                 <ScrollView style={styles.image_section} horizontal showsHorizontalScrollIndicator={false}>
                     <Image style={styles.genre_image}
@@ -108,7 +108,7 @@ const Accueil = ({ navigation }) => {
 const styles = StyleSheet.create({
     main_container: {
         flex: 1,
-        backgroundColor: '#4D4D4D',
+        backgroundColor: global.darkGray,
     },
     section_container: {
         //padding: 10,
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         marginRight: 10,
         fontSize: 32,
-        color: '#EEEEEE',
+        color: global.white,
         fontWeight: 'bold',
         marginBottom: 10,
     },
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
         marginRight: 10,
         height: 190,
         width: 160,
-        backgroundColor: '#EEEEEE'
+        backgroundColor: global.white
     },
       subtitle: {
         flexDirection: 'row',
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         fontSize: 18,
         fontFamily: 'Verdana',
-		color: '#EEEEEE',
+		color: global.white,
       },
       arrow_next: {
         fontSize: 16,
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
           height: 90,
           width: 140,
           borderRadius: 7,
-          backgroundColor: '#EEEEEE'
+          backgroundColor: global.white
       },
       new_image: {
           marginLeft: 10,
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
           height: 80,
           width: 80,
           borderRadius: 50,
-          backgroundColor: '#EEEEEE'
+          backgroundColor: global.white
 
       },
       genre_image: {
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
           height: 90,
           width: 120,
           borderRadius: 7,
-          backgroundColor: '#EEEEEE'
+          backgroundColor: global.white
 
       }
 })

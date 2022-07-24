@@ -71,12 +71,12 @@ const Connexion = ({navigation}) => {
             <Text style={styles.auth_title}>Connexion</Text>
             <TextInput placeholder="Email / Telephone"
                 style={styles.text_input}
-                placeholderTextColor="#AAAAAA"
+                placeholderTextColor={global.gray}
                 onChangeText={(text) => setUsername(text)}  />
             <TextInput secureTextEntry
                 placeholder="Mot de passe"
                 style={styles.text_input}
-                placeholderTextColor="#AAAAAA"
+                placeholderTextColor={global.gray}
                 onChangeText={(text) => setPassword(text)}
                 onSubmitEditing={onLoginPress} />
             <Pressable onPress={() => navigation.navigate('MotDePasseOublie')}>
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     main_container: {
         flex: 1,
         marginTop: 20,
-        backgroundColor: '#4D4D4D',
+        backgroundColor: global.darkGray,
         paddingLeft: 20,
         paddingRight: 20,
       },
@@ -126,28 +126,28 @@ const styles = StyleSheet.create({
           marginTop: 20,
           marginBottom: 20,
             fontSize: 32,
-            color: '#EEEEEE'
+            color: global.white
       },
       text_input: {
           marginTop: 10,
           paddingLeft: 5,
-          borderBottomColor: '#CFCFCF',
+          borderBottomColor: global.lightGray,
           height: 50,
           borderBottomWidth: 1,
           fontSize: 18,
-          color: '#EEEEEE'
+          color: global.white
       },
       forget_password_link: {
         textAlign: 'right',
         marginTop: 10,
-        color: "#3A96F2",
+        color: global.darkBlue,
         textDecorationLine: 'underline',
         fontSize: 14,
         fontStyle: 'italic'
     },
     button: {
         width: '100%',
-        backgroundColor: '#ECBB04',
+        backgroundColor: global.darkYellow,
         textAlign: 'center',
         borderRadius: 7,
         padding: 10,
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     },
     button_text: {
         textAlign: 'center',
-        color: '#fff',
+        color: global.white,
         fontSize: 24,
         fontWeight: '600',
     },
@@ -164,10 +164,10 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         marginTop: 10,
-        color: "#fff"
+        color: global.white
     },
     auth_media_text: {
-        color: '#fff'
+        color: global.white
     },
     media_image_container: {
         flexDirection: 'row',
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     link_underscore: {
         textDecorationLine: 'underline',
         fontStyle: 'italic',
-        color: '#3A96F2'
+        color: global.darkBlue
     },
     error_container: {
         marginTop: 5,

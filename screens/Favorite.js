@@ -15,7 +15,7 @@ const Favorite = ({ navigation }) => {
                             <Text style={styles.item_title}>
                                 Titre du film
                             </Text>
-                            <MaterialCommunityIcons name="heart" size={24} color="#ECBB04" />
+                            <MaterialCommunityIcons name="heart" size={24} color={global.darkYellow} />
                         </View>
                         <Text style={styles.item_time}>
                             1h 22min
@@ -24,7 +24,7 @@ const Favorite = ({ navigation }) => {
                             Drame / Histoire
                         </Text>
                         <View style={styles.item_rate}>
-                            <MaterialCommunityIcons name="star" size={28} color="#FFFFFF" />
+                            <MaterialCommunityIcons name="star" size={28} color={global.white} />
                             <Text style={styles.item_rate_text}>
                                 6.4
                             </Text>
@@ -56,14 +56,14 @@ const Favorite = ({ navigation }) => {
 const styles = StyleSheet.create({
     main_container: {
         flex: 1,
-        backgroundColor: '#4D4D4D',
+        backgroundColor: global.darkGray,
     },
     title: {
         marginTop: 10,
         marginLeft: 10,
         marginRight: 10,
         fontSize: 32,
-        color: '#EEEEEE',
+        color: global.white,
         fontWeight: 'bold',
         paddingBottom: 10,
     },
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
 
     },
     item_image: {
-        backgroundColor: 'gray',
+        backgroundColor: global.lightGray,
         width: 120,
         height: 180,
     },
@@ -89,16 +89,16 @@ const styles = StyleSheet.create({
     },
     item_title: {
         fontSize: 26,
-        color: '#CFCFCF',
+        color: global.lightGray,
         fontFamily: 'Helvetica',
         flexWrap: 'wrap',
         paddingRight: 2,
     },
     item_time: {
-        color: '#B5B5B5',
+        color: global.gray,
     },
     item_genre: {
-        color: '#C79D02',
+        color: global.Yellow,
         fontFamily: 'Helvetica',
         fontSize: 14,
         marginTop: 5,
@@ -108,11 +108,11 @@ const styles = StyleSheet.create({
         bottom: 0,
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#ECBB04',
+        backgroundColor: global.darkYellow,
         padding: 2,
     },
     item_rate_text: {
-        color: '#FFFFFF',
+        color: global.white,
         paddingRight: 4,
         paddingLeft: 2,
         fontSize: 18,

@@ -68,29 +68,29 @@ const Inscription = ({ navigation }) => {
             <Text style={styles.auth_title}>Inscription</Text>
             <TextInput placeholder="Prenom"
                 style={styles.text_input}
-                placeholderTextColor="#AAAAAA"
+                placeholderTextColor={global.gray}
                 onChangeText={(text) => setPrenom(text)} />
             <TextInput placeholder="Nom"
                 style={styles.text_input}
-                placeholderTextColor="#AAAAAA"
+                placeholderTextColor={global.gray}
                 onChangeText={(text) => setNom(text)} />
             <TextInput placeholder="Email"
                 style={styles.text_input}
-                placeholderTextColor="#AAAAAA"
+                placeholderTextColor={global.gray}
                 onChangeText={(text) => setEmail(text)} />
             <TextInput placeholder="Telephone"
                 style={styles.text_input}
-                placeholderTextColor="#AAAAAA"
+                placeholderTextColor={global.gray}
                 onChangeText={(text) => setPhone(text)} />
             <TextInput secureTextEntry
                 placeholder="Mot de passe"
                 style={styles.text_input}
-                placeholderTextColor="#AAAAAA"
+                placeholderTextColor={global.gray}
                 onChangeText={(text) => setPassword(text)} />
             <TextInput secureTextEntry
                 placeholder="Mot de passe confirmer"
                 style={styles.text_input}
-                placeholderTextColor="#AAAAAA"
+                placeholderTextColor={global.gray}
                 onChangeText={(text) => setPasswordConfirm(text)} />
             <Pressable style={styles.button} onPress={() => onRegisterPress()}>
                 <Text style={styles.button_text}>INSCRIPTION</Text>
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     main_container: {
         flex: 1,
         marginTop: 20,
-        backgroundColor: '#4D4D4D',
+        backgroundColor: global.darkGray,
         paddingLeft: 20,
         paddingRight: 20,
       },
@@ -122,20 +122,20 @@ const styles = StyleSheet.create({
           marginTop: 20,
           marginBottom: 20,
             fontSize: 32,
-            color: '#EEEEEE'
+            color: global.white
       },
       text_input: {
           marginTop: 10,
           paddingLeft: 5,
-          borderBottomColor: '#CFCFCF',
+          borderBottomColor: global.lightGray,
           height: 50,
           borderBottomWidth: 1,
           fontSize: 18,
-          color: '#EEEEEE'
+          color: global.white
       },
       button: {
           width: '100%',
-          backgroundColor: '#ECBB04',
+          backgroundColor: global.darkYellow,
           textAlign: 'center',
           borderRadius: 7,
           padding: 10,
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
       },
       button_text: {
           textAlign: 'center',
-          color: '#fff',
+          color: global.white,
           fontSize: 24,
           fontWeight: '600',
       },
@@ -153,10 +153,10 @@ const styles = StyleSheet.create({
           alignItems: 'center',
           marginTop: 10,
           marginBottom: 10,
-          color: "#fff"
+          color: global.white
       },
       auth_media_text: {
-        color: '#fff'
+        color: global.white
       },
       media_image_container: {
           flexDirection: 'row',
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
       link_underscore: {
         fontStyle: 'italic',
         textDecorationLine: 'underline',
-        color: '#3A96F2'
+        color: global.darkBlue
       }
 })
 

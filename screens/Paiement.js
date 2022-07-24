@@ -24,7 +24,7 @@ const Paiement = ({ navigation }) => {
                     </Text>
                 </Pressable>
                 <Pressable style={[styles.button, {backgroundColor: '#F3F3F3'}]} onPress={()=> {}}>
-                    <Text style={[styles.button_text, {color: '#4D4D4D'}]}>
+                    <Text style={[styles.button_text, {color: global.darkGray}]}>
                         VISA / MASTERCARD
                     </Text>
                 </Pressable>
@@ -37,14 +37,14 @@ const Paiement = ({ navigation }) => {
 const styles = StyleSheet.create({
     main_container: {
         flex: 1,
-        backgroundColor: '#4D4D4D',
+        backgroundColor: global.darkGray,
     },
     title: {
         marginTop: 10,
         marginLeft: 10,
         marginRight: 10,
         fontSize: 32,
-        color: '#EEEEEE',
+        color: global.white,
         fontWeight: 'bold',
         paddingBottom: 10,
     },
@@ -55,12 +55,12 @@ const styles = StyleSheet.create({
     },
     sub_title: {
         fontSize: 22,
-        color: '#CFCFCF',
+        color: global.lightGray,
         marginBottom: 30,
     },
     button: {
         width: '70%',
-        backgroundColor: '#ECBB04',
+        backgroundColor: global.darkYellow,
         textAlign: 'center',
         borderRadius: 7,
         padding: 10,
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     },
     button_text: {
         textAlign: 'center',
-        color: '#fff',
+        color: global.white,
         fontSize: 24,
     },
 });

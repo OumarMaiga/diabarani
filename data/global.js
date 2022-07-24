@@ -41,7 +41,7 @@ global.currentUser = {
 };
 
 /* backend */
-global.SERVER_ADDRESS = 'http://192.168.1.32/diabarani/public/';
+global.SERVER_ADDRESS = 'http://192.168.1.22/diabarani-api/public/';
 
 global.server_off = false;
 global.server_status = null;
@@ -49,12 +49,15 @@ global.server_data = null;
 global.accessToken = null;
 
 // colors //
-global.lightBrown = "#c48a4d";
-//global.darkBrown = "#4c2203";
-global.darkBrown = "#232323";
+global.Yellow = "#ECBB04";
+global.darkYellow = "#FAB52B";
 global.blue = "#89bbde";
 global.darkBlue = "#0087C8";
-//global.lightBrown2 = "#BA9B8E";
+global.lightGray = "#CFCFCF";
+global.gray = "#AAAAAA";
+global.darkGray = "#4D4D4D";
+global.white = "#FFF";
+global.black = "#000";
 
 // storage //
 export const STORAGE_KEY_ACCESS_TOKEN = '@access_token';

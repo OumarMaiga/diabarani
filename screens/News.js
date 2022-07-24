@@ -38,7 +38,7 @@ const News = ({ navigation }) => {
 const styles = StyleSheet.create({
     main_container: {
         flex: 1,
-        backgroundColor: '#4D4D4D',
+        backgroundColor: global.darkGray,
     },
     title_container: {
         paddingTop: 10,
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         marginRight: 10,
         fontSize: 32,
-        color: '#EEEEEE',
+        color: global.white,
         fontWeight: 'bold',
         //marginBottom: 10,
     },
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
         marginRight: 5,
         height: 120,
         width: '30%',
-        backgroundColor: '#EEEEEE'
+        backgroundColor: global.white
     },
 
 })
