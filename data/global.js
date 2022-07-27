@@ -58,6 +58,7 @@ global.gray = "#AAAAAA";
 global.darkGray = "#4D4D4D";
 global.white = "#FFF";
 global.black = "#000";
+global.blackLight = "#242424";
 
 // storage //
 export const STORAGE_KEY_ACCESS_TOKEN = '@access_token';

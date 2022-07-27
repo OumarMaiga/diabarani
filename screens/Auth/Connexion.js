@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { ScrollView, View, Text, Image, TextInput, Pressable, StyleSheet, ActivityIndicator } from 'react-native'
+import { ScrollView, View, Text, Image, TextInput, Pressable, StyleSheet, ActivityIndicator , StatusBar } from 'react-native'
+import SafeAreaView from 'react-native-safe-area-view';
 import { login } from '../../API/DiabaraniApi'
 import { useDispatch } from "react-redux"
 import * as GLOBAL from '../../data/global'
@@ -67,7 +68,9 @@ const Connexion = ({navigation}) => {
         } else return null
     }
     return (
-        <ScrollView style={styles.main_container}>
+        <SafeAreaView style={styles.main_container}>
+            <StatusBar barStyle="light-content" backgroundColor="#6a51ae" />
+            
             <Text style={styles.auth_title}>Connexion</Text>
             <TextInput placeholder="Email / Telephone"
                 style={styles.text_input}
@@ -100,14 +103,13 @@ const Connexion = ({navigation}) => {
                     <Text  style={styles.auth_media_text}>Vous n'avez pas de compte ? <Pressable onPress={() => navigation.navigate('Inscription')}><Text style={styles.link_underscore}>Inscription</Text></Pressable></Text>
             </View>
             <DisplayLoading/>
-        </ScrollView>
+        </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
     main_container: {
         flex: 1,
-        marginTop: 20,
         backgroundColor: global.darkGray,
         paddingLeft: 20,
         paddingRight: 20,

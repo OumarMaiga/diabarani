@@ -1,9 +1,12 @@
 import React, {useState} from 'react'
-import { View, Text, TextInput, Pressable, StyleSheet } from 'react-native'
+import { View, Text, TextInput, Pressable, StyleSheet, StatusBar } from 'react-native'
+import SafeAreaView from 'react-native-safe-area-view';
 
 const Verification = ({ navigation }) => {
     return (
-        <View style={styles.main_container}>
+        <SafeAreaView style={styles.main_container}>
+            <StatusBar barStyle="light-content" backgroundColor="#6a51ae" />
+    
             <Text style={styles.auth_title}>Verification de numéro</Text>
             <Text style={{ color: global.white }}>Un code de 4 chiffres vous a été envoyer au 223 71 31 65 44</Text>
             <View style={styles.number_container}>
@@ -34,7 +37,7 @@ const Verification = ({ navigation }) => {
             <Pressable style={styles.button} onPress={() => navigation.navigate('ChangerMotDePasse')}>
                 <Text style={styles.button_text}>VERIFICATION</Text>
             </Pressable>
-        </View>
+        </SafeAreaView>
     )
 }
 
@@ -42,7 +45,6 @@ const styles = StyleSheet.create({
     main_container: {
         flex: 1,
         backgroundColor: global.darkGray,
-        marginTop: 20,
         paddingLeft: 20,
         paddingRight: 20,
       },

@@ -121,23 +121,23 @@ const Navigation = () => {
                         }
                         return <MaterialCommunityIcons name={iconName} size={28} color={color} />
                     },
-                    tabBarActiveTintColor: '#ECBB04',
-                    tabBarInactiveTintColor: '#CFCFCF',
+                    tabBarActiveTintColor: global.Yellow,
+                    tabBarInactiveTintColor: global.lightGray,
                     tabBarStyle: {
                         //padding: 10, 
-                        backgroundColor: '#242424'
+                        backgroundColor: global.blackLight
                     },
                 })}>
                 <Tab.Screen name="TabFavorite" component={FavoriteStackScreen} options={{
                     tabBarLabel: "Favorie",
                     headerTitle: "",
                     headerStyle: {
-                        backgroundColor: '#242424',
+                        backgroundColor: global.blackLight,
                     },
                     headerLeft: () => (
                         <View>
                             <Text style={{ 
-                                color: '#ECBB04', 
+                                color: global.Yellow,
                                 fontSize: 18,
                                 }}>
                                     DIABARANI
@@ -145,19 +145,19 @@ const Navigation = () => {
                         </View>
                     ),
                     headerRight: () => (
-                        <MaterialCommunityIcons name="magnify" size={28} color="#FFFFFF" />
+                        <MaterialCommunityIcons name="magnify" size={28} color={global.white} />
                     ),
                 }} />
                 <Tab.Screen name="TabBibliotheque" component={BibliothequeStackScreen} options={{
                     tabBarLabel: "Bibliotheque",
                     headerTitle: "",
                     headerStyle: {
-                        backgroundColor: '#242424',
+                        backgroundColor: global.blackLight,
                     },
                     headerLeft: () => (
                         <View>
                             <Text style={{ 
-                                color: '#ECBB04', 
+                                color: global.Yellow,
                                 fontSize: 18,
                                 }}>
                                     DIABARANI
@@ -165,19 +165,19 @@ const Navigation = () => {
                         </View>
                     ),
                     headerRight: () => (
-                        <MaterialCommunityIcons name="magnify" size={28} color="#FFFFFF" />
+                        <MaterialCommunityIcons name="magnify" size={28} color={global.white} />
                     ),
                 }} />
                 <Tab.Screen name="Home" component={HomeStackScreen} options={{
                     tabBarLabel: "Accueil",
                     headerTitle: "",
                     headerStyle: {
-                        backgroundColor: '#242424',
+                        backgroundColor: global.blackLight,
                     },
                     headerLeft: () => (
                         <View>
                             <Text style={{ 
-                                    color: '#ECBB04', 
+                                    color: global.Yellow,
                                     fontSize: 18,
                                 }}
                             >
@@ -186,45 +186,45 @@ const Navigation = () => {
                         </View>
                     ),
                     headerRight: () => (
-                        <MaterialCommunityIcons name="magnify" size={28} color="#FFFFFF" />
+                        <MaterialCommunityIcons name="magnify" size={28} color={global.white} />
                     )
                 }} />
                 <Tab.Screen name="TabNews" component={NewsStackScreen} options={{
                     title: "Nouveauté",
                     headerTitle: "",
                     headerStyle: {
-                        backgroundColor: '#242424',
+                        backgroundColor: global.blackLight,
                     },
                     headerLeft: () => (
                         <View>
                             <Text style={{ 
-                                color: '#ECBB04', 
+                                color: global.Yellow,
                                 fontSize: 18,}}>
                                     DIABARANI
                             </Text>
                         </View>
                     ),
                     headerRight: () => (
-                        <MaterialCommunityIcons name="magnify" size={28} color="#FFFFFF" />
+                        <MaterialCommunityIcons name="magnify" size={28} color={global.white} />
                     ),
                 }} />
                 <Tab.Screen name="TabProfil" component={ProfilStackScreen} options={{
                     title: "Profil",
                     headerTitle: "",
                     headerStyle: {
-                        backgroundColor: '#242424',
+                        backgroundColor: global.blackLight,
                     },
                     headerLeft: () => (
                         <View>
                             <Text style={{ 
-                                color: '#ECBB04', 
+                                color: global.Yellow,
                                 fontSize: 18,}}>
                                     DIABARANI
                             </Text>
                         </View>
                     ),
                     headerRight: () => (
-                        <MaterialCommunityIcons name="magnify" size={28} color="#FFFFFF" />
+                        <MaterialCommunityIcons name="magnify" size={28} color={global.white} />
                     ),
                 }} />
             </Tab.Navigator>
