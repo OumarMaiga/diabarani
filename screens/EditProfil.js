@@ -5,6 +5,8 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getUser, updateUser } from '../API/DiabaraniApi';
 import { useSelector } from 'react-redux';
+import * as GLOBAL from '../data/global';
+import '../data/global';
 
 const EditProfil = ({ navigation }) => {
     
@@ -15,27 +17,23 @@ const EditProfil = ({ navigation }) => {
     const [email, setEmail] = React.useState("");
     const [phone, setPhone] = React.useState("");
     const [isLoading, setIsLoading] = React.useState(false);
-    const [rightPosition, setRightPosition] = React.useState("");
-    const [user, setUser] = React.useState(undefined);
-        
     const { width, height } = Dimensions.get('window');
-    setRightPosition((width/2)-67.5)
+    const [rightPosition, setRightPosition] = React.useState(() => (width/2)-67.5);
+    const [user, setUser] = React.useState(auth ? auth.user : undefined);
+        
 
     useEffect(() => {
-        if (global.debug >= GLOBAL.LOG.DEBUG) 
-        {
-            console.log("EditProfil::useEffect()");
-        }
+        if (global.debug >= GLOBAL.LOG.DEBUG) console.log("EditProfil:::useEffect()");
+
         const fetchUser = async () =>
         {
-            if("auth.user.id" == "userId")
+            if(user != undefined)
             {
                 let token = null;
                 token = auth.token;
                 if(token != null)
                 {
-                    let data = await getUser(token, 17);
-                    console.log("date: "+JSON.stringify(data));
+                    let data = await getUser(token, user.id);
                     if(data.code == 1) {
                         setUser(data.user);
                     } else {
@@ -43,18 +41,11 @@ const EditProfil = ({ navigation }) => {
                     }
                 }
             }
-            else
-            {
-                setUser(auth.user);
-            }
         }
         fetchUser();
 
-        if (global.debug >= GLOBAL.LOG.INFO) 
-        {
-            console.log("EditProfil::useEffect()::user "+JSON.stringify(user));
-        }
-    });
+        if (global.debug >= GLOBAL.LOG.INFO) console.log("EditProfil::useEffect():::user "+JSON.stringify(user));
+    }, []);
 
     const DisplayLoading = () => {
         if(isLoading) {
@@ -70,57 +61,59 @@ const EditProfil = ({ navigation }) => {
             /*await signUp({firstname: firstName, lastname: lastName, username: userName,
                 email: email, password: password, birthday: birthday, gender: genderBackend});*/
     const onUpdateButtonPress = async () => {
-        setLoading(true);
+        setIsLoading(true);
         data = await updateUser({ first_name: first_name, last_name: last_name, email: email, phone: phone });
         if (global.debug >= GLOBAL.LOG.INFO) 
         {
             console.log("EditProfil:onUpdateButtonPress()::rc "+JSON.stringify(data));
         }
-        setLoading(false);
+        setIsLoading(false);
     };
 
     const DisplayProfile = () => {
         if(user != undefined) {
             return (
-                <ScrollView>
-                    <StatusBar barStyle="light-content" backgroundColor="#6a51ae" />
-                    <View style={styles.title_container}>
-                        <Text style={styles.title}>
-                            Profil
-                        </Text>
-                    </View>
-                    <View style={styles.profil_image_section}>
-                        <Image style={styles.profil_image}
-                        source={require("../Images/movie-6.jpg")} />
-                        <MaterialCommunityIcons style={[styles.icon_camera, {right: rightPosition}]} 
-                            name="camera" size={36} color="#B8B8B8" />
-                    </View>
-                    <View style={styles.form_container}>
-                        <TextInput placeholder="Prenom"
-                            style={styles.text_input}
-                            placeholderTextColor={global.gray}
-                            value={user.first_name}
-                            onChangeText={setFirst_name} />
-                        <TextInput placeholder="Nom"
-                            style={styles.text_input}
-                            placeholderTextColor={global.gray}
-                            value={user.last_name}
-                            onChangeText={setLast_name} />
-                        <TextInput placeholder="Email"
-                            style={styles.text_input}
-                            placeholderTextColor={global.gray}
-                            value={user.email}
-                            onChangeText={setEmail} />
-                        <TextInput placeholder="Telephone"
-                            style={styles.text_input}
-                            placeholderTextColor={global.gray}
-                            value={user.phone}
-                            onChangeText={setPhone} />
-                        <Pressable style={styles.button} onPress={onUpdateButtonPress}>
-                            <Text style={styles.button_text}>MODIFIER</Text>
-                        </Pressable>
-                    </View>
-                </ScrollView>
+                <SafeAreaView>
+                    <ScrollView>
+                        <StatusBar barStyle="light-content" backgroundColor="#6a51ae" />
+                        <View style={styles.title_container}>
+                            <Text style={styles.title}>
+                                Profil
+                            </Text>
+                        </View>
+                        <View style={styles.profil_image_section}>
+                            <Image style={styles.profil_image}
+                            source={require("../Images/movie-6.jpg")} />
+                            <MaterialCommunityIcons style={[styles.icon_camera, {right: rightPosition}]} 
+                                name="camera" size={36} color="#B8B8B8" />
+                        </View>
+                        <View style={styles.form_container}>
+                            <TextInput placeholder="Prenom"
+                                style={styles.text_input}
+                                placeholderTextColor={global.gray}
+                                value={user.first_name}
+                                onChangeText={(text) => setFirst_name(text)} />
+                            <TextInput placeholder="Nom"
+                                style={styles.text_input}
+                                placeholderTextColor={global.gray}
+                                value={user.last_name}
+                                onChangeText={(text) => setLast_name(text)} />
+                            <TextInput placeholder="Email"
+                                style={styles.text_input}
+                                placeholderTextColor={global.gray}
+                                value={user.email}
+                                onChangeText={(text) => setEmail(text)} />
+                            <TextInput placeholder="Telephone"
+                                style={styles.text_input}
+                                placeholderTextColor={global.gray}
+                                value={user.phone}
+                                onChangeText={(text) => setPhone(text)} />
+                            <Pressable style={styles.button} onPress={onUpdateButtonPress}>
+                                <Text style={styles.button_text}>MODIFIER</Text>
+                            </Pressable>
+                        </View>
+                    </ScrollView>
+                </SafeAreaView>
             )
         } else return null
     }

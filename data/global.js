@@ -24,7 +24,7 @@ export const SERVER_STATUS_CODE = {
 /* GLOBAL VARIABLES */
 /* general */
 global.appName = 'Diabarani';
-global.debug = LOG.DEBUG;
+global.debug = LOG.TRACE;
 global.users = [];
 global.user = null;
 global.currentUser = {

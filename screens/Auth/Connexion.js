@@ -17,10 +17,9 @@ const Connexion = ({navigation}) => {
     const [errorMessage, setErrorMessage] = useState("");
 
     const onLoginPress = async () => {
-        if (global.debug >= GLOBAL.LOG.DEBUG) 
-        {
-            console.log("Connexion:onLoginPress()");
-        }
+
+        if (global.debug >= GLOBAL.LOG.DEBUG) console.log("Connexion:onLoginPress()");
+
         if (username.length == 0 || password.length == 0) 
         {
             alert('Veuillez remplir les champs');
@@ -75,7 +74,7 @@ const Connexion = ({navigation}) => {
             <TextInput placeholder="Email / Telephone"
                 style={styles.text_input}
                 placeholderTextColor={global.gray}
-                onChangeText={(text) => setUsername(text)}  />
+                onChangeText={(text) => setUsername(text)} />
             <TextInput secureTextEntry
                 placeholder="Mot de passe"
                 style={styles.text_input}

@@ -16,7 +16,7 @@ const Inscription = ({ navigation }) => {
     const [phone, setPhone] = useState("")
     const [password, setPassword] = useState("")
     const [passwordConfirm, setPasswordConfirm] = useState("")
-    const [isLoading, setIsLoading] = useState(true)
+    const [isLoading, setIsLoading] = useState(false)
 
     const onRegisterPress = async () => {
         
@@ -67,7 +67,7 @@ const Inscription = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.main_container}>
             <StatusBar barStyle="light-content" backgroundColor="#6a51ae" />
-            <ScrollView style={styles.main_container}>
+            <ScrollView style={styles.main_container} showsVerticalScrollIndicator={false}>
                 <Text style={styles.auth_title}>Inscription</Text>
                 <TextInput placeholder="Prenom"
                     style={styles.text_input}
@@ -120,6 +120,16 @@ const styles = StyleSheet.create({
         backgroundColor: global.darkGray,
         paddingLeft: 20,
         paddingRight: 20,
+      },
+      loading_container: {
+        position: 'absolute',
+        flex: 1, 
+        justifyContent: "center", 
+        alignItems: "center" ,
+        top: 100,
+        right: 0,
+        bottom: 0,
+        left: 0,
       },
       auth_title: {
           marginTop: 20,
