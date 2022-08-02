@@ -41,7 +41,7 @@ global.currentUser = {
 };
 
 /* backend */
-global.SERVER_ADDRESS = 'http://192.168.1.22/diabarani-api/public/';
+global.SERVER_ADDRESS = 'http://192.168.1.18/diabarani-api/public/';
 
 global.server_off = false;
 global.server_status = null;

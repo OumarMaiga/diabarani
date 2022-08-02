@@ -74,7 +74,7 @@ export const getUser = (token, id) => {
         console.log("Api::getUser()");
     }
 
-    url = `${global.SERVER_ADDRESS}`+'index.php?action=get_user&id='+id;
+    url = `${global.SERVER_ADDRESS}`+'index.php?action=get-user&id='+id;
     return fetch(url, {
         method: 'GET',
         headers: {
@@ -89,13 +89,13 @@ export const getUser = (token, id) => {
     .catch((error) => console.log(error))
 }
 
-export function updateUser(token, value) {
+export function updateUser(token, id, value) {
     
     if (global.debug >= GLOBAL.LOG.DEBUG) {
         console.log("Api::getUser()");
     }
     
-    url = `${global.SERVER_ADDRESS}`+'index.php?action=update_user';
+    url = `${global.SERVER_ADDRESS}`+'index.php?action=update-user&id='+id;
     return fetch(url, {
         method: 'PUT',
         headers: {

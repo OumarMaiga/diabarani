@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { TextInput, View, Text, Image, Pressable, StyleSheet, StatusBar, Dimensions, ScrollView } from 'react-native'
+import { TextInput, View, Text, Image, Pressable, StyleSheet, StatusBar, Dimensions, ScrollView, ActivityIndicator } from 'react-native'
 import SafeAreaView from 'react-native-safe-area-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -12,18 +12,19 @@ const EditProfil = ({ navigation }) => {
     
     const auth = useSelector((state) => state.auth);
 
-    const [first_name, setFirst_name] = React.useState("");
-    const [last_name, setLast_name] = React.useState("");
-    const [email, setEmail] = React.useState("");
-    const [phone, setPhone] = React.useState("");
-    const [isLoading, setIsLoading] = React.useState(false);
+    const [first_name, setFirst_name] = useState("");
+    const [last_name, setLast_name] = useState("");
+    const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
     const { width, height } = Dimensions.get('window');
-    const [rightPosition, setRightPosition] = React.useState(() => (width/2)-67.5);
-    const [user, setUser] = React.useState(auth ? auth.user : undefined);
+    const [rightPosition, setRightPosition] = useState(() => (width/2)-67.5);
+    const [user, setUser] = useState(auth ? auth.user : undefined);
         
 
     useEffect(() => {
-        if (global.debug >= GLOBAL.LOG.DEBUG) console.log("EditProfil:::useEffect()");
+
+        if (global.debug >= GLOBAL.LOG.DEBUG) console.log("EditProfil::useEffect()");
 
         const fetchUser = async () =>
         {
@@ -36,15 +37,19 @@ const EditProfil = ({ navigation }) => {
                     let data = await getUser(token, user.id);
                     if(data.code == 1) {
                         setUser(data.user);
+                        setFirst_name(user.first_name);
+                        setLast_name(user.last_name);
+                        setEmail(user.email);
+                        setPhone(user.phone);
                     } else {
                         alert ("Utilisateur introuvable");
                     }
                 }
             }
         }
+        
         fetchUser();
 
-        if (global.debug >= GLOBAL.LOG.INFO) console.log("EditProfil::useEffect():::user "+JSON.stringify(user));
     }, []);
 
     const DisplayLoading = () => {
@@ -61,66 +66,79 @@ const EditProfil = ({ navigation }) => {
             /*await signUp({firstname: firstName, lastname: lastName, username: userName,
                 email: email, password: password, birthday: birthday, gender: genderBackend});*/
     const onUpdateButtonPress = async () => {
-        setIsLoading(true);
-        data = await updateUser({ first_name: first_name, last_name: last_name, email: email, phone: phone });
-        if (global.debug >= GLOBAL.LOG.INFO) 
+        let data = { first_name: first_name, last_name: last_name, email: email, phone: phone };
+        
+        if (global.debug >= GLOBAL.LOG.INFO) console.log("EditProfil::onUpdateButtonPress() => "+JSON.stringify(data));
+        
+        if(user != undefined)
         {
-            console.log("EditProfil:onUpdateButtonPress()::rc "+JSON.stringify(data));
+            setIsLoading(true);
+            let token = null;
+            token = auth.token;
+            result = await updateUser(token, user.id, data);
+            if (result.code == 1)
+            {
+                alert ("Mise à jour effectué");
+                navigation.goBack();
+            } 
+            else
+            {
+                alert ("Mise à jour echoué");
+
+            }
+
+            if (global.debug >= GLOBAL.LOG.INFO) 
+            {
+                console.log("EditProfil:onUpdateButtonPress() => result "+JSON.stringify(result));
+            }
+            setIsLoading(false);
         }
-        setIsLoading(false);
     };
 
-    const DisplayProfile = () => {
-        if(user != undefined) {
-            return (
-                <SafeAreaView>
-                    <ScrollView>
-                        <StatusBar barStyle="light-content" backgroundColor="#6a51ae" />
-                        <View style={styles.title_container}>
-                            <Text style={styles.title}>
-                                Profil
-                            </Text>
-                        </View>
-                        <View style={styles.profil_image_section}>
-                            <Image style={styles.profil_image}
-                            source={require("../Images/movie-6.jpg")} />
-                            <MaterialCommunityIcons style={[styles.icon_camera, {right: rightPosition}]} 
-                                name="camera" size={36} color="#B8B8B8" />
-                        </View>
-                        <View style={styles.form_container}>
-                            <TextInput placeholder="Prenom"
-                                style={styles.text_input}
-                                placeholderTextColor={global.gray}
-                                value={user.first_name}
-                                onChangeText={(text) => setFirst_name(text)} />
-                            <TextInput placeholder="Nom"
-                                style={styles.text_input}
-                                placeholderTextColor={global.gray}
-                                value={user.last_name}
-                                onChangeText={(text) => setLast_name(text)} />
-                            <TextInput placeholder="Email"
-                                style={styles.text_input}
-                                placeholderTextColor={global.gray}
-                                value={user.email}
-                                onChangeText={(text) => setEmail(text)} />
-                            <TextInput placeholder="Telephone"
-                                style={styles.text_input}
-                                placeholderTextColor={global.gray}
-                                value={user.phone}
-                                onChangeText={(text) => setPhone(text)} />
-                            <Pressable style={styles.button} onPress={onUpdateButtonPress}>
-                                <Text style={styles.button_text}>MODIFIER</Text>
-                            </Pressable>
-                        </View>
-                    </ScrollView>
-                </SafeAreaView>
-            )
-        } else return null
-    }
 
     return (
         <View style={styles.main_container}>
-            <DisplayProfile/>
+            <SafeAreaView>
+                <ScrollView>
+                    <StatusBar barStyle="light-content" backgroundColor="#6a51ae" />
+                    <View style={styles.title_container}>
+                        <Text style={styles.title}>
+                            Profil
+                        </Text>
+                    </View>
+                    <View style={styles.profil_image_section}>
+                        <Image style={styles.profil_image}
+                        source={require("../Images/movie-6.jpg")} />
+                        <MaterialCommunityIcons style={[styles.icon_camera, {right: rightPosition}]} 
+                            name="camera" size={36} color="#B8B8B8" />
+                    </View>
+                    <View style={styles.form_container}>
+                        <TextInput placeholder="Prenom"
+                            style={styles.text_input}
+                            placeholderTextColor={global.gray}
+                            value={first_name}
+                            onChangeText={(text) => setFirst_name(text)} />
+                        <TextInput placeholder="Nom"
+                            style={styles.text_input}
+                            placeholderTextColor={global.gray}
+                            value={last_name}
+                            onChangeText={(text) => setLast_name(text)} />
+                        <TextInput placeholder="Email"
+                            style={styles.text_input}
+                            placeholderTextColor={global.gray}
+                            value={email}
+                            onChangeText={(text) => setEmail(text)} />
+                        <TextInput placeholder="Telephone"
+                            style={styles.text_input}
+                            placeholderTextColor={global.gray}
+                            value={phone}
+                            onChangeText={(text) => setPhone(text)} />
+                        <Pressable style={styles.button} onPress={onUpdateButtonPress}>
+                            <Text style={styles.button_text}>MODIFIER</Text>
+                        </Pressable>
+                    </View>
+                </ScrollView>
+            </SafeAreaView>
             <DisplayLoading/>
         </View>
     );
