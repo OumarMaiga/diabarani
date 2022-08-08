@@ -18,7 +18,7 @@ const Connexion = ({navigation}) => {
     
     const onLoginPress = async () => {
 
-        if (global.debug >= GLOBAL.LOG.DEBUG) console.log("Connexion:onLoginPress()");
+        if (global.debug >= GLOBAL.LOG.INFO) console.log("Connexion:onLoginPress()");
 
         if (username.length == 0 || password.length == 0) 
         {
@@ -28,7 +28,7 @@ const Connexion = ({navigation}) => {
 
         setIsLoading(true);
         let data = await login({username, password})
-        if (global.debug >= GLOBAL.LOG.INFO)  console.log("Connexion:onLoginPress()::data "+JSON.stringify(data));
+        if (global.debug >= GLOBAL.LOG.DEBUG)  console.log("Connexion:onLoginPress()::data "+JSON.stringify(data));
 
         if(data.code == 1) 
         {

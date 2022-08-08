@@ -25,7 +25,7 @@ const EditProfil = ({ navigation }) => {
 
     useEffect(() => {
 
-        if (global.debug >= GLOBAL.LOG.DEBUG) console.log("EditProfil::useEffect()");
+        if (global.debug >= GLOBAL.LOG.INFO) console.log("EditProfil::useEffect()");
 
             if(user != undefined)
             {
@@ -54,7 +54,7 @@ const EditProfil = ({ navigation }) => {
     const onUpdateButtonPress = async () => {
         let data = { first_name: first_name, last_name: last_name, email: email, phone: phone };
         
-        if (global.debug >= GLOBAL.LOG.INFO) console.log("EditProfil::onUpdateButtonPress() => "+JSON.stringify(data));
+        if (global.debug >= GLOBAL.LOG.DEBUG) console.log("EditProfil::onUpdateButtonPress() => "+JSON.stringify(data));
         
         if(user != undefined)
         {
@@ -79,7 +79,7 @@ const EditProfil = ({ navigation }) => {
 
             }
 
-            if (global.debug >= GLOBAL.LOG.INFO) console.log("EditProfil:onUpdateButtonPress() => result "+JSON.stringify(result));
+            if (global.debug >= GLOBAL.LOG.DEBUG) console.log("EditProfil:onUpdateButtonPress() => result "+JSON.stringify(result));
             setIsLoading(false);
         }
     };

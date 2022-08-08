@@ -17,7 +17,7 @@ const Profil = ({ navigation }) => {
     const dispatch = useDispatch();
 
     /*useEffect(() => {
-        if (global.debug >= GLOBAL.LOG.DEBUG) console.log("Profil::useEffect()");
+        if (global.debug >= GLOBAL.LOG.INFO) console.log("Profil::useEffect()");
        
         const fetchUser = async () =>
         {
@@ -38,12 +38,12 @@ const Profil = ({ navigation }) => {
         }
         fetchUser();
 
-        if (global.debug >= GLOBAL.LOG.INFO) console.log("Profil::useEffect()::user "+JSON.stringify(user));
+        if (global.debug >= GLOBAL.LOG.DEBUG) console.log("Profil::useEffect()::user "+JSON.stringify(user));
     }, []);*/
     
 
     const onLogoutPress = () => {
-        if (global.debug >= GLOBAL.LOG.DEBUG) console.log("Profil:onLogoutPress()");
+        if (global.debug >= GLOBAL.LOG.INFO) console.log("Profil:onLogoutPress()");
 
         dispatch(logout())
     }

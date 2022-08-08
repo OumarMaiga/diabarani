@@ -5,9 +5,9 @@ import * as GLOBAL from "../data/global.js";
 //const TOKEN = "b2768876ee710b2e8476da4f1138403b";
 
 export const login = async (value) => {
-    if (global.debug >= GLOBAL.LOG.DEBUG) {
-        console.log("API:login()");
-    }
+    
+    if (global.debug >= GLOBAL.LOG.INFO) console.log("API:login()");
+
     let url = `${global.SERVER_ADDRESS}`+'index.php?action=login';
     const res = await fetch(url, {
         method: 'POST',
@@ -31,9 +31,7 @@ export const login = async (value) => {
 }
 
 export const logout = () => async (dispatch) => {
-    if (global.debug >= GLOBAL.LOG.DEBUG) {
-        console.log("API:logout()");
-    }
+    if (global.debug >= GLOBAL.LOG.INFO) console.log("API:logout()");
     return dispatch({
         type: "LOGOUT",
         payload: null,
@@ -41,10 +39,9 @@ export const logout = () => async (dispatch) => {
 };
 
 export const register = (value) => {
-    if (global.debug >= GLOBAL.LOG.DEBUG) {
-        console.log("API::register()");
-    }
-    url = `${global.SERVER_ADDRESS}`+'index.php?action=register';
+    if (global.debug >= GLOBAL.LOG.INFO) console.log("API::register()");
+
+        url = `${global.SERVER_ADDRESS}`+'index.php?action=register';
     return fetch(url, {
         method: 'POST',
         headers: {
@@ -70,9 +67,7 @@ export const register = (value) => {
 
 export const getUser = (token, id) => {
 
-    if (global.debug >= GLOBAL.LOG.DEBUG) {
-        console.log("Api::getUser()");
-    }
+    if (global.debug >= GLOBAL.LOG.INFO) console.log("Api::getUser()");
 
     url = `${global.SERVER_ADDRESS}`+'index.php?action=get-user&id='+id;
     return fetch(url, {
@@ -91,9 +86,7 @@ export const getUser = (token, id) => {
 
 export function updateUser(token, id, value) {
     
-    if (global.debug >= GLOBAL.LOG.DEBUG) {
-        console.log("Api::getUser()");
-    }
+    if (global.debug >= GLOBAL.LOG.INFO) console.log("Api::getUser()");
     
     url = `${global.SERVER_ADDRESS}`+'index.php?action=update-user&id='+id;
     return fetch(url, {
