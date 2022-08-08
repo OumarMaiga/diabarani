@@ -4,14 +4,16 @@ import SafeAreaView from 'react-native-safe-area-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getUser, updateUser } from '../API/DiabaraniApi';
+import { useDispatch } from "react-redux"
 import { useSelector } from 'react-redux';
 import * as GLOBAL from '../data/global';
 import '../data/global';
 
 const EditProfil = ({ navigation }) => {
     
-    const auth = useSelector((state) => state.auth);
-
+    const dispatch = useDispatch();
+    
+    const user = useSelector((state) => state.user);
     const [first_name, setFirst_name] = useState("");
     const [last_name, setLast_name] = useState("");
     const [email, setEmail] = useState("");
@@ -19,36 +21,20 @@ const EditProfil = ({ navigation }) => {
     const [isLoading, setIsLoading] = useState(false);
     const { width, height } = Dimensions.get('window');
     const [rightPosition, setRightPosition] = useState(() => (width/2)-67.5);
-    const [user, setUser] = useState(auth ? auth.user : undefined);
         
 
     useEffect(() => {
 
         if (global.debug >= GLOBAL.LOG.DEBUG) console.log("EditProfil::useEffect()");
 
-        const fetchUser = async () =>
-        {
             if(user != undefined)
             {
-                let token = null;
-                token = auth.token;
-                if(token != null)
-                {
-                    let data = await getUser(token, user.id);
-                    if(data.code == 1) {
-                        setUser(data.user);
-                        setFirst_name(user.first_name);
-                        setLast_name(user.last_name);
-                        setEmail(user.email);
-                        setPhone(user.phone);
-                    } else {
-                        alert ("Utilisateur introuvable");
-                    }
-                }
+                setFirst_name(user.first_name);
+                setLast_name(user.last_name);
+                setEmail(user.email);
+                setPhone(user.phone);
             }
-        }
         
-        fetchUser();
 
     }, []);
 
@@ -74,10 +60,16 @@ const EditProfil = ({ navigation }) => {
         {
             setIsLoading(true);
             let token = null;
-            token = auth.token;
-            result = await updateUser(token, user.id, data);
+            token = user.token;
+            const result = await updateUser(token, user.id, data);
+
             if (result.code == 1)
             {
+                dispatch({
+                    type: "UPDATE_USER",
+                    payload: result.user
+                });
+
                 alert ("Mise à jour effectué");
                 navigation.goBack();
             } 
@@ -87,10 +79,7 @@ const EditProfil = ({ navigation }) => {
 
             }
 
-            if (global.debug >= GLOBAL.LOG.INFO) 
-            {
-                console.log("EditProfil:onUpdateButtonPress() => result "+JSON.stringify(result));
-            }
+            if (global.debug >= GLOBAL.LOG.INFO) console.log("EditProfil:onUpdateButtonPress() => result "+JSON.stringify(result));
             setIsLoading(false);
         }
     };

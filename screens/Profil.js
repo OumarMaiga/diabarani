@@ -11,13 +11,12 @@ import '../data/global'
 
 const Profil = ({ navigation }) => {
     
-    const auth = useSelector((state) => state.auth);
-
-    const [user, setUser] = useState(auth ? auth.user : undefined);
+    useSelector((state) => console.log("==> "+ JSON.stringify(state)))
+    const user = useSelector((state) => state.user);
     
     const dispatch = useDispatch();
 
-    useEffect(() => {
+    /*useEffect(() => {
         if (global.debug >= GLOBAL.LOG.DEBUG) console.log("Profil::useEffect()");
        
         const fetchUser = async () =>
@@ -40,7 +39,7 @@ const Profil = ({ navigation }) => {
         fetchUser();
 
         if (global.debug >= GLOBAL.LOG.INFO) console.log("Profil::useEffect()::user "+JSON.stringify(user));
-    }, []);
+    }, []);*/
     
 
     const onLogoutPress = () => {

@@ -4,10 +4,10 @@
 * distributed without written authorizations from its author.
 *--------------------------------------------------------------------*/
 import {combineReducers} from 'redux';
-import auth from './auth';
+import user from './user';
 import alert from './alert';
 
 export default combineReducers({
-  auth,
+  user,
   alert
 });

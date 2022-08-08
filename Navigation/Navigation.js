@@ -97,7 +97,7 @@ const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
 const Navigation = () => {
     
-    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+    const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
 
     return (
         <NavigationContainer>

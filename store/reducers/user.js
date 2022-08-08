@@ -3,7 +3,6 @@ import { setToken, removeToken, getToken } from "../../utils/token";
 const initialState = {
   isAuthenticated: false,
   loading: true,
-  user: null,
 };
 
 export default (state = initialState, action) => {
@@ -18,7 +17,6 @@ export default (state = initialState, action) => {
       }
     case "LOGIN":
       setToken(payload.token);
-      //   console.log("Payload", payload); // zim1@gmail.com
       return {
         ...state,
         ...payload,
@@ -28,14 +26,19 @@ export default (state = initialState, action) => {
 
     case "LOGOUT":
       removeToken();
-    //   console.log(isAuthenticated)
       return {
         ...state,
+        ...payload,
         isAuthenticated: false,
         loading: false,
-        user: null,
       };
-
+    case "UPDATE_USER":
+      return {
+        ...state,
+        ...payload,
+        isAuthenticated: true,
+        loading: false,
+      };
     default:
       return state;
   }

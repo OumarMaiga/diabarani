@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { ScrollView, View, Text, Image, TextInput, Pressable, StyleSheet, ActivityIndicator , StatusBar } from 'react-native'
 import SafeAreaView from 'react-native-safe-area-view';
 import { login } from '../../API/DiabaraniApi'
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import * as GLOBAL from '../../data/global'
 import '../../data/global';
 
@@ -15,7 +15,7 @@ const Connexion = ({navigation}) => {
     const [password, setPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
-
+    
     const onLoginPress = async () => {
 
         if (global.debug >= GLOBAL.LOG.DEBUG) console.log("Connexion:onLoginPress()");
@@ -34,7 +34,7 @@ const Connexion = ({navigation}) => {
         {
             dispatch({
                 type: "LOGIN",
-                payload: data
+                payload: data.user
             });
         }
          else 
