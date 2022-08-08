@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { TextInput, View, Text, Image, Pressable, StyleSheet, StatusBar, Dimensions, ScrollView, ActivityIndicator } from 'react-native'
+import { TextInput, View, Text, Image, Pressable, StyleSheet, StatusBar, Dimensions, ScrollView, ActivityIndicator,
+    KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import SafeAreaView from 'react-native-safe-area-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -76,7 +77,6 @@ const EditProfil = ({ navigation }) => {
             else
             {
                 alert ("Mise à jour echoué");
-
             }
 
             if (global.debug >= GLOBAL.LOG.DEBUG) console.log("EditProfil:onUpdateButtonPress() => result "+JSON.stringify(result));
@@ -86,50 +86,56 @@ const EditProfil = ({ navigation }) => {
 
 
     return (
-        <View style={styles.main_container}>
-            <SafeAreaView>
-                <ScrollView>
-                    <StatusBar barStyle="light-content" backgroundColor="#6a51ae" />
-                    <View style={styles.title_container}>
-                        <Text style={styles.title}>
-                            Profil
-                        </Text>
-                    </View>
-                    <View style={styles.profil_image_section}>
-                        <Image style={styles.profil_image}
-                        source={require("../Images/movie-6.jpg")} />
-                        <MaterialCommunityIcons style={[styles.icon_camera, {right: rightPosition}]} 
-                            name="camera" size={36} color="#B8B8B8" />
-                    </View>
-                    <View style={styles.form_container}>
-                        <TextInput placeholder="Prenom"
-                            style={styles.text_input}
-                            placeholderTextColor={global.gray}
-                            value={first_name}
-                            onChangeText={(text) => setFirst_name(text)} />
-                        <TextInput placeholder="Nom"
-                            style={styles.text_input}
-                            placeholderTextColor={global.gray}
-                            value={last_name}
-                            onChangeText={(text) => setLast_name(text)} />
-                        <TextInput placeholder="Email"
-                            style={styles.text_input}
-                            placeholderTextColor={global.gray}
-                            value={email}
-                            onChangeText={(text) => setEmail(text)} />
-                        <TextInput placeholder="Telephone"
-                            style={styles.text_input}
-                            placeholderTextColor={global.gray}
-                            value={phone}
-                            onChangeText={(text) => setPhone(text)} />
-                        <Pressable style={styles.button} onPress={onUpdateButtonPress}>
-                            <Text style={styles.button_text}>MODIFIER</Text>
-                        </Pressable>
-                    </View>
-                </ScrollView>
-            </SafeAreaView>
+        <SafeAreaView style={styles.main_container}>
+            <KeyboardAvoidingView 
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+                keyboardVerticalOffset={Platform.OS === "ios" ? 200 : 0}>
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                    <ScrollView>
+                        <StatusBar barStyle="light-content" backgroundColor="#6a51ae" />
+                        <View style={styles.title_container}>
+                            <Text style={styles.title}>
+                                Profil
+                            </Text>
+                        </View>
+                        <View style={styles.profil_image_section}>
+                            <Image style={styles.profil_image}
+                            source={require("../Images/movie-6.jpg")} />
+                            <MaterialCommunityIcons style={[styles.icon_camera, {right: rightPosition}]} 
+                                name="camera" size={36} color="#B8B8B8" />
+                        </View>
+                        <View style={styles.form_container}>
+                                <TextInput placeholder="Prenom"
+                                    style={styles.text_input}
+                                    placeholderTextColor={global.gray}
+                                    value={first_name}
+                                    onChangeText={(text) => setFirst_name(text)} />
+                                <TextInput placeholder="Nom"
+                                    style={styles.text_input}
+                                    placeholderTextColor={global.gray}
+                                    value={last_name}
+                                    onChangeText={(text) => setLast_name(text)} />
+                                <TextInput placeholder="Email"
+                                    style={styles.text_input}
+                                    placeholderTextColor={global.gray}
+                                    value={email}
+                                    onChangeText={(text) => setEmail(text)}
+                                    keyboardType="email-address" />
+                                <TextInput placeholder="Telephone"
+                                    style={styles.text_input}
+                                    placeholderTextColor={global.gray}
+                                    value={phone}
+                                    onChangeText={(text) => setPhone(text)}
+                                    keyboardType="numeric" />
+                                <Pressable style={styles.button} onPress={onUpdateButtonPress}>
+                                    <Text style={styles.button_text}>MODIFIER</Text>
+                                </Pressable>
+                        </View>
+                    </ScrollView>
+                </TouchableWithoutFeedback>
+            </KeyboardAvoidingView>
             <DisplayLoading/>
-        </View>
+        </SafeAreaView>
     );
 }
 

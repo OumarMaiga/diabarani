@@ -11,37 +11,10 @@ import '../data/global'
 
 const Profil = ({ navigation }) => {
     
-    useSelector((state) => console.log("==> "+ JSON.stringify(state)))
     const user = useSelector((state) => state.user);
     
     const dispatch = useDispatch();
-
-    /*useEffect(() => {
-        if (global.debug >= GLOBAL.LOG.INFO) console.log("Profil::useEffect()");
-       
-        const fetchUser = async () =>
-        {
-            if(user != undefined)
-            {
-                let token = null;
-                token = auth.token;
-                if(token != null)
-                {
-                    let data = await getUser(token, user.id);
-                    if(data.code == 1) {
-                        setUser(data.user);
-                    } else {
-                        alert ("Utilisateur introuvable");
-                    }
-                }
-            }
-        }
-        fetchUser();
-
-        if (global.debug >= GLOBAL.LOG.DEBUG) console.log("Profil::useEffect()::user "+JSON.stringify(user));
-    }, []);*/
-    
-
+  
     const onLogoutPress = () => {
         if (global.debug >= GLOBAL.LOG.INFO) console.log("Profil:onLogoutPress()");
 
@@ -50,7 +23,7 @@ const Profil = ({ navigation }) => {
         if(user != undefined) {
             return (
 
-                <View style={styles.main_container}>
+                <SafeAreaView style={styles.main_container}>
                     <StatusBar barStyle="light-content" backgroundColor="#6a51ae" />
                     <View style={styles.title_container}>
                         <Text style={styles.title}>
@@ -107,7 +80,7 @@ const Profil = ({ navigation }) => {
                                 Deconnexion
                             </Text>
                         </TouchableOpacity>
-                </View>
+                </SafeAreaView>
             )
         } else return null
 }

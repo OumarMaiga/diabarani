@@ -1,19 +1,40 @@
 import React, { useState } from 'react'
-import { View, Text, TextInput, Pressable, StyleSheet, StatusBar } from 'react-native'
+import { View, Text, TextInput, Pressable, StyleSheet, StatusBar,
+    KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import SafeAreaView from 'react-native-safe-area-view';
 
 const MotDePasseOublie = ({ navigation }) => {
+    
+    const [isLoading, setIsLoading] = useState(false);
+
+    const DisplayLoading = () => {
+        if(isLoading) {
+            return(
+                <View style={styles.loading_container}>
+                    <ActivityIndicator size="large"/>
+                </View>
+            )
+        } else return null
+    }
+
     return (
         <SafeAreaView style={styles.main_container}>
             <StatusBar barStyle="light-content" backgroundColor="#6a51ae" />
-    
-            <Text style={styles.auth_title}>Mot de passe oublié</Text>
-            <TextInput placeholder="Email / Telephone"
-                style={styles.text_input}
-                placeholderTextColor={global.gray} />
-            <Pressable style={styles.button} onPress={() => navigation.navigate('Verification')}>
-                <Text style={styles.button_text}>ENVOYER</Text>
-            </Pressable>
+            <KeyboardAvoidingView 
+                behavior={Platform.OS === "ios" ? "padding" : "height"}>
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                    <View>
+                        <Text style={styles.auth_title}>Mot de passe oublié</Text>
+                        <TextInput placeholder="Email / Telephone"
+                            style={styles.text_input}
+                            placeholderTextColor={global.gray} />
+                        <Pressable style={styles.button} onPress={() => navigation.navigate('Verification')}>
+                            <Text style={styles.button_text}>ENVOYER</Text>
+                        </Pressable>
+                    </View>
+                </TouchableWithoutFeedback>
+            </KeyboardAvoidingView>
+            <DisplayLoading/>
         </SafeAreaView>
     )
 }

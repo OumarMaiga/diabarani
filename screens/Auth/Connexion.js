@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { ScrollView, View, Text, Image, TextInput, Pressable, StyleSheet, ActivityIndicator , StatusBar } from 'react-native'
+import { ScrollView, View, Text, Image, TextInput, Pressable, StyleSheet, ActivityIndicator , StatusBar,
+    KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import SafeAreaView from 'react-native-safe-area-view';
 import { login } from '../../API/DiabaraniApi'
 import { useDispatch, useSelector } from "react-redux"
@@ -69,38 +70,44 @@ const Connexion = ({navigation}) => {
     return (
         <SafeAreaView style={styles.main_container}>
             <StatusBar barStyle="light-content" backgroundColor="#6a51ae" />
-            
-            <Text style={styles.auth_title}>Connexion</Text>
-            <TextInput placeholder="Email / Telephone"
-                style={styles.text_input}
-                placeholderTextColor={global.gray}
-                onChangeText={(text) => setUsername(text)} />
-            <TextInput secureTextEntry
-                placeholder="Mot de passe"
-                style={styles.text_input}
-                placeholderTextColor={global.gray}
-                onChangeText={(text) => setPassword(text)}
-                onSubmitEditing={onLoginPress} />
-            <Pressable onPress={() => navigation.navigate('MotDePasseOublie')}>
-                <Text style={styles.forget_password_link}
-                    textContentType='password'>
-                    Mot de passe oublié ?
-                </Text>
-            </Pressable>
-            <Pressable style={styles.button} onPress={onLoginPress}>
-                <Text style={styles.button_text}>CONNEXION</Text>
-            </Pressable>
-            <DisplayError/>
-            <View style={styles.auth_media_container}>
-                <Text style={styles.auth_media_text}>-- Ou avec --</Text>
-                <View style={styles.media_image_container}>
-                    <Image source={require("../../Images/google.jpg")}
-                        style={styles.icon_social} />
-                    <Image source={require("../../Images/facebook.jpg")}
-                        style={styles.icon_social} />
-                </View>
-                    <Text  style={styles.auth_media_text}>Vous n'avez pas de compte ? <Pressable onPress={() => navigation.navigate('Inscription')}><Text style={styles.link_underscore}>Inscription</Text></Pressable></Text>
-            </View>
+            <KeyboardAvoidingView 
+                behavior={Platform.OS === "ios" ? "padding" : "height"}>
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                    <ScrollView>
+                        <Text style={styles.auth_title}>Connexion</Text>
+                        <TextInput placeholder="Email / Telephone"
+                            style={styles.text_input}
+                            placeholderTextColor={global.gray}
+                            onChangeText={(text) => setUsername(text)} />
+                        <TextInput secureTextEntry
+                            placeholder="Mot de passe"
+                            style={styles.text_input}
+                            placeholderTextColor={global.gray}
+                            onChangeText={(text) => setPassword(text)}
+                            onSubmitEditing={onLoginPress} />
+                        <Pressable onPress={() => navigation.navigate('MotDePasseOublie')}>
+                            <Text style={styles.forget_password_link}
+                                textContentType='password'>
+                                Mot de passe oublié ?
+                            </Text>
+                        </Pressable>
+                        <Pressable style={styles.button} onPress={onLoginPress}>
+                            <Text style={styles.button_text}>CONNEXION</Text>
+                        </Pressable>
+                        <DisplayError/>
+                        <View style={styles.auth_media_container}>
+                            <Text style={styles.auth_media_text}>-- Ou avec --</Text>
+                            <View style={styles.media_image_container}>
+                                <Image source={require("../../Images/google.jpg")}
+                                    style={styles.icon_social} />
+                                <Image source={require("../../Images/facebook.jpg")}
+                                    style={styles.icon_social} />
+                            </View>
+                                <Text  style={styles.auth_media_text}>Vous n'avez pas de compte ? <Pressable onPress={() => navigation.navigate('Inscription')}><Text style={styles.link_underscore}>Inscription</Text></Pressable></Text>
+                        </View>
+                    </ScrollView>
+                </TouchableWithoutFeedback>
+            </KeyboardAvoidingView>
             <DisplayLoading/>
         </SafeAreaView>
     );

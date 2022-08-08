@@ -1,22 +1,45 @@
 import React, { useState } from 'react'
-import { View, Text, Image, TextInput, Pressable, StyleSheet, StatusBar } from 'react-native'
+import { View, Text, Image, TextInput, Pressable, StyleSheet, StatusBar,
+    KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import SafeAreaView from 'react-native-safe-area-view';
 
 const ChangerMotDePasse = ({ navigation }) => {
+
+    const [isLoading, setIsLoading] = useState(false);
+    
+    const DisplayLoading = () => {
+        if(isLoading) {
+            return(
+                <View style={styles.loading_container}>
+                    <ActivityIndicator size="large"/>
+                </View>
+            )
+        } else return null
+    }
+
+
     return (
         <SafeAreaView style={styles.main_container}>
             <StatusBar barStyle="light-content" backgroundColor="#6a51ae" />
             
-            <Text style={styles.auth_title}>Changer le mot de passe</Text>
-            <TextInput placeholder="Nouveau mot de passe"
-                style={styles.text_input}
-                placeholderTextColor={global.gray} />
-            <TextInput placeholder="Nouveau mot de passe confirmé"
-                style={styles.text_input}
-                placeholderTextColor={global.gray} />
-            <Pressable style={styles.button} onPress={navigation.navigate('Connexion')}>
-                <Text style={styles.button_text}>CHANGER</Text>
-            </Pressable>
+            <KeyboardAvoidingView 
+                behavior={Platform.OS === "ios" ? "padding" : "height"}>
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                    <View>
+                        <Text style={styles.auth_title}>Changer le mot de passe</Text>
+                        <TextInput placeholder="Nouveau mot de passe"
+                            style={styles.text_input}
+                            placeholderTextColor={global.gray} />
+                        <TextInput placeholder="Nouveau mot de passe confirmé"
+                            style={styles.text_input}
+                            placeholderTextColor={global.gray} />
+                        <Pressable style={styles.button} onPress={navigation.navigate('Connexion')}>
+                            <Text style={styles.button_text}>CHANGER</Text>
+                        </Pressable>
+                    </View>
+                </TouchableWithoutFeedback>
+            </KeyboardAvoidingView>
+            <DisplayLoading/>
         </SafeAreaView>
     )
 }

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { ScrollView, View, Text, Image, TextInput, Pressable, StyleSheet, ActivityIndicator, StatusBar } from 'react-native'
+import { ScrollView, View, Text, Image, TextInput, Pressable, StyleSheet, ActivityIndicator, StatusBar,
+    KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import SafeAreaView from 'react-native-safe-area-view';
 import { register } from '../../API/DiabaraniApi'
 import { useDispatch } from "react-redux"
@@ -67,49 +68,54 @@ const Inscription = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.main_container}>
             <StatusBar barStyle="light-content" backgroundColor="#6a51ae" />
-            <ScrollView style={styles.main_container} showsVerticalScrollIndicator={false}>
-                <Text style={styles.auth_title}>Inscription</Text>
-                <TextInput placeholder="Prenom"
-                    style={styles.text_input}
-                    placeholderTextColor={global.gray}
-                    onChangeText={(text) => setPrenom(text)} />
-                <TextInput placeholder="Nom"
-                    style={styles.text_input}
-                    placeholderTextColor={global.gray}
-                    onChangeText={(text) => setNom(text)} />
-                <TextInput placeholder="Email"
-                    style={styles.text_input}
-                    placeholderTextColor={global.gray}
-                    onChangeText={(text) => setEmail(text)} />
-                <TextInput placeholder="Telephone"
-                    style={styles.text_input}
-                    placeholderTextColor={global.gray}
-                    onChangeText={(text) => setPhone(text)} />
-                <TextInput secureTextEntry
-                    placeholder="Mot de passe"
-                    style={styles.text_input}
-                    placeholderTextColor={global.gray}
-                    onChangeText={(text) => setPassword(text)} />
-                <TextInput secureTextEntry
-                    placeholder="Mot de passe confirmer"
-                    style={styles.text_input}
-                    placeholderTextColor={global.gray}
-                    onChangeText={(text) => setPasswordConfirm(text)} />
-                <Pressable style={styles.button} onPress={() => onRegisterPress()}>
-                    <Text style={styles.button_text}>INSCRIPTION</Text>
-                </Pressable>
-                <View style={styles.auth_media_container}>
-                    <Text style={styles.auth_media_text}>-- Ou avec --</Text>
-                    <View style={styles.media_image_container}>
-                        <Image source={require("../../Images/google.jpg")}
-                            style={styles.icon_social} />
-                        <Image source={require("../../Images/facebook.jpg")}
-                            style={styles.icon_social} />
-                    </View>
-                        <Text  style={styles.auth_media_text}>Vous êtes déjà inscrit ? <Pressable onPress={() => navigation.navigate('Connexion')}><Text style={styles.link_underscore}>Connexion</Text></Pressable></Text>
-                </View>
-                <DisplayLoading/>
-            </ScrollView>
+            <KeyboardAvoidingView 
+                behavior={Platform.OS === "ios" ? "padding" : "height"}>
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                    <ScrollView showsVerticalScrollIndicator={false}>
+                        <Text style={styles.auth_title}>Inscription</Text>
+                        <TextInput placeholder="Prenom"
+                            style={styles.text_input}
+                            placeholderTextColor={global.gray}
+                            onChangeText={(text) => setPrenom(text)} />
+                        <TextInput placeholder="Nom"
+                            style={styles.text_input}
+                            placeholderTextColor={global.gray}
+                            onChangeText={(text) => setNom(text)} />
+                        <TextInput placeholder="Email"
+                            style={styles.text_input}
+                            placeholderTextColor={global.gray}
+                            onChangeText={(text) => setEmail(text)} />
+                        <TextInput placeholder="Telephone"
+                            style={styles.text_input}
+                            placeholderTextColor={global.gray}
+                            onChangeText={(text) => setPhone(text)} />
+                        <TextInput secureTextEntry
+                            placeholder="Mot de passe"
+                            style={styles.text_input}
+                            placeholderTextColor={global.gray}
+                            onChangeText={(text) => setPassword(text)} />
+                        <TextInput secureTextEntry
+                            placeholder="Mot de passe confirmer"
+                            style={styles.text_input}
+                            placeholderTextColor={global.gray}
+                            onChangeText={(text) => setPasswordConfirm(text)} />
+                        <Pressable style={styles.button} onPress={() => onRegisterPress()}>
+                            <Text style={styles.button_text}>INSCRIPTION</Text>
+                        </Pressable>
+                        <View style={styles.auth_media_container}>
+                            <Text style={styles.auth_media_text}>-- Ou avec --</Text>
+                            <View style={styles.media_image_container}>
+                                <Image source={require("../../Images/google.jpg")}
+                                    style={styles.icon_social} />
+                                <Image source={require("../../Images/facebook.jpg")}
+                                    style={styles.icon_social} />
+                            </View>
+                                <Text  style={styles.auth_media_text}>Vous êtes déjà inscrit ? <Pressable onPress={() => navigation.navigate('Connexion')}><Text style={styles.link_underscore}>Connexion</Text></Pressable></Text>
+                        </View>
+                    </ScrollView>
+                </TouchableWithoutFeedback>
+            </KeyboardAvoidingView>
+            <DisplayLoading/>
         </SafeAreaView>
     )
 }

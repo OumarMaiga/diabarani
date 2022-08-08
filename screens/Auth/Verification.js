@@ -1,42 +1,65 @@
 import React, {useState} from 'react'
-import { View, Text, TextInput, Pressable, StyleSheet, StatusBar } from 'react-native'
+import { View, Text, TextInput, Pressable, StyleSheet, StatusBar,
+    KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import SafeAreaView from 'react-native-safe-area-view';
 
 const Verification = ({ navigation }) => {
+    
+    const [isLoading, setIsLoading] = useState(false);
+
+    const DisplayLoading = () => {
+        if(isLoading) {
+            return(
+                <View style={styles.loading_container}>
+                    <ActivityIndicator size="large"/>
+                </View>
+            )
+        } else return null
+    }
+
+
     return (
         <SafeAreaView style={styles.main_container}>
             <StatusBar barStyle="light-content" backgroundColor="#6a51ae" />
     
-            <Text style={styles.auth_title}>Verification de numéro</Text>
-            <Text style={{ color: global.white }}>Un code de 4 chiffres vous a été envoyer au 223 71 31 65 44</Text>
-            <View style={styles.number_container}>
-                <TextInput 
-                    style={styles.number_input}
-                    placeholderTextColor={global.white}
-                    autoFocus='true'
-                    maxLength='1'
-                    textContentType='telephoneNumber'
-                    keyboardType='numeric' />
-                <TextInput
-                    style={styles.number_input}
-                    maxLength='1'
-                    textContentType='telephoneNumber'
-                    keyboardType='numeric' />
-                <TextInput 
-                    style={styles.number_input}
-                    maxLength='1'
-                    textContentType='telephoneNumber'
-                    keyboardType='numeric' />
-                <TextInput 
-                    style={styles.number_input}
-                    maxLength='1'
-                    textContentType='telephoneNumber'
-                    keyboardType='numeric' />
-            </View>
-            <Text style={styles.send_link}>Re-envoyer le code</Text>
-            <Pressable style={styles.button} onPress={() => navigation.navigate('ChangerMotDePasse')}>
-                <Text style={styles.button_text}>VERIFICATION</Text>
-            </Pressable>
+            <KeyboardAvoidingView 
+                behavior={Platform.OS === "ios" ? "padding" : "height"}>
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                    <View>
+                        <Text style={styles.auth_title}>Verification de numéro</Text>
+                        <Text style={{ color: global.white }}>Un code de 4 chiffres vous a été envoyer au 223 71 31 65 44</Text>
+                        <View style={styles.number_container}>
+                            <TextInput 
+                                style={styles.number_input}
+                                placeholderTextColor={global.white}
+                                autoFocus='true'
+                                maxLength='1'
+                                textContentType='telephoneNumber'
+                                keyboardType='numeric' />
+                            <TextInput
+                                style={styles.number_input}
+                                maxLength='1'
+                                textContentType='telephoneNumber'
+                                keyboardType='numeric' />
+                            <TextInput 
+                                style={styles.number_input}
+                                maxLength='1'
+                                textContentType='telephoneNumber'
+                                keyboardType='numeric' />
+                            <TextInput 
+                                style={styles.number_input}
+                                maxLength='1'
+                                textContentType='telephoneNumber'
+                                keyboardType='numeric' />
+                        </View>
+                        <Text style={styles.send_link}>Re-envoyer le code</Text>
+                        <Pressable style={styles.button} onPress={() => navigation.navigate('ChangerMotDePasse')}>
+                            <Text style={styles.button_text}>VERIFICATION</Text>
+                        </Pressable>
+                    </View>
+                </TouchableWithoutFeedback>
+            </KeyboardAvoidingView>
+            <DisplayLoading/>
         </SafeAreaView>
     )
 }
