@@ -5,7 +5,7 @@ import SafeAreaView from 'react-native-safe-area-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getUser, updateUser } from '../API/DiabaraniApi';
-import { useDispatch } from "react-redux"
+import { useDispatch } from "react-redux";
 import { useSelector } from 'react-redux';
 import * as GLOBAL from '../data/global';
 import '../data/global';

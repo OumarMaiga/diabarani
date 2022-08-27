@@ -103,3 +103,57 @@ export function updateUser(token, id, value) {
     })
     .catch((error) => console.log(error))
 }
+
+export const getFilms = () => {
+
+    if (global.debug >= GLOBAL.LOG.INFO) console.log("Api::getFilms()");
+
+    url = `${global.SERVER_ADDRESS}`+'index.php?action=films';
+    return fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        return data
+    })
+    .catch((error) => console.log(error))
+}
+
+export const getFilm = (idFilm) => {
+
+    if (global.debug >= GLOBAL.LOG.INFO) console.log("Api::getFilm()");
+
+    url = `${global.SERVER_ADDRESS}`+'index.php?action=film&id='+idFilm;
+    return fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        return data
+    })
+    .catch((error) => console.log(error))
+}
+
+export const getNewFilms = () => {
+
+    if (global.debug >= GLOBAL.LOG.INFO) console.log("Api::getNewFilms()");
+
+    url = `${global.SERVER_ADDRESS}`+'index.php?action=new-film';
+    return fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        return data
+    })
+    .catch((error) => console.log(error))
+}
