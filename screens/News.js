@@ -11,7 +11,6 @@ const News = ({ navigation }) => {
     
     const [isLoading, setIsLoading] = useState(true);
     const [films, setFilms] = useState([]);
-    let image_path = '';
     
     const fetchNewFilms = async () => {
         if (global.debug >= GLOBAL.LOG.INFO) console.log("News::fetchNewFilms()");
@@ -50,11 +49,10 @@ const News = ({ navigation }) => {
     };
 
     const FilmItem = ({film, handleItemPress}) => (
-        film.images.map(image => image.type == 'poster' || image.type == 'couverture' ? image_path = global.SERVER_ADDRESS+image.path : image_path = ''),
         <Pressable onPress={() => handleItemPress(film.id) }>
             <View>
             <Image style={styles.new_image}
-                source={{ uri: image_path }} />
+                source={{ uri: global.SERVER_ADDRESS+film.poster_path }} />
             </View>
         </Pressable>
     );

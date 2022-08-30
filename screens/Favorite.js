@@ -14,7 +14,6 @@ const Favorite = ({ navigation }) => {
     
     const [isLoading, setIsLoading] = useState(true);
     const [films, setFilms] = useState([]);
-    let image_path = '';
     
     const fetchFilms = async () => {
         if (global.debug >= GLOBAL.LOG.INFO) console.log("Favorite::fetchFilms()");
@@ -55,10 +54,9 @@ const Favorite = ({ navigation }) => {
     };
 
     const FilmItem = ({film, handleItemPress}) => (
-        film.images.map(image => image.type == 'poster' ? image_path = global.SERVER_ADDRESS+image.path : image_path = ''),
         <TouchableOpacity onPress={() => handleItemPress(film.id) }>
             <View style={styles.item_container}>
-                <Image style={styles.item_image} source={{ uri: image_path }} />
+                <Image style={styles.item_image} source={{ uri: global.SERVER_ADDRESS+film.poster_path }} />
                 <View style={styles.item_content}>
                     <View style={styles.item_title_container}>
                         <Text style={styles.item_title}>

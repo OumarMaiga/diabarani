@@ -13,8 +13,10 @@ export default ({ route, navigation }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [film, setFilm] = useState(undefined);
     const [video_path, setVideo_path] = useState('');
+    const [couverture_path, setCouverture_path] = useState('');
     const video = React.useRef(null);
     const [status, setStatus] = React.useState({});
+    const today = new Date();
 
     const fetchFilm = async () => {
         
@@ -25,6 +27,7 @@ export default ({ route, navigation }) => {
         if (data.code == 1) {
             setFilm(data.film);
             data.film.videos.map(video => setVideo_path(global.SERVER_ADDRESS+video.path));
+            setCouverture_path(global.SERVER_ADDRESS+data.film.couverture_path);
         }
         setIsLoading(false);
 
@@ -52,7 +55,9 @@ export default ({ route, navigation }) => {
     return (
         <View style={styles.main_container}>
             <StatusBar barStyle="light-content" backgroundColor="#6a51ae" />
-            <ScrollView style={{ flex: 1 }}>                    
+            <ScrollView style={{ flex: 1 }}>   
+            {   film && film.realease_date >= today.toDateString()
+                ?
                 <Video style={styles.background_video}
                     source={{
                         uri: video_path
@@ -61,7 +66,14 @@ export default ({ route, navigation }) => {
                     useNativeControls
                     resizeMode="contain"
                     onPlaybackStatusUpdate={status => setStatus(() => status)}
-                  />
+                />
+                :
+                <Image style={styles.background_image}
+                    source={{
+                        uri: couverture_path
+                    }}
+                />
+            }
                <View style={styles.detail_container}>
                     <Text style={styles.detail_title}>
                         { film && film.title }
@@ -120,7 +132,7 @@ export default ({ route, navigation }) => {
             </ScrollView>
             <DisplayLoading />
         </View>
-        );
+    );
 }
 
 const styles = StyleSheet.create({
@@ -139,6 +151,11 @@ const styles = StyleSheet.create({
       left: 0,
     },
     background_video: {
+        height: 220,
+        width: '100%',
+        backgroundColor: global.gray
+    },
+    background_image: {
         height: 220,
         width: '100%',
         backgroundColor: global.gray

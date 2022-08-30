@@ -1,34 +1,149 @@
-import React, { useState } from 'react'
-import { ScrollView, View, Text, Image, TouchableOpacity, StyleSheet, StatusBar } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { ScrollView, View, Text, Image, Pressable, StyleSheet, StatusBar,
+    ActivityIndicator, FlatList } from 'react-native'
 import SafeAreaView from 'react-native-safe-area-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { getUpcomingFilms, getNewFilms } from '../API/DiabaraniApi';
 import * as GLOBAL from '../data/global'
 import '../data/global'
 
 const Accueil = ({ navigation }) => {
 
-    const Coming_soon = () => {
-		return(
+    const [isLoading, setIsLoading] = useState(true);
+    const [upcomingFilms, setUpComingFilms] = useState([]);
+    const [films, setFilms] = useState([]);
+    const [newFilms, setNewFilms] = useState([]);
+    const [genresFilms, setGenresFilms] = useState([]);
+
+    const fetchUpcomingFilms = async () => {
+        if (global.debug >= GLOBAL.LOG.INFO) console.log("Accueil::fetchUpcomingFilms()");
+        setIsLoading(true);
+        let data = await getUpcomingFilms(); 
+        if (data.code == 1) {
+            setUpComingFilms(data.films);
+        }
+        setIsLoading(false);
+
+        if (global.debug >= GLOBAL.LOG.DEBUG)  console.log("Accueil::useEffect()::fetchUpcomingFilms()::data "+JSON.stringify(data));
+    }
+
+    const fetchNewFilms = async () => {
+        if (global.debug >= GLOBAL.LOG.INFO) console.log("Accueil::fetchNewFilms()");
+        setIsLoading(true);
+        let data = await getNewFilms(); 
+        if (data.code == 1) {
+            setNewFilms(data.films);
+        }
+        setIsLoading(false);
+
+        if (global.debug >= GLOBAL.LOG.DEBUG)  console.log("Accueil::useEffect()::fetchNewFilms()::data "+JSON.stringify(data));
+    }
+
+    useEffect(() => {
+
+        if (global.debug >= GLOBAL.LOG.INFO) console.log("Accueil::useEffect()");
+
+        fetchUpcomingFilms();
+
+        fetchNewFilms();
+
+    }, []);
+    
+    const handleUpcomingFilmsItemPress = (idFilm) => {
+        navigation.navigate('FilmDetail', {
+            idFilm: idFilm
+        });
+    };
+
+    const UpcomingFilmItem = ({film, handleUpcomingFilmsItemPress}) => (
+        <Pressable onPress={() => handleUpcomingFilmsItemPress(film.id) }>
+            <View>
+                <Image style={styles.upcoming_image}
+                    source={{ uri: global.SERVER_ADDRESS+film.poster_path }} />
+            </View>
+        </Pressable>
+    );
+
+    const renderUpcomingFilmsItem = ({ item }) => (
+        <UpcomingFilmItem film={item} handleUpcomingFilmsItemPress={handleUpcomingFilmsItemPress} />
+    );
+    
+    const handleNewFilmsItemPress = (idFilm) => {
+        navigation.navigate('FilmDetail', {
+            idFilm: idFilm
+        });
+    };
+
+    const NewFilmItem = ({film, handleNewFilmsItemPress}) => (
+        <Pressable onPress={() => handleNewFilmsItemPress(film.id) }>
+            <View>
+                <Image style={styles.new_image}
+                    source={{ uri: global.SERVER_ADDRESS+film.poster_path }} />
+            </View>
+        </Pressable>
+    );
+
+    const renderNewFilmsItem = ({ item }) => (
+        <NewFilmItem film={item} handleNewFilmsItemPress={handleNewFilmsItemPress} />
+    );
+
+    
+    const handleGenreFilmsItemPress = (idFilm) => {
+        navigation.navigate('FilmDetail', {
+            idFilm: idFilm
+        });
+    };
+
+    const GenreFilmItem = ({genre_film, handleGenreFilmsItemPress}) => (
+        <View style={styles.section_container}>
+            <View style={styles.subtitle}>
+                <Text style={styles.subtitle_text}>
+                    { genre_film.libelle }
+                </Text>
+                <MaterialCommunityIcons name='chevron-right' size={22} color={global.white} />
+            </View>
+            <ScrollView style={styles.image_section} horizontal showsHorizontalScrollIndicator={false}>
+                <Image style={styles.genre_image}
+                source={require("../Images/movie-6.jpg")} />
+                <Image style={styles.genre_image}
+                source={require("../Images/movie-5.jpg")} />
+                <Image style={styles.genre_image}
+                source={require("../Images/movie-2.jpg")} />
+                <Image style={styles.genre_image}
+                source={require("../Images/movie.jpg")} />
+            </ScrollView>
+        </View>
+    );
+
+    const renderGenreFilmsItem = ({ item }) => (
+        <GenreFilmItem genre_film={item} handleGenreFilmsItemPress={handleGenreFilmsItemPress} />
+    );
+    const DisplayLoading = () => {
+        if(isLoading) {
+            return (
+                <View style={styles.loading_container}>
+                    <ActivityIndicator size="large"/>
+                </View>
+            )
+        } else return null
+    };
+
+    const UpComing = () => {
+		return (
             <View style={styles.section_container}>
                 <Text style={styles.coming_title}>
                     Bientôt
                 </Text>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                    <TouchableOpacity onPress={() => navigation.navigate('FilmDetail') }>
-                        <Image style={styles.coming_image}
-                            source={require("../Images/movie-2.jpg")} />
-                    </TouchableOpacity>
-                    <Image style={styles.coming_image}
-                    source={require("../Images/movie-5.jpg")} />
-                    <Image style={styles.coming_image}
-                    source={require("../Images/movie-3.jpg")} />
-                    <Image style={styles.coming_image}
-                    source={require("../Images/movie-6.jpg")} />
+                    <FlatList
+                        contentContainerStyle={styles.image_container}
+                        data={upcomingFilms}
+                        renderItem={renderUpcomingFilmsItem}
+                        keyExtractor={item => item.id} />
                 </ScrollView>
             </View>
 		)
     }
-
     const Historique = () => {
 		return(
             <View style={styles.section_container}>
@@ -36,16 +151,15 @@ const Accueil = ({ navigation }) => {
                     Continuer à regarder
                 </Text>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                    <TouchableOpacity onPress={() => navigation.navigate('FilmDetail') }>
+                    <Pressable onPress={() => navigation.navigate('FilmDetail') }>
                         <Image style={styles.historique_image}
                             source={require("../Images/image-1.jpg")} />
-                    </TouchableOpacity>
-                    <Image style={styles.historique_image}
-                        source={require("../Images/image-2.jpg")} />
+                    </Pressable>
                 </ScrollView>
             </View>
 		)
     }
+
 
     const New = () => {
 		return(
@@ -54,14 +168,11 @@ const Accueil = ({ navigation }) => {
                     Nouveautés
                 </Text>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                    <Image style={styles.new_image}
-                    source={require("../Images/movie.jpg")} />
-                    <Image style={styles.new_image}
-                    source={require("../Images/movie-2.jpg")} />
-                    <Image style={styles.new_image}
-                    source={require("../Images/movie.jpg")} />
-                    <Image style={styles.new_image}
-                    source={require("../Images/movie-6.jpg")} />
+                    <FlatList
+                        contentContainerStyle={styles.image_container}
+                        data={newFilms}
+                        renderItem={renderNewFilmsItem}
+                        keyExtractor={item => item.id} />
                 </ScrollView>
             </View>
 		)
@@ -69,23 +180,11 @@ const Accueil = ({ navigation }) => {
 
     const Genre = () => {
 		return(
-            <View style={styles.section_container}>
-                <View style={styles.subtitle}>
-                    <Text style={styles.subtitle_text}>
-                        Drame
-                    </Text>
-                    <MaterialCommunityIcons name='chevron-right' size={22} color={global.white} />
-                </View>
-                <ScrollView style={styles.image_section} horizontal showsHorizontalScrollIndicator={false}>
-                    <Image style={styles.genre_image}
-                    source={require("../Images/movie-6.jpg")} />
-                    <Image style={styles.genre_image}
-                    source={require("../Images/movie-5.jpg")} />
-                    <Image style={styles.genre_image}
-                    source={require("../Images/movie-2.jpg")} />
-                    <Image style={styles.genre_image}
-                    source={require("../Images/movie.jpg")} />
-                </ScrollView>
+            <View>
+                <FlatList
+                    data={newFilms}
+                    renderItem={renderGenreFilmsItem}
+                    keyExtractor={item => item.id} />
             </View>
 		)
     }
@@ -94,13 +193,14 @@ const Accueil = ({ navigation }) => {
         <SafeAreaView style={styles.main_container}>
             <StatusBar barStyle="light-content" backgroundColor="#6a51ae" />
             <ScrollView showsVerticalScrollIndicator={false}>
-                <Coming_soon/>
+                <UpComing/>
                 <Historique/>
                 <New/>
                 <Genre/>
                 <Genre/>
                 <Genre/>
             </ScrollView>
+            <DisplayLoading/>
         </SafeAreaView>
     )
 }
@@ -109,6 +209,16 @@ const styles = StyleSheet.create({
     main_container: {
         flex: 1,
         backgroundColor: global.darkGray,
+    },
+    loading_container: {
+      position: 'absolute',
+      flex: 1, 
+      justifyContent: "center", 
+      alignItems: "center" ,
+      top: 100,
+      right: 0,
+      bottom: 0,
+      left: 0,
     },
     section_container: {
         //padding: 10,
@@ -123,12 +233,17 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 10,
     },
-    coming_image: {
+    upcoming_image: {
         marginLeft: 10,
         marginRight: 10,
         height: 190,
         width: 160,
         backgroundColor: global.white
+    },
+    image_container: {
+        flex: 1,
+        flexDirection: 'row',
+        flexWrap: 'wrap',
     },
       subtitle: {
         flexDirection: 'row',

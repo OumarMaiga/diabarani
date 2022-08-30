@@ -4,6 +4,7 @@ import * as GLOBAL from "../data/global.js";
 
 //const TOKEN = "b2768876ee710b2e8476da4f1138403b";
 
+/* Auth */
 export const login = async (value) => {
     
     if (global.debug >= GLOBAL.LOG.INFO) console.log("API:login()");
@@ -65,6 +66,7 @@ export const register = (value) => {
     .catch((error) => console.log(error))
 }
 
+/* Users */
 export const getUser = (token, id) => {
 
     if (global.debug >= GLOBAL.LOG.INFO) console.log("Api::getUser()");
@@ -104,6 +106,7 @@ export function updateUser(token, id, value) {
     .catch((error) => console.log(error))
 }
 
+/* Films */
 export const getFilms = () => {
 
     if (global.debug >= GLOBAL.LOG.INFO) console.log("Api::getFilms()");
@@ -145,6 +148,24 @@ export const getNewFilms = () => {
     if (global.debug >= GLOBAL.LOG.INFO) console.log("Api::getNewFilms()");
 
     url = `${global.SERVER_ADDRESS}`+'index.php?action=new-film';
+    return fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        return data
+    })
+    .catch((error) => console.log(error))
+}
+
+export const getUpcomingFilms = () => {
+
+    if (global.debug >= GLOBAL.LOG.INFO) console.log("Api::getUpcomingFilms()");
+
+    url = `${global.SERVER_ADDRESS}`+'index.php?action=upcoming-film';
     return fetch(url, {
         method: 'GET',
         headers: {
