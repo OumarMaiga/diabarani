@@ -178,3 +178,58 @@ export const getUpcomingFilms = () => {
     })
     .catch((error) => console.log(error))
 }
+
+export const getGenresFilms = () => {
+
+    if (global.debug >= GLOBAL.LOG.INFO) console.log("Api::getGenresFilms()");
+
+    url = `${global.SERVER_ADDRESS}`+'index.php?action=genres-films';
+    return fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        return data
+    })
+    .catch((error) => console.log(error))
+}
+
+export const getGenreFilms = (genre_id) => {    
+    
+    if (global.debug >= GLOBAL.LOG.INFO) console.log("Api::getGenreFilms()");
+
+    url = `${global.SERVER_ADDRESS}`+'index.php?action=genre-films&genre_id=' + genre_id;
+    return fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        return data
+    })
+    .catch((error) => console.log(error))
+}
+
+export const getGenre = (id) => {
+
+    if (global.debug >= GLOBAL.LOG.INFO) console.log("Api::getGenre()");
+
+    url = `${global.SERVER_ADDRESS}`+'index.php?action=genre&id=' + id;
+    return fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        return data
+    })
+    .catch((error) => console.log(error))
+}
+

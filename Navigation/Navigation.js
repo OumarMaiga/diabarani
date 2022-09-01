@@ -16,6 +16,7 @@ import Profil from '../screens/Profil'
 import Abonnement from '../screens/Abonnement'
 import Paiement from '../screens/Paiement'
 import FilmDetail from '../screens/FilmDetail'
+import FilmPerGenre from '../screens/FilmPerGenre'
 import EditProfil from '../screens/EditProfil'
 import { Button, View, Text, Platform, ActivityIndicator } from 'react-native'
 import { useDispatch, useSelector } from "react-redux";
@@ -42,6 +43,7 @@ function HomeStackScreen() {
         <HomeStack.Navigator>
             <HomeStack.Screen name="Accueil" component={Accueil} options={{ headerShown: false }} />
             <HomeStack.Screen name="FilmDetail" component={FilmDetail} options={{ headerShown: false }} />
+            <HomeStack.Screen name="FilmPerGenre" component={FilmPerGenre} options={{ headerShown: false }} />
         </HomeStack.Navigator>
     )
 }
