@@ -215,6 +215,42 @@ export const getGenreFilms = (genre_id) => {
     .catch((error) => console.log(error))
 }
 
+export const getSomeGenresFilms = (genre_ids) => {
+
+    if (global.debug >= GLOBAL.LOG.INFO) console.log("Api::getSomeGenresFilms()");
+
+    url = `${global.SERVER_ADDRESS}`+'index.php?action=some-genres-films&genre_ids=' + genre_ids;
+    return fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        return data
+    })
+    .catch((error) => console.log(error))
+}
+
+export const getGenres = () => {
+
+    if (global.debug >= GLOBAL.LOG.INFO) console.log("Api::getGenres()");
+
+    url = `${global.SERVER_ADDRESS}`+'index.php?action=genres';
+    return fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        return data
+    })
+    .catch((error) => console.log(error))
+}
+
 export const getGenre = (id) => {
 
     if (global.debug >= GLOBAL.LOG.INFO) console.log("Api::getGenre()");

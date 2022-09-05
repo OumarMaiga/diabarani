@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView, StatusBar, StyleSheet, View, Image, Text, ActivityIndicator, Button } from 'react-native';
+import { ScrollView, StatusBar, StyleSheet, View, Image, Text, ActivityIndicator, 
+    FlatList, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Video, AVPlaybackStatus } from 'expo-av';
-import { getFilm } from '../API/DiabaraniApi';
+import { getFilm, getSomeGenresFilms } from '../API/DiabaraniApi';
 import * as GLOBAL from '../data/global';
 import '../data/global';
 
@@ -12,6 +13,7 @@ export default ({ route, navigation }) => {
     const { idFilm } = route.params;
     const [isLoading, setIsLoading] = useState(true);
     const [film, setFilm] = useState(undefined);
+    const [filmSimulaire, setFilmSimulaire] = useState([]);
     const [video_path, setVideo_path] = useState('');
     const [couverture_path, setCouverture_path] = useState('');
     const video = React.useRef(null);
@@ -20,7 +22,7 @@ export default ({ route, navigation }) => {
 
     const fetchFilm = async () => {
         
-        if (global.debug >= GLOBAL.LOG.INFO) console.log("Favorite::fetchFilm()");
+        if (global.debug >= GLOBAL.LOG.INFO) console.log("FilmDetail::fetchFilm()");
 
         setIsLoading(true);
         let data = await getFilm(idFilm); 
@@ -28,19 +30,50 @@ export default ({ route, navigation }) => {
             setFilm(data.film);
             data.film.videos.map(video => setVideo_path(global.SERVER_ADDRESS+video.path));
             setCouverture_path(global.SERVER_ADDRESS+data.film.couverture_path);
+            const genre_ids = data.film.genres.map(genre => genre.id).join();
+            fetchSomeGenresFilms(genre_ids);
         }
         setIsLoading(false);
 
-        if (global.debug >= GLOBAL.LOG.DEBUG)  console.log("Favorite::useEffect()::fetchFilms()::data "+JSON.stringify(data));
+        if (global.debug >= GLOBAL.LOG.DEBUG)  console.log("FilmDetail::useEffect()::fetchFilms()::data " + JSON.stringify(data));
+    }
+    const fetchSomeGenresFilms = async (genre_ids) => {
+        
+        if (global.debug >= GLOBAL.LOG.INFO) console.log("FilmDetail::fetchSomeGenresFilms()");
+
+        setIsLoading(true);
+        let data = await getSomeGenresFilms(genre_ids); 
+        if (data.code == 1) {
+            setFilmSimulaire(data.films);
+        }
+        setIsLoading(false);
+
+        if (global.debug >= GLOBAL.LOG.DEBUG)  console.log("FilmDetail::fetchSomeGenresFilms()::data " + JSON.stringify(data));
     }
 
     useEffect(() => {
 
-        if (global.debug >= GLOBAL.LOG.INFO) console.log("Favorite::useEffect()");
+        if (global.debug >= GLOBAL.LOG.INFO) console.log("FilmDetail::useEffect()");
 
         fetchFilm();
-
     }, []);
+    
+    const handleFilmSimilaireItemPress = (idFilm) => {
+        navigation.navigate('FilmDetail', {
+            idFilm: idFilm
+        });
+    };
+
+    const FilmSimilaireItem = ({film, handleFilmSimilaireItemPress}) => (
+        <Pressable onPress={() => handleFilmSimilaireItemPress(film.id) }>
+            <Image style={styles.detail_similaire_image}
+                source={{ uri: global.SERVER_ADDRESS+film.poster_path }} />
+        </Pressable>
+    );
+
+    const renderFilmSimilaireItem = ({ item }) => (
+        <FilmSimilaireItem film={item} handleFilmSimilaireItemPress={handleFilmSimilaireItemPress} />
+    );
     
     const DisplayLoading = () => {
         if(isLoading) {
@@ -112,20 +145,13 @@ export default ({ route, navigation }) => {
                         { film && film.overview }
                     </Text>
                     <View style={styles.detail_simulaire_container}>
-                        <Text style={styles.detail_simulaire_title}>Vidéos simulaires</Text>
+                        <Text style={styles.detail_simulaire_title}>Film simulaires</Text>
                         <View style={styles.detail_similaire_image_container}>
-                            <Image style={styles.detail_similaire_image}
-                                source={require('../Images/movie-4.jpg')} />
-                            <Image style={styles.detail_similaire_image}
-                                source={require('../Images/movie-6.jpg')} />
-                            <Image style={styles.detail_similaire_image}
-                                source={require('../Images/movie.jpg')} />
-                            <Image style={styles.detail_similaire_image}
-                                source={require('../Images/movie-2.jpg')} />
-                            <Image style={styles.detail_similaire_image}
-                                source={require('../Images/movie-3.jpg')} />
-                            <Image style={styles.detail_similaire_image}
-                                source={require('../Images/movie-5.jpg')} />
+                            <FlatList
+                                contentContainerStyle={styles.detail_similaire_container}
+                                data={filmSimulaire}
+                                renderItem={renderFilmSimilaireItem}
+                                keyExtractor={item => item.id} />
                         </View>
                     </View>
                 </View>
@@ -227,7 +253,12 @@ const styles = StyleSheet.create({
         marginLeft: 5,
         marginRight: 5,
         height: 120,
-        width: '30%',
+        minWidth: '33,33%',
         backgroundColor: global.white,
-    }
+    },
+    detail_similaire_container: {
+        flex: 1,
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+    },
 });

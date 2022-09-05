@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import { ScrollView, View, Text, Image, Pressable, StyleSheet, StatusBar,
-    ActivityIndicator, FlatList } from 'react-native'
+    ActivityIndicator, FlatList } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { getUpcomingFilms, getNewFilms, getGenresFilms } from '../API/DiabaraniApi';
-import * as GLOBAL from '../data/global'
-import '../data/global'
+import * as GLOBAL from '../data/global';
+import '../data/global';
 
 const Accueil = ({ navigation }) => {
 
@@ -40,7 +40,7 @@ const Accueil = ({ navigation }) => {
     }
     
     const fetchGenresFilms = async () => {
-        if (global.debug >= GLOBAL.LOG.INFO) console.log("Accueil::fetchGenresFilms()");
+        if (global.debug >= GLOBAL.LOG.INFO) console.log("Accueil::fetchGenres()");
         setIsLoading(true);
         let data = await getGenresFilms(); 
         if (data.code == 1) {
@@ -48,7 +48,7 @@ const Accueil = ({ navigation }) => {
         }
         setIsLoading(false);
 
-        if (global.debug >= GLOBAL.LOG.DEBUG)  console.log("Accueil::useEffect()::fetchGenresFilms()::data "+JSON.stringify(data));
+        if (global.debug >= GLOBAL.LOG.DEBUG)  console.log("Accueil::useEffect()::fetchGenres()::data "+JSON.stringify(data));
     }
 
     useEffect(() => {
@@ -71,10 +71,8 @@ const Accueil = ({ navigation }) => {
 
     const UpcomingFilmItem = ({film, handleUpcomingFilmsItemPress}) => (
         <Pressable onPress={() => handleUpcomingFilmsItemPress(film.id) }>
-            <View>
-                <Image style={styles.upcoming_image}
-                    source={{ uri: global.SERVER_ADDRESS+film.poster_path }} />
-            </View>
+            <Image style={styles.upcoming_image}
+                source={{ uri: global.SERVER_ADDRESS+film.poster_path }} />
         </Pressable>
     );
 
@@ -90,10 +88,8 @@ const Accueil = ({ navigation }) => {
 
     const NewFilmItem = ({film, handleNewFilmsItemPress}) => (
         <Pressable onPress={() => handleNewFilmsItemPress(film.id) }>
-            <View>
-                <Image style={styles.new_image}
-                    source={{ uri: global.SERVER_ADDRESS+film.poster_path }} />
-            </View>
+            <Image style={styles.new_image}
+                source={{ uri: global.SERVER_ADDRESS+film.poster_path }} />
         </Pressable>
     );
 
@@ -102,39 +98,54 @@ const Accueil = ({ navigation }) => {
     );
 
     
-    const handleGenresFilmsItemPress = (genre_id) => {
+    const handleGenresFilmsItemPress = (film_id) => {
+        navigation.navigate('FilmDetail', {
+            idFilm: film_id
+        });
+    };
+
+    const handleGenresItemPress = (genre_id) => {
         navigation.navigate('FilmPerGenre', {
             genre_id: genre_id
         });
     };
+    
+    const GenreFilmsItem = ({film, handleGenresFilmsItemPress}) => (
+        <Pressable onPress={() => handleGenresFilmsItemPress(film.id) }>
+            <Image style={styles.genre_image}
+                source={{ uri: global.SERVER_ADDRESS+film.poster_path }} />
+        </Pressable>
+    );
 
-    const GenreFilmItem = ({genre_film, handleGenresFilmsItemPress}) => (
+    const renderGenreFilmsItem = ({ item }) => (
+        <GenreFilmsItem film={item} handleGenresFilmsItemPress={handleGenresFilmsItemPress} />
+    );
+
+
+    const GenreFilmItem = ({genre, handleGenresFilmsItemPress, handleGenresItemPress}) => (
         <View style={styles.section_container}>
             <View style={styles.subtitle}>
-                <Pressable onPress={() => handleGenresFilmsItemPress(genre_film.id)}>
+                <Pressable onPress={() => handleGenresItemPress(genre.id)}>
                     <Text style={styles.subtitle_text}>
-                        { genre_film.libelle }
+                        { genre.libelle }
                     </Text>
                 </Pressable>
                 <View style={styles.arrow_next}>
                     <MaterialCommunityIcons name='chevron-right' size={22} color={global.white} />
                 </View>
             </View>
-            <ScrollView style={styles.image_section} horizontal showsHorizontalScrollIndicator={false}>
-                <Image style={styles.genre_image}
-                    source={require("../Images/movie-6.jpg")} />
-                <Image style={styles.genre_image}
-                    source={require("../Images/movie-5.jpg")} />
-                <Image style={styles.genre_image}
-                    source={require("../Images/movie-2.jpg")} />
-                <Image style={styles.genre_image}
-                    source={require("../Images/movie.jpg")} />
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                <FlatList
+                    data={genre.films}
+                    renderItem={renderGenreFilmsItem}
+                    keyExtractor={item => item.id}
+                    horizontal={true} />
             </ScrollView>
         </View>
     );
 
-    const renderGenreFilmsItem = ({ item }) => (
-        <GenreFilmItem genre_film={item} handleGenresFilmsItemPress={handleGenresFilmsItemPress} />
+    const renderGenresFilmsItem = ({ item }) => (
+        <GenreFilmItem genre={item} handleGenresFilmsItemPress={handleGenresFilmsItemPress} handleGenresItemPress={handleGenresItemPress} />
     );
     
     const DisplayLoading = () => {
@@ -155,10 +166,10 @@ const Accueil = ({ navigation }) => {
                 </Text>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                     <FlatList
-                        contentContainerStyle={styles.image_container}
                         data={upcomingFilms}
                         renderItem={renderUpcomingFilmsItem}
-                        keyExtractor={item => item.id} />
+                        keyExtractor={item => item.id}
+                        horizontal={true} />
                 </ScrollView>
             </View>
 		)
@@ -188,10 +199,10 @@ const Accueil = ({ navigation }) => {
                 </Text>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false} vertical={false}>
                     <FlatList
-                        contentContainerStyle={styles.image_container}
                         data={newFilms}
                         renderItem={renderNewFilmsItem}
-                        keyExtractor={item => item.id} />
+                        keyExtractor={item => item.id}
+                        horizontal={true} />
                 </ScrollView>
             </View>
 		)
@@ -202,7 +213,7 @@ const Accueil = ({ navigation }) => {
             <View>
                 <FlatList
                     data={genresFilms}
-                    renderItem={renderGenreFilmsItem}
+                    renderItem={renderGenresFilmsItem}
                     keyExtractor={item => item.id} />
             </View>
 		)
@@ -260,7 +271,6 @@ const styles = StyleSheet.create({
     image_container: {
         flex: 1,
         flexDirection: 'row',
-        flexWrap: 'wrap',
     },
       subtitle: {
         flexDirection: 'row',
