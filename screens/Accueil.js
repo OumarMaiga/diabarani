@@ -134,13 +134,12 @@ const Accueil = ({ navigation }) => {
                     <MaterialCommunityIcons name='chevron-right' size={22} color={global.white} />
                 </View>
             </View>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                <FlatList
-                    data={genre.films}
-                    renderItem={renderGenreFilmsItem}
-                    keyExtractor={item => item.id}
-                    horizontal={true} />
-            </ScrollView>
+            <FlatList
+                data={genre.films}
+                renderItem={renderGenreFilmsItem}
+                keyExtractor={item => item.id}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false} />
         </View>
     );
 
@@ -164,13 +163,12 @@ const Accueil = ({ navigation }) => {
                 <Text style={styles.coming_title}>
                     Bientôt
                 </Text>
-                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                    <FlatList
-                        data={upcomingFilms}
-                        renderItem={renderUpcomingFilmsItem}
-                        keyExtractor={item => item.id}
-                        horizontal={true} />
-                </ScrollView>
+                <FlatList
+                    data={upcomingFilms}
+                    renderItem={renderUpcomingFilmsItem}
+                    keyExtractor={item => item.id}
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false} />
             </View>
 		)
     }
@@ -180,12 +178,12 @@ const Accueil = ({ navigation }) => {
                 <Text style={styles.subtitle_text}>
                     Continuer à regarder
                 </Text>
-                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                <View horizontal showsHorizontalScrollIndicator={false}>
                     <Pressable onPress={() => navigation.navigate('FilmDetail') }>
                         <Image style={styles.historique_image}
                             source={require("../Images/image-1.jpg")} />
                     </Pressable>
-                </ScrollView>
+                </View>
             </View>
 		)
     }
@@ -197,25 +195,23 @@ const Accueil = ({ navigation }) => {
                 <Text style={styles.subtitle_text}>
                     Nouveautés
                 </Text>
-                <ScrollView horizontal showsHorizontalScrollIndicator={false} vertical={false}>
-                    <FlatList
-                        data={newFilms}
-                        renderItem={renderNewFilmsItem}
-                        keyExtractor={item => item.id}
-                        horizontal={true} />
-                </ScrollView>
+                <FlatList
+                    data={newFilms}
+                    renderItem={renderNewFilmsItem}
+                    keyExtractor={item => item.id}
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false} />
             </View>
 		)
     }
 
     const Genre = () => {
 		return (
-            <View>
-                <FlatList
-                    data={genresFilms}
-                    renderItem={renderGenresFilmsItem}
-                    keyExtractor={item => item.id} />
-            </View>
+            <FlatList
+                data={genresFilms}
+                renderItem={renderGenresFilmsItem}
+                keyExtractor={item => item.id}
+                showsHorizontalScrollIndicator={false} />
 		)
     }
 
@@ -226,7 +222,7 @@ const Accueil = ({ navigation }) => {
                 <UpComing/>
                 <Historique/>
                 <New/>
-                <Genre/>
+                {/**/}<Genre/>
             </ScrollView>
             <DisplayLoading/>
         </SafeAreaView>

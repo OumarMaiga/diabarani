@@ -18,12 +18,36 @@ export default ({ route, navigation }) => {
     const [couverture_path, setCouverture_path] = useState('');
     const video = React.useRef(null);
     const [status, setStatus] = React.useState({});
-    const today = new Date();
+    const date = new Date();
+    let annee = date.getFullYear();
+    let mois = date.getMonth()+1;
+    let jour = date.getDate();
+    
+    const today = annee+'-'+mois+'-'+jour;
+
+    /**
+     * Methode pour verifier si la date recuperé est 
+     * superieure ou egale à aujourd'hui 
+     * @param {DateTime} date 
+     * @returns boolean
+     */
+    const greaterThanToday = (date) => 
+    {
+        var todayUpdated = new Date(today.replace(/-/g,'/'));
+        var dateUpdated = new Date(date.replace(/-/g,'/'));
+
+        if(dateUpdated > todayUpdated) {
+            return true;
+        }
+        if(dateUpdated <= todayUpdated) {
+            return false;
+        }
+    }
 
     const fetchFilm = async () => {
         
         if (global.debug >= GLOBAL.LOG.INFO) console.log("FilmDetail::fetchFilm()");
-
+        
         setIsLoading(true);
         let data = await getFilm(idFilm); 
         if (data.code == 1) {
@@ -59,9 +83,11 @@ export default ({ route, navigation }) => {
     }, []);
     
     const handleFilmSimilaireItemPress = (idFilm) => {
-        navigation.navigate('FilmDetail', {
+        console.log('idFilm = ' + idFilm);
+        navigation.setParams({
             idFilm: idFilm
         });
+        fetchFilm();
     };
 
     const FilmSimilaireItem = ({film, handleFilmSimilaireItemPress}) => (
@@ -89,8 +115,14 @@ export default ({ route, navigation }) => {
         <View style={styles.main_container}>
             <StatusBar barStyle="light-content" backgroundColor="#6a51ae" />
             <ScrollView style={{ flex: 1 }}>   
-            {   film && film.realease_date >= today.toDateString()
-                ?
+            {   film && greaterThanToday(film.release_date)
+                ? (
+                    <Image style={styles.background_image}
+                        source={{
+                            uri: couverture_path
+                        }}
+                    />
+                ) : (
                 <Video style={styles.background_video}
                     source={{
                         uri: video_path
@@ -100,12 +132,7 @@ export default ({ route, navigation }) => {
                     resizeMode="contain"
                     onPlaybackStatusUpdate={status => setStatus(() => status)}
                 />
-                :
-                <Image style={styles.background_image}
-                    source={{
-                        uri: couverture_path
-                    }}
-                />
+                )
             }
                <View style={styles.detail_container}>
                     <Text style={styles.detail_title}>
@@ -199,7 +226,7 @@ const styles = StyleSheet.create({
         fontFamily: "Helvetica",
     },
     detail_time: {
-        color: global.darkGray,
+        color: global.lightGray,
     },
     detail_genre: {
         color: global.Yellow,
@@ -253,7 +280,7 @@ const styles = StyleSheet.create({
         marginLeft: 5,
         marginRight: 5,
         height: 120,
-        minWidth: '33,33%',
+        minWidth: '30%',
         backgroundColor: global.white,
     },
     detail_similaire_container: {
