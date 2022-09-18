@@ -3,8 +3,7 @@ import { ScrollView, View, Text, Image, TouchableOpacity, StyleSheet, StatusBar,
     FlatList, ActivityIndicator } from 'react-native'
 import SafeAreaView from 'react-native-safe-area-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useDispatch } from "react-redux";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 import { getFilms } from '../API/DiabaraniApi';
 import * as GLOBAL from '../data/global';
 import '../data/global';
@@ -12,31 +11,9 @@ import '../data/global';
 
 const Favorite = ({ navigation }) => {
     
+    const favoritesFilm = useSelector((state) => state.favorite.favoritesFilm);
     const [isLoading, setIsLoading] = useState(true);
-    const [films, setFilms] = useState([]);
     
-    const fetchFilms = async () => {
-        if (global.debug >= GLOBAL.LOG.INFO) console.log("Favorite::fetchFilms()");
-        setIsLoading(true);
-        let data = await getFilms(); 
-        if (data.code == 1) {
-            setFilms(data.films);
-        }
-        setIsLoading(false);
-
-        if (global.debug >= GLOBAL.LOG.DEBUG)  console.log("Favorite::useEffect()::fetchFilms()::data "+JSON.stringify(data));
-    }
-
-    useEffect(() => {
-
-        if (global.debug >= GLOBAL.LOG.INFO) console.log("Favorite::useEffect()");
-
-        fetchFilms();
-
-    }, []);
-
-
-
     const DisplayLoading = () => {
         if(isLoading) {
             return (
@@ -92,7 +69,7 @@ const Favorite = ({ navigation }) => {
                     Favorie
                 </Text>
                 <FlatList
-                    data={films}
+                    data={favoritesFilm}
                     renderItem={renderItem}
                     keyExtractor={item => item.id} />
             </ScrollView>

@@ -5,10 +5,15 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Video, AVPlaybackStatus } from 'expo-av';
 import { getFilm, getSomeGenresFilms } from '../API/DiabaraniApi';
+import { useDispatch, useSelector } from "react-redux";
 import * as GLOBAL from '../data/global';
 import '../data/global';
 
 export default ({ route, navigation }) => {
+    
+    const dispatch = useDispatch();
+
+    const favoritesFilm = useSelector((state) => state.favorite.favoritesFilm);
 
     const { idFilm } = route.params;
     const [isLoading, setIsLoading] = useState(true);
@@ -83,7 +88,6 @@ export default ({ route, navigation }) => {
     }, []);
     
     const handleFilmSimilaireItemPress = (idFilm) => {
-        console.log('idFilm = ' + idFilm);
         navigation.setParams({
             idFilm: idFilm
         });
@@ -100,6 +104,18 @@ export default ({ route, navigation }) => {
     const renderFilmSimilaireItem = ({ item }) => (
         <FilmSimilaireItem film={item} handleFilmSimilaireItemPress={handleFilmSimilaireItemPress} />
     );
+
+    const favoriteIconPress = (film) => {
+      dispatch({
+            type: "TOGGLE_FAVORITE",
+            payload: film
+        });
+    }
+
+    const isFavorite = (film_id) => {
+      const favoriteFilmIndex = favoritesFilm.findIndex(item => item.id === film_id)
+      return favoriteFilmIndex !== -1 ? true : false;
+    }
     
     const DisplayLoading = () => {
         if(isLoading) {
@@ -114,8 +130,8 @@ export default ({ route, navigation }) => {
     return (
         <View style={styles.main_container}>
             <StatusBar barStyle="light-content" backgroundColor="#6a51ae" />
-            <ScrollView style={{ flex: 1 }}>   
-            {   film && greaterThanToday(film.release_date)
+            <ScrollView style={{ flex: 1 }}>
+            { film && greaterThanToday(film.release_date)
                 ? (
                     <Image style={styles.background_image}
                         source={{
@@ -155,10 +171,23 @@ export default ({ route, navigation }) => {
                         <Text style={styles.detail_view_count}>6.015</Text>
                     </View>
                     <View style={{ flexDirection: "row", marginTop: 10 }}>
-                        <View style={{ marginRight: 10, alignItems: 'center' }}>
-                            <MaterialCommunityIcons name="heart" size={28} color={global.lightGray} />
-                            <Text style={styles.detail_icon_text}>Aimer</Text>
-                        </View>
+                            { film && isFavorite(film.id)
+                                ? (
+                                    <View style={{ marginRight: 10, alignItems: 'center' }}>
+                                        <Pressable onPress={() => favoriteIconPress(film)}>
+                                            <MaterialCommunityIcons name="heart" size={28} color={global.Yellow} />
+                                            <Text style={styles.detail_icon_text}>J'aime</Text>
+                                        </Pressable>
+                                    </View>
+                                ) : (
+                                    <View style={{ marginRight: 10, alignItems: 'center' }}>
+                                        <Pressable onPress={() => favoriteIconPress(film)}>
+                                            <MaterialCommunityIcons name="heart" size={28} color={global.lightGray} />
+                                            <Text style={styles.detail_icon_text}>J'aime</Text>
+                                        </Pressable>
+                                    </View>
+                                )
+                            }
                         <View style={{ marginLeft: 10, marginRight: 10, alignItems: 'center' }}>
                             <MaterialCommunityIcons name="share" size={28} color={global.lightGray} />
                             <Text style={styles.detail_icon_text}>Partager</Text>
