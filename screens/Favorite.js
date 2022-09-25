@@ -10,9 +10,9 @@ import '../data/global';
 
 
 const Favorite = ({ navigation }) => {
-    
+
     const favoritesFilm = useSelector((state) => state.favorite.favoritesFilm);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState();
     
     const DisplayLoading = () => {
         if(isLoading) {

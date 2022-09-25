@@ -14,7 +14,8 @@ export default ({ route, navigation }) => {
     const dispatch = useDispatch();
 
     const favoritesFilm = useSelector((state) => state.favorite.favoritesFilm);
-
+    const towatchsFilm = useSelector((state) => state.toWatch.towatchsFilm);
+    
     const { idFilm } = route.params;
     const [isLoading, setIsLoading] = useState(true);
     const [film, setFilm] = useState(undefined);
@@ -112,9 +113,21 @@ export default ({ route, navigation }) => {
         });
     }
 
+    const toWatchIconPress = (film) => {
+      dispatch({
+            type: "TOGGLE_TOWATCH",
+            payload: film
+        });
+    }
+
     const isFavorite = (film_id) => {
-      const favoriteFilmIndex = favoritesFilm.findIndex(item => item.id === film_id)
-      return favoriteFilmIndex !== -1 ? true : false;
+        const favoriteFilmIndex = favoritesFilm.findIndex(item => item.id === film_id)
+        return favoriteFilmIndex !== -1 ? true : false;
+    }
+    
+    const isToWatch = (film_id) => {
+        const toWatchFilmIndex = towatchsFilm.findIndex(item => item.id === film_id)
+        return toWatchFilmIndex !== -1 ? true : false;
     }
     
     const DisplayLoading = () => {
@@ -171,31 +184,36 @@ export default ({ route, navigation }) => {
                         <Text style={styles.detail_view_count}>6.015</Text>
                     </View>
                     <View style={{ flexDirection: "row", marginTop: 10 }}>
-                            { film && isFavorite(film.id)
-                                ? (
-                                    <View style={{ marginRight: 10, alignItems: 'center' }}>
-                                        <Pressable onPress={() => favoriteIconPress(film)}>
-                                            <MaterialCommunityIcons name="heart" size={28} color={global.Yellow} />
-                                            <Text style={styles.detail_icon_text}>J'aime</Text>
-                                        </Pressable>
-                                    </View>
-                                ) : (
-                                    <View style={{ marginRight: 10, alignItems: 'center' }}>
-                                        <Pressable onPress={() => favoriteIconPress(film)}>
-                                            <MaterialCommunityIcons name="heart" size={28} color={global.lightGray} />
-                                            <Text style={styles.detail_icon_text}>J'aime</Text>
-                                        </Pressable>
-                                    </View>
-                                )
-                            }
+                        { film && isFavorite(film.id)
+                            ? (
+                                <Pressable onPress={() => favoriteIconPress(film)} style={{ marginRight: 10, alignItems: 'center' }}>
+                                    <MaterialCommunityIcons name="heart" size={28} color={global.Yellow} />
+                                    <Text style={styles.detail_icon_text}>J'aime pas</Text>
+                                </Pressable>
+                            ) : (
+                                <Pressable onPress={() => favoriteIconPress(film)} style={{ marginRight: 10, alignItems: 'center' }}>
+                                    <MaterialCommunityIcons name="heart" size={28} color={global.lightGray} />
+                                    <Text style={styles.detail_icon_text}>J'aime</Text>
+                                </Pressable>
+                            )
+                        }
                         <View style={{ marginLeft: 10, marginRight: 10, alignItems: 'center' }}>
                             <MaterialCommunityIcons name="share" size={28} color={global.lightGray} />
                             <Text style={styles.detail_icon_text}>Partager</Text>
                         </View>
-                        <View style={{ marginLeft: 10, marginRight: 10, alignItems: 'center'  }}>
-                            <MaterialCommunityIcons name="heart" size={28} color={global.lightGray} />
-                            <Text style={styles.detail_icon_text}>A régarder</Text>
-                        </View>
+                        { film && isToWatch(film.id)
+                            ? (
+                                <Pressable onPress={() => toWatchIconPress(film)} style={{ marginRight: 10, alignItems: 'center' }}>
+                                    <MaterialCommunityIcons name="plus-box-multiple" size={28} color={global.Yellow} />
+                                    <Text style={styles.detail_icon_text}>A régarder</Text>
+                                </Pressable>
+                            ) : (
+                                <Pressable onPress={() => toWatchIconPress(film)} style={{ marginRight: 10, alignItems: 'center' }}>
+                                    <MaterialCommunityIcons name="plus-box-multiple" size={28} color={global.lightGray} />
+                                    <Text style={styles.detail_icon_text}>A régarder</Text>
+                                </Pressable>
+                            )
+                        }
                     </View>
                     <Text style={styles.detail_overview}>
                         { film && film.overview }
@@ -204,7 +222,7 @@ export default ({ route, navigation }) => {
                         <Text style={styles.detail_simulaire_title}>Film simulaires</Text>
                         <View style={styles.detail_similaire_image_container}>
                             <FlatList
-                                contentContainerStyle={styles.detail_similaire_container}
+                                contentContainerStyle={styles.detail_similaire_image_container}
                                 data={filmSimulaire}
                                 renderItem={renderFilmSimilaireItem}
                                 keyExtractor={item => item.id} />
@@ -311,10 +329,5 @@ const styles = StyleSheet.create({
         height: 120,
         minWidth: '30%',
         backgroundColor: global.white,
-    },
-    detail_similaire_container: {
-        flex: 1,
-        flexDirection: 'row',
-        flexWrap: 'wrap',
     },
 });

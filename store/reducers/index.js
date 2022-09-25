@@ -7,9 +7,11 @@ import {combineReducers} from 'redux';
 import user from './user';
 import alert from './alert';
 import favorite from './favorite';
+import toWatch from './toWatch';
 
 export default combineReducers({
   user,
   alert,
-  favorite
+  favorite,
+  toWatch
 });

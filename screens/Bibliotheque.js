@@ -1,10 +1,31 @@
 import React, { useState } from 'react'
-import { ScrollView, View, Text, Image, StyleSheet, StatusBar, TouchableOpacity } from 'react-native'
+import { ScrollView, View, Text, Image, StyleSheet, StatusBar, TouchableOpacity,
+    ActivityIndicator, FlatList, Pressable } from 'react-native'
 import SafeAreaView from 'react-native-safe-area-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useDispatch, useSelector } from "react-redux";
 
 const Bibliotheque = ({ navigation }) => {
 
+    const towatchsFilm = useSelector((state) => state.toWatch.towatchsFilm);
+    const [isLoading, setIsLoading] = useState();
+
+    const DisplayLoading = () => {
+        if(isLoading) {
+            return (
+                <View style={styles.loading_container}>
+                    <ActivityIndicator size="large"/>
+                </View>
+            )
+        } else return null
+    };
+    
+    const handleItemPress = (idFilm) => {
+        navigation.navigate('FilmDetail', {
+            idFilm: idFilm
+        });
+    };
+    
     const Historique = () => {
         return(
                 <View style={styles.section_container}>
@@ -27,24 +48,30 @@ const Bibliotheque = ({ navigation }) => {
         )
     }
 
+    const ToWatchItem = ({film, handleItemPress}) => (
+        <Pressable onPress={() => handleItemPress(film.id) }>
+            <Image style={styles.to_watch_image}
+                source={{ uri: global.SERVER_ADDRESS+film.poster_path }} />
+        </Pressable>
+    );
+    
+    const renderItem = ({ item }) => (
+        <ToWatchItem film={item} handleItemPress={handleItemPress} />
+    );
+
     const ToWatch = () => {
         return(
                 <View style={styles.section_container}>
                     <Text style={styles.subtitle_text}>
                         A regarder
-                    </Text>
-                    <ScrollView showsVerticalScrollIndicator={false}>
-                        <View style={styles.to_watch_container}>
-                            <Image style={styles.to_watch_image}
-                                source={require("../Images/movie-2.jpg")} />
-                            <Image style={styles.to_watch_image}
-                                source={require("../Images/movie-5.jpg")} />
-                            <Image style={styles.to_watch_image}
-                                source={require("../Images/movie-3.jpg")} />
-                            <Image style={styles.to_watch_image}
-                                source={require("../Images/movie-6.jpg")} />
-                        </View>
-                    </ScrollView>
+                    </Text>                        
+                    <View style={styles.to_watch_container}>
+                        <FlatList
+                            contentContainerStyle={styles.to_watch_container}
+                            data={towatchsFilm}
+                            renderItem={renderItem}
+                            keyExtractor={item => item.id} />
+                    </View>
                 </View>
         )
     }
@@ -61,6 +88,7 @@ const Bibliotheque = ({ navigation }) => {
                 <Historique/>
                 <ToWatch/>
             </ScrollView>
+            <DisplayLoading/>
         </View>
     )
 }
@@ -103,11 +131,10 @@ const styles = StyleSheet.create({
         backgroundColor: global.white
     },
     to_watch_container: {
-        flex: 1,
+        //flex: 1,
         flexDirection: 'row',
         flexWrap: 'wrap',
-        marginLeft: 10,
-        
+        //marginLeft: 10,        
         //marginRight: 10,
     },
     to_watch_image: {
@@ -115,9 +142,9 @@ const styles = StyleSheet.create({
         marginLeft: 5,
         marginRight: 5,
         height: 120,
-        width: '30%',
+        minWidth: '30%',
         backgroundColor: global.white
-    }
+    },
 
 })
 

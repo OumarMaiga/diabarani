@@ -4,6 +4,7 @@ import { ScrollView, View, Text, Image, Pressable, StyleSheet, StatusBar,
 import SafeAreaView from 'react-native-safe-area-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { getUpcomingFilms, getNewFilms, getGenresFilms } from '../API/DiabaraniApi';
+import { useDispatch, useSelector } from "react-redux";
 import * as GLOBAL from '../data/global';
 import '../data/global';
 
