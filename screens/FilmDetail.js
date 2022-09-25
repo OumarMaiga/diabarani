@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ScrollView, StatusBar, StyleSheet, View, Image, Text, ActivityIndicator, 
-    FlatList, Pressable } from 'react-native';
+    FlatList, Pressable, Share } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Video, AVPlaybackStatus } from 'expo-av';
@@ -140,6 +140,29 @@ export default ({ route, navigation }) => {
         } else return null
     };
 
+    const onShare = async (film) => {
+        try {
+          const result = await Share.share({
+            message:
+              'Diabarani | Je vous partage un film interressant ' + global.SERVER_ADDRESS+film.id,
+          });
+          if (result.action === Share.sharedAction) {
+            if (result.activityType) {
+          console.log("shared with activity type of result.activityType");
+          // shared with activity type of result.activityType
+            } else {
+          console.log("shared");
+          // shared
+            }
+          } else if (result.action === Share.dismissedAction) {
+          console.log("dismissed");
+          // dismissed
+          }
+        } catch (error) {
+          alert(error.message);
+        }
+      };
+
     return (
         <View style={styles.main_container}>
             <StatusBar barStyle="light-content" backgroundColor="#6a51ae" />
@@ -197,10 +220,10 @@ export default ({ route, navigation }) => {
                                 </Pressable>
                             )
                         }
-                        <View style={{ marginLeft: 10, marginRight: 10, alignItems: 'center' }}>
+                        <Pressable onPress={() => onShare(film)} style={{ marginRight: 10, alignItems: 'center' }}>
                             <MaterialCommunityIcons name="share" size={28} color={global.lightGray} />
                             <Text style={styles.detail_icon_text}>Partager</Text>
-                        </View>
+                        </Pressable>
                         { film && isToWatch(film.id)
                             ? (
                                 <Pressable onPress={() => toWatchIconPress(film)} style={{ marginRight: 10, alignItems: 'center' }}>
