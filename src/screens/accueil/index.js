@@ -3,10 +3,10 @@ import { ScrollView, View, Text, Image, Pressable, StyleSheet, StatusBar,
     ActivityIndicator, FlatList } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { getUpcomingFilms, getNewFilms, getGenresFilms } from '../API/DiabaraniApi';
+import { getUpcomingFilms, getNewFilms, getGenresFilms } from '../../../API/DiabaraniApi';
 import { useDispatch, useSelector } from "react-redux";
-import * as GLOBAL from '../data/global';
-import '../data/global';
+import * as GLOBAL from '../../../data/global';
+import '../../../data/global';
 
 const Accueil = ({ navigation }) => {
 
@@ -182,7 +182,7 @@ const Accueil = ({ navigation }) => {
                 <View horizontal showsHorizontalScrollIndicator={false}>
                     <Pressable onPress={() => navigation.navigate('FilmDetail') }>
                         <Image style={styles.historique_image}
-                            source={require("../Images/image-1.jpg")} />
+                            source={require("../../../assets/image-1.jpg")} />
                     </Pressable>
                 </View>
             </View>

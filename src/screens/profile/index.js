@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react'
 import { ScrollView, View, Text, Image, Pressable, StyleSheet, StatusBar, TouchableOpacity } from 'react-native'
 import SafeAreaView from 'react-native-safe-area-view'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import { logout } from "../API/DiabaraniApi"
+import { logout } from "../../../API/DiabaraniApi"
 import { useDispatch, useSelector } from "react-redux"
-import { getUser } from "../API/DiabaraniApi";
-import * as GLOBAL from '../data/global'
-import '../data/global'
+import { getUser } from "../../../API/DiabaraniApi";
+import * as GLOBAL from '../../../data/global'
+import '../../../data/global'
 
 
-const Profil = ({ navigation }) => {
+const Profile = ({ navigation }) => {
     
     const user = useSelector((state) => state.user);
     
@@ -33,7 +33,7 @@ const Profil = ({ navigation }) => {
                     <View style={styles.info_user_section}>
                         <View style={styles.profil_image_section}>
                             <Image style={styles.profil_image}
-                            source={require("../Images/movie-6.jpg")} />
+                            source={require("../../../assets/movie-6.jpg")} />
                             <MaterialCommunityIcons style={styles.icon_camera} 
                                 name="camera" size={36} color={global.gray} />
                         </View>
@@ -48,7 +48,7 @@ const Profil = ({ navigation }) => {
                     </View>
                     <View style={styles.list_item_section}>
                         <Pressable style={styles.list_item}
-                            onPress={() => navigation.navigate('EditProfil')}>
+                            onPress={() => navigation.navigate('EditProfile')}>
                             <MaterialCommunityIcons name="account" size={28} color={global.white} />
                             <Text style={styles.list_item_text}>
                                 Modifier le profil
@@ -178,4 +178,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default Profil
+export default Profile

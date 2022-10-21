@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import { ScrollView, View, Text, Image, TextInput, Pressable, StyleSheet, ActivityIndicator, StatusBar,
     KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import SafeAreaView from 'react-native-safe-area-view';
-import { register } from '../../API/DiabaraniApi'
+import { register } from '../../../../API/DiabaraniApi'
 import { useDispatch } from "react-redux"
-import * as GLOBAL from '../../data/global'
-import '../../data/global'
+import * as GLOBAL from '../../../../data/global'
+import '../../../../data/global'
 
 const Inscription = ({ navigation }) => {
     
@@ -105,9 +105,9 @@ const Inscription = ({ navigation }) => {
                         <View style={styles.auth_media_container}>
                             <Text style={styles.auth_media_text}>-- Ou avec --</Text>
                             <View style={styles.media_image_container}>
-                                <Image source={require("../../Images/google.jpg")}
+                                <Image source={require("../../../../assets/google.jpg")}
                                     style={styles.icon_social} />
-                                <Image source={require("../../Images/facebook.jpg")}
+                                <Image source={require("../../../../assets/facebook.jpg")}
                                     style={styles.icon_social} />
                             </View>
                                 <Text  style={styles.auth_media_text}>Vous êtes déjà inscrit ? <Pressable onPress={() => navigation.navigate('Connexion')}><Text style={styles.link_underscore}>Connexion</Text></Pressable></Text>

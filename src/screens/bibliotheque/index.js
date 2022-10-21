@@ -35,14 +35,14 @@ const Bibliotheque = ({ navigation }) => {
                     <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                         <TouchableOpacity onPress={() => navigation.navigate('FilmDetail') }>
                             <Image style={styles.historique_image}
-                                source={require("../Images/image-1.jpg")} />
+                                source={require("../../../assets/image-1.jpg")} />
                         </TouchableOpacity>
                         <Image style={styles.historique_image}
-                            source={require("../Images/image-2.jpg")} />
+                            source={require("../../../assets/image-2.jpg")} />
                         <Image style={styles.historique_image}
-                            source={require("../Images/image-1.jpg")} />
+                            source={require("../../../assets/image-1.jpg")} />
                         <Image style={styles.historique_image}
-                            source={require("../Images/image-2.jpg")} />
+                            source={require("../../../assets/image-2.jpg")} />
                     </ScrollView>
                 </View>
         )

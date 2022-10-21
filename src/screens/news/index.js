@@ -3,9 +3,9 @@ import { ScrollView, View, Text, Image, Pressable, StyleSheet, StatusBar,
     ActivityIndicator, FlatList } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { getNewFilms } from '../API/DiabaraniApi';
-import * as GLOBAL from '../data/global';
-import '../data/global';
+import { getNewFilms } from '../../../API/DiabaraniApi';
+import * as GLOBAL from '../../../data/global';
+import '../../../data/global';
 
 const News = ({ navigation }) => {
     

@@ -4,11 +4,10 @@ import { TextInput, View, Text, Image, Pressable, StyleSheet, StatusBar, Dimensi
 import SafeAreaView from 'react-native-safe-area-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getUser, updateUser } from '../API/DiabaraniApi';
-import { useDispatch } from "react-redux";
-import { useSelector } from 'react-redux';
-import * as GLOBAL from '../data/global';
-import '../data/global';
+import { getUser, updateUser } from '../../../API/DiabaraniApi';
+import { useDispatch, useSelector } from "react-redux";
+import * as GLOBAL from '../../../data/global';
+import '../../../data/global';
 
 const EditProfil = ({ navigation }) => {
     
@@ -100,7 +99,7 @@ const EditProfil = ({ navigation }) => {
                         </View>
                         <View style={styles.profil_image_section}>
                             <Image style={styles.profil_image}
-                            source={require("../Images/movie-6.jpg")} />
+                            source={require("../../../assets/movie-6.jpg")} />
                             <MaterialCommunityIcons style={[styles.icon_camera, {right: rightPosition}]} 
                                 name="camera" size={36} color="#B8B8B8" />
                         </View>

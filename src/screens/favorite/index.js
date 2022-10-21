@@ -3,54 +3,17 @@ import { ScrollView, View, Text, Image, TouchableOpacity, StyleSheet, StatusBar,
     FlatList, ActivityIndicator } from 'react-native'
 import SafeAreaView from 'react-native-safe-area-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useDispatch } from "react-redux";
-import { useSelector } from 'react-redux';
-import { getGenreFilms, getGenre } from '../API/DiabaraniApi';
-import * as GLOBAL from '../data/global';
-import '../data/global';
+import { useDispatch, useSelector } from "react-redux";
+import { getFilms } from '../../../API/DiabaraniApi';
+import * as GLOBAL from '../../../data/global';
+import '../../../data/global';
 
 
-const FilmPerGenre = ({ route, navigation }) => {
+const Favorite = ({ navigation }) => {
+
+    const favoritesFilm = useSelector((state) => state.favorite.favoritesFilm);
+    const [isLoading, setIsLoading] = useState();
     
-    const { genre_id } = route.params;
-    const [isLoading, setIsLoading] = useState(true);
-    const [films, setFilms] = useState([]);
-    const [genre, setGenre] = useState(undefined);
-    
-    const fetchFilms = async () => {
-        if (global.debug >= GLOBAL.LOG.INFO) console.log("FilmPerGenre::fetchFilms()");
-        setIsLoading(true);
-        let data = await getGenreFilms(genre_id); 
-        if (data.code == 1) {
-            setFilms(data.films);
-        }
-        setIsLoading(false);
-
-        if (global.debug >= GLOBAL.LOG.DEBUG)  console.log("FilmPerGenre::useEffect()::fetchFilms()::data "+JSON.stringify(data));
-    }
-    const fetchGenre = async () => {
-        if (global.debug >= GLOBAL.LOG.INFO) console.log("FilmPerGenre::fetchGenre()");
-        setIsLoading(true);
-        let data = await getGenre(genre_id); 
-        if (data.code == 1) {
-            setGenre(data.genre);
-        }
-        setIsLoading(false);
-
-        if (global.debug >= GLOBAL.LOG.DEBUG)  console.log("FilmPerGenre::useEffect()::fetchGenre()::data "+JSON.stringify(data));
-    }
-
-    useEffect(() => {
-
-        if (global.debug >= GLOBAL.LOG.INFO) console.log("FilmPerGenre::useEffect()");
-
-        fetchFilms();
-        fetchGenre();
-
-    }, []);
-
-
-
     const DisplayLoading = () => {
         if(isLoading) {
             return (
@@ -76,6 +39,7 @@ const FilmPerGenre = ({ route, navigation }) => {
                         <Text style={styles.item_title}>
                             {film.title}
                         </Text>
+                        <MaterialCommunityIcons name="heart" size={24} color={global.darkYellow} />
                     </View>
                     <Text style={styles.item_time}>
                         1h 22min
@@ -102,10 +66,10 @@ const FilmPerGenre = ({ route, navigation }) => {
             <StatusBar barStyle="light-content" backgroundColor="#6a51ae" />
             <ScrollView showsVerticalScrollIndicator={false}>
                 <Text style={styles.title}>
-                    { genre && genre.libelle }
+                    Favorie
                 </Text>
                 <FlatList
-                    data={films}
+                    data={favoritesFilm}
                     renderItem={renderItem}
                     keyExtractor={item => item.id} />
             </ScrollView>
@@ -190,4 +154,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default FilmPerGenre
+export default Favorite
