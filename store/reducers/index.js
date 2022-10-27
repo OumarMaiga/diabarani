@@ -8,10 +8,12 @@ import user from './user';
 import alert from './alert';
 import favorite from './favorite';
 import toWatch from './toWatch';
+import inRecent from './inRecent';
 
 export default combineReducers({
   user,
   alert,
   favorite,
-  toWatch
+  toWatch,
+  inRecent
 });

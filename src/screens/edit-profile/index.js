@@ -54,7 +54,7 @@ const EditProfil = ({ navigation }) => {
     const onUpdateButtonPress = async () => {
         let data = { first_name: first_name, last_name: last_name, email: email, phone: phone };
         
-        if (global.debug >= GLOBAL.LOG.DEBUG) console.log("EditProfil::onUpdateButtonPress() => "+JSON.stringify(data));
+        if (global.debug >= GLOBAL.LOG.ROOT) console.log("EditProfil::onUpdateButtonPress() => "+JSON.stringify(data));
         
         if(user != undefined)
         {
@@ -78,7 +78,7 @@ const EditProfil = ({ navigation }) => {
                 alert ("Mise à jour echoué");
             }
 
-            if (global.debug >= GLOBAL.LOG.DEBUG) console.log("EditProfil:onUpdateButtonPress() => result "+JSON.stringify(result));
+            if (global.debug >= GLOBAL.LOG.ROOT) console.log("EditProfil:onUpdateButtonPress() => result "+JSON.stringify(result));
             setIsLoading(false);
         }
     };

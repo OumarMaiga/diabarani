@@ -29,7 +29,7 @@ const Connexion = ({navigation}) => {
 
         setIsLoading(true);
         let data = await login({username, password})
-        if (global.debug >= GLOBAL.LOG.DEBUG)  console.log("Connexion:onLoginPress()::data "+JSON.stringify(data));
+        if (global.debug >= GLOBAL.LOG.ROOT)  console.log("Connexion:onLoginPress()::data "+JSON.stringify(data));
 
         if(data.code == 1) 
         {

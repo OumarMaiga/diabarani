@@ -15,6 +15,7 @@ export default ({ route, navigation }) => {
 
     const favoritesFilm = useSelector((state) => state.favorite.favoritesFilm);
     const towatchsFilm = useSelector((state) => state.toWatch.towatchsFilm);
+    const inRecentsFilm = useSelector((state) => state.inRecent.inRecentsFilm);
     
     const { idFilm } = route.params;
     const [isLoading, setIsLoading] = useState(true);
@@ -65,7 +66,7 @@ export default ({ route, navigation }) => {
         }
         setIsLoading(false);
 
-        if (global.debug >= GLOBAL.LOG.DEBUG)  console.log("FilmDetail::useEffect()::fetchFilms()::data " + JSON.stringify(data));
+        if (global.debug >= GLOBAL.LOG.ROOT)  console.log("FilmDetail::useEffect()::fetchFilms()::data " + JSON.stringify(data));
     }
     const fetchSomeGenresFilms = async (genre_ids) => {
         
@@ -78,7 +79,7 @@ export default ({ route, navigation }) => {
         }
         setIsLoading(false);
 
-        if (global.debug >= GLOBAL.LOG.DEBUG)  console.log("FilmDetail::fetchSomeGenresFilms()::data " + JSON.stringify(data));
+        if (global.debug >= GLOBAL.LOG.ROOT)  console.log("FilmDetail::fetchSomeGenresFilms()::data " + JSON.stringify(data));
     }
 
     useEffect(() => {
@@ -120,6 +121,13 @@ export default ({ route, navigation }) => {
         });
     }
 
+    const inRecentIconPress = (film) => {
+      dispatch({
+            type: "ADD_INRECENT",
+            payload: film
+        });
+    }
+
     const isFavorite = (film_id) => {
         const favoriteFilmIndex = favoritesFilm.findIndex(item => item.id === film_id)
         return favoriteFilmIndex !== -1 ? true : false;
@@ -128,6 +136,11 @@ export default ({ route, navigation }) => {
     const isToWatch = (film_id) => {
         const toWatchFilmIndex = towatchsFilm.findIndex(item => item.id === film_id)
         return toWatchFilmIndex !== -1 ? true : false;
+    }
+    
+    const inRecent = (film_id) => {
+        const inRecentFilmIndex = inRecentsFilm.findIndex(item => item.id === film_id)
+        return inRecentFilmIndex !== -1 ? true : false;
     }
     
     const DisplayLoading = () => {
@@ -151,8 +164,8 @@ export default ({ route, navigation }) => {
           console.log("shared with activity type of result.activityType");
           // shared with activity type of result.activityType
             } else {
-          console.log("shared");
-          // shared
+                console.log("shared");
+                // shared
             }
           } else if (result.action === Share.dismissedAction) {
           console.log("dismissed");
@@ -183,6 +196,7 @@ export default ({ route, navigation }) => {
                     useNativeControls
                     resizeMode="contain"
                     onPlaybackStatusUpdate={status => setStatus(() => status)}
+                    onLoadStart={() => inRecentIconPress(film)}
                 />
                 )
             }
@@ -237,6 +251,19 @@ export default ({ route, navigation }) => {
                                 </Pressable>
                             )
                         }
+                        { /*film && inRecent(film.id)
+                            ? (
+                                <Pressable onPress={() => inRecentIconPress(film)} style={{ marginRight: 10, alignItems: 'center' }}>
+                                    <MaterialCommunityIcons name="plus-box-multiple" size={28} color={global.Yellow} />
+                                    <Text style={styles.detail_icon_text}>A régarder</Text>
+                                </Pressable>
+                            ) : (
+                                <Pressable onPress={() => inRecentIconPress(film)} style={{ marginRight: 10, alignItems: 'center' }}>
+                                    <MaterialCommunityIcons name="plus-box-multiple" size={28} color={global.lightGray} />
+                                    <Text style={styles.detail_icon_text}>A régarder</Text>
+                                </Pressable>
+                            )
+                        */}
                     </View>
                     <Text style={styles.detail_overview}>
                         { film && film.overview }
@@ -245,10 +272,10 @@ export default ({ route, navigation }) => {
                         <Text style={styles.detail_simulaire_title}>Film simulaires</Text>
                         <View style={styles.detail_similaire_image_container}>
                             <FlatList
-                                contentContainerStyle={styles.detail_similaire_image_container}
-                                data={filmSimulaire}
-                                renderItem={renderFilmSimilaireItem}
-                                keyExtractor={item => item.id} />
+                              contentContainerStyle={styles.detail_similaire_image_container}
+                              data={filmSimulaire}
+                              renderItem={renderFilmSimilaireItem}
+                              keyExtractor={item => item.id} />
                         </View>
                     </View>
                 </View>

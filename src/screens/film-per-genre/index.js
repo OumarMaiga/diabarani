@@ -26,7 +26,7 @@ const FilmPerGenre = ({ route, navigation }) => {
         }
         setIsLoading(false);
 
-        if (global.debug >= GLOBAL.LOG.DEBUG)  console.log("FilmPerGenre::useEffect()::fetchFilms()::data "+JSON.stringify(data));
+        if (global.debug >= GLOBAL.LOG.ROOT)  console.log("FilmPerGenre::useEffect()::fetchFilms()::data "+JSON.stringify(data));
     }
     const fetchGenre = async () => {
         if (global.debug >= GLOBAL.LOG.INFO) console.log("FilmPerGenre::fetchGenre()");
@@ -37,7 +37,7 @@ const FilmPerGenre = ({ route, navigation }) => {
         }
         setIsLoading(false);
 
-        if (global.debug >= GLOBAL.LOG.DEBUG)  console.log("FilmPerGenre::useEffect()::fetchGenre()::data "+JSON.stringify(data));
+        if (global.debug >= GLOBAL.LOG.ROOT)  console.log("FilmPerGenre::useEffect()::fetchGenre()::data "+JSON.stringify(data));
     }
 
     useEffect(() => {

@@ -21,7 +21,7 @@ const News = ({ navigation }) => {
         }
         setIsLoading(false);
 
-        if (global.debug >= GLOBAL.LOG.DEBUG)  console.log("News::useEffect()::fetchNewFilms()::data "+JSON.stringify(data));
+        if (global.debug >= GLOBAL.LOG.ROOT)  console.log("News::useEffect()::fetchNewFilms()::data "+JSON.stringify(data));
     }
 
     useEffect(() => {

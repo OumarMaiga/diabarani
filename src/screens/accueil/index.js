@@ -10,6 +10,8 @@ import '../../../data/global';
 
 const Accueil = ({ navigation }) => {
 
+    const inRecentsFilm = useSelector((state) => state.inRecent.inRecentsFilm);
+
     const [isLoading, setIsLoading] = useState(true);
     const [upcomingFilms, setUpComingFilms] = useState([]);
     const [films, setFilms] = useState([]);
@@ -25,7 +27,7 @@ const Accueil = ({ navigation }) => {
         }
         setIsLoading(false);
 
-        if (global.debug >= GLOBAL.LOG.DEBUG)  console.log("Accueil::useEffect()::fetchUpcomingFilms()::data "+JSON.stringify(data));
+        if (global.debug >= GLOBAL.LOG.ROOT)  console.log("Accueil::useEffect()::fetchUpcomingFilms()::data "+JSON.stringify(data));
     }
 
     const fetchNewFilms = async () => {
@@ -37,7 +39,7 @@ const Accueil = ({ navigation }) => {
         }
         setIsLoading(false);
 
-        if (global.debug >= GLOBAL.LOG.DEBUG)  console.log("Accueil::useEffect()::fetchNewFilms()::data "+JSON.stringify(data));
+        if (global.debug >= GLOBAL.LOG.ROOT)  console.log("Accueil::useEffect()::fetchNewFilms()::data "+JSON.stringify(data));
     }
     
     const fetchGenresFilms = async () => {
@@ -49,7 +51,7 @@ const Accueil = ({ navigation }) => {
         }
         setIsLoading(false);
 
-        if (global.debug >= GLOBAL.LOG.DEBUG)  console.log("Accueil::useEffect()::fetchGenres()::data "+JSON.stringify(data));
+        if (global.debug >= GLOBAL.LOG.ROOT)  console.log("Accueil::useEffect()::fetchGenres()::data "+JSON.stringify(data));
     }
 
     useEffect(() => {
@@ -64,46 +66,44 @@ const Accueil = ({ navigation }) => {
 
     }, []);
     
-    const handleUpcomingFilmsItemPress = (idFilm) => {
+    const handleFilmItemPress = (idFilm) => {
         navigation.navigate('FilmDetail', {
             idFilm: idFilm
         });
     };
 
-    const UpcomingFilmItem = ({film, handleUpcomingFilmsItemPress}) => (
-        <Pressable onPress={() => handleUpcomingFilmsItemPress(film.id) }>
+    const UpcomingFilmItem = ({film, handleFilmItemPress}) => (
+        <Pressable onPress={() => handleFilmItemPress(film.id) }>
             <Image style={styles.upcoming_image}
                 source={{ uri: global.SERVER_ADDRESS+film.poster_path }} />
         </Pressable>
     );
 
     const renderUpcomingFilmsItem = ({ item }) => (
-        <UpcomingFilmItem film={item} handleUpcomingFilmsItemPress={handleUpcomingFilmsItemPress} />
+        <UpcomingFilmItem film={item} handleFilmItemPress={handleFilmItemPress} />
     );
-    
-    const handleNewFilmsItemPress = (idFilm) => {
-        navigation.navigate('FilmDetail', {
-            idFilm: idFilm
-        });
-    };
 
-    const NewFilmItem = ({film, handleNewFilmsItemPress}) => (
-        <Pressable onPress={() => handleNewFilmsItemPress(film.id) }>
+    const NewFilmItem = ({film, handleFilmItemPress}) => (
+        <Pressable onPress={() => handleFilmItemPress(film.id) }>
             <Image style={styles.new_image}
                 source={{ uri: global.SERVER_ADDRESS+film.poster_path }} />
         </Pressable>
     );
 
     const renderNewFilmsItem = ({ item }) => (
-        <NewFilmItem film={item} handleNewFilmsItemPress={handleNewFilmsItemPress} />
+        <NewFilmItem film={item} handleFilmItemPress={handleFilmItemPress} />
     );
 
-    
-    const handleGenresFilmsItemPress = (film_id) => {
-        navigation.navigate('FilmDetail', {
-            idFilm: film_id
-        });
-    };
+    const RecentFilmItem = ({film, handleFilmItemPress}) => (
+        <Pressable onPress={() => handleFilmItemPress(film.id) }>
+            <Image style={styles.historique_image}
+                source={{ uri: global.SERVER_ADDRESS+film.poster_path }} />
+        </Pressable>
+    );
+
+    const renderRecentFilmsItem = ({ item }) => (
+        <RecentFilmItem film={item} handleFilmItemPress={handleFilmItemPress} />
+    );
 
     const handleGenresItemPress = (genre_id) => {
         navigation.navigate('FilmPerGenre', {
@@ -111,19 +111,19 @@ const Accueil = ({ navigation }) => {
         });
     };
     
-    const GenreFilmsItem = ({film, handleGenresFilmsItemPress}) => (
-        <Pressable onPress={() => handleGenresFilmsItemPress(film.id) }>
+    const GenreFilmsItem = ({film, handleFilmItemPress}) => (
+        <Pressable onPress={() => handleFilmItemPress(film.id) }>
             <Image style={styles.genre_image}
                 source={{ uri: global.SERVER_ADDRESS+film.poster_path }} />
         </Pressable>
     );
 
     const renderGenreFilmsItem = ({ item }) => (
-        <GenreFilmsItem film={item} handleGenresFilmsItemPress={handleGenresFilmsItemPress} />
+        <GenreFilmsItem film={item} handleFilmItemPress={handleFilmItemPress} />
     );
 
 
-    const GenreFilmItem = ({genre, handleGenresFilmsItemPress, handleGenresItemPress}) => (
+    const GenreFilmItem = ({genre, handleFilmItemPress, handleGenresItemPress}) => (
         <View style={styles.section_container}>
             <View style={styles.subtitle}>
                 <Pressable onPress={() => handleGenresItemPress(genre.id)}>
@@ -145,7 +145,7 @@ const Accueil = ({ navigation }) => {
     );
 
     const renderGenresFilmsItem = ({ item }) => (
-        <GenreFilmItem genre={item} handleGenresFilmsItemPress={handleGenresFilmsItemPress} handleGenresItemPress={handleGenresItemPress} />
+        <GenreFilmItem genre={item} handleFilmItemPress={handleFilmItemPress} handleGenresItemPress={handleGenresItemPress} />
     );
     
     const DisplayLoading = () => {
@@ -180,10 +180,12 @@ const Accueil = ({ navigation }) => {
                     Continuer à regarder
                 </Text>
                 <View horizontal showsHorizontalScrollIndicator={false}>
-                    <Pressable onPress={() => navigation.navigate('FilmDetail') }>
-                        <Image style={styles.historique_image}
-                            source={require("../../../assets/image-1.jpg")} />
-                    </Pressable>
+                    <FlatList
+                        data={inRecentsFilm}
+                        renderItem={renderRecentFilmsItem}
+                        keyExtractor={item => item.id}
+                        horizontal={true}
+                        showsHorizontalScrollIndicator={false} />
                 </View>
             </View>
 		)

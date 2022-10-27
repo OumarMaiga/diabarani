@@ -40,7 +40,7 @@ const Inscription = ({ navigation }) => {
 
         setIsLoading(true);
         let data = await register({prenom, nom, phone, email, password, passwordConfirm})
-        if (global.debug >= GLOBAL.LOG.DEBUG)  console.log("Inscription:onRegisterPress()::data "+JSON.stringify(data));
+        if (global.debug >= GLOBAL.LOG.ROOT)  console.log("Inscription:onRegisterPress()::data "+JSON.stringify(data));
 
         if(data.code == 1) {
             dispatch({

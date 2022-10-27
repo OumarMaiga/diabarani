@@ -7,8 +7,28 @@ import { useDispatch, useSelector } from "react-redux";
 
 const Bibliotheque = ({ navigation }) => {
 
+    const inRecentsFilm = useSelector((state) => state.inRecent.inRecentsFilm);
+
     const towatchsFilm = useSelector((state) => state.toWatch.towatchsFilm);
     const [isLoading, setIsLoading] = useState();
+
+    
+    const handleFilmItemPress = (idFilm) => {
+        navigation.navigate('FilmDetail', {
+            idFilm: idFilm
+        });
+    };
+
+    const RecentFilmItem = ({film, handleFilmItemPress}) => (
+        <Pressable onPress={() => handleFilmItemPress(film.id) }>
+            <Image style={styles.historique_image}
+                source={{ uri: global.SERVER_ADDRESS+film.poster_path }} />
+        </Pressable>
+    );
+
+    const renderRecentFilmsItem = ({ item }) => (
+        <RecentFilmItem film={item} handleFilmItemPress={handleFilmItemPress} />
+    );
 
     const DisplayLoading = () => {
         if(isLoading) {
@@ -32,18 +52,14 @@ const Bibliotheque = ({ navigation }) => {
                     <Text style={styles.subtitle_text}>
                         Recent
                     </Text>
-                    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                        <TouchableOpacity onPress={() => navigation.navigate('FilmDetail') }>
-                            <Image style={styles.historique_image}
-                                source={require("../../../assets/image-1.jpg")} />
-                        </TouchableOpacity>
-                        <Image style={styles.historique_image}
-                            source={require("../../../assets/image-2.jpg")} />
-                        <Image style={styles.historique_image}
-                            source={require("../../../assets/image-1.jpg")} />
-                        <Image style={styles.historique_image}
-                            source={require("../../../assets/image-2.jpg")} />
-                    </ScrollView>
+                    <View horizontal showsHorizontalScrollIndicator={false}>
+                        <FlatList
+                            data={inRecentsFilm}
+                            renderItem={renderRecentFilmsItem}
+                            keyExtractor={item => item.id}
+                            horizontal={true}
+                            showsHorizontalScrollIndicator={false} />
+                    </View>
                 </View>
         )
     }
