@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ScrollView, StatusBar, StyleSheet, View, Image, Text, ActivityIndicator, 
-    FlatList, Pressable, Share } from 'react-native';
+    FlatList, Pressable, Share, Button } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Video, AVPlaybackStatus } from 'expo-av';
@@ -87,6 +87,7 @@ export default ({ route, navigation }) => {
         if (global.debug >= GLOBAL.LOG.INFO) console.log("FilmDetail::useEffect()");
 
         fetchFilm();
+
     }, []);
     
     const handleFilmSimilaireItemPress = (idFilm) => {
@@ -121,7 +122,7 @@ export default ({ route, navigation }) => {
         });
     }
 
-    const inRecentIconPress = (film) => {
+    const handleInRecent = (film) => {
       dispatch({
             type: "ADD_INRECENT",
             payload: film
@@ -161,19 +162,38 @@ export default ({ route, navigation }) => {
           });
           if (result.action === Share.sharedAction) {
             if (result.activityType) {
-          console.log("shared with activity type of result.activityType");
-          // shared with activity type of result.activityType
+                console.log("shared with activity type of result.activityType");
+                // shared with activity type of result.activityType
             } else {
                 console.log("shared");
                 // shared
             }
           } else if (result.action === Share.dismissedAction) {
-          console.log("dismissed");
-          // dismissed
+                console.log("dismissed");
+                // dismissed
           }
         } catch (error) {
           alert(error.message);
         }
+      };
+
+      const _onPlaybackStatusUpdatestatus = (status) => {
+        setStatus(status);
+        if (status.isLoaded) {
+            status.isBuffering ? console.log('isBuffering') : console.log('');
+            status.isPlaying ? console.log('isPlaying') : console.log('');
+            status.shouldPlay ? console.log('shouldPlay') : console.log('');
+
+            if (status.isPlaying) {
+                console.log('status');
+                handleInRecent(film);
+            }
+        }
+      };
+      
+      const _onLoad = () => {
+        if (global.debug >= GLOBAL.LOG.INFO) console.log("FilmDetail::_onLoad()");
+        handleInRecent(film);
       };
 
     return (
@@ -195,8 +215,8 @@ export default ({ route, navigation }) => {
                     ref={video}
                     useNativeControls
                     resizeMode="contain"
-                    onPlaybackStatusUpdate={status => setStatus(() => status)}
-                    onLoadStart={() => inRecentIconPress(film)}
+                    //onPlaybackStatusUpdate={status => _onPlaybackStatusUpdatestatus(status)}
+                    onLoad={() => _onLoad()}
                 />
                 )
             }
@@ -251,19 +271,6 @@ export default ({ route, navigation }) => {
                                 </Pressable>
                             )
                         }
-                        { /*film && inRecent(film.id)
-                            ? (
-                                <Pressable onPress={() => inRecentIconPress(film)} style={{ marginRight: 10, alignItems: 'center' }}>
-                                    <MaterialCommunityIcons name="plus-box-multiple" size={28} color={global.Yellow} />
-                                    <Text style={styles.detail_icon_text}>A régarder</Text>
-                                </Pressable>
-                            ) : (
-                                <Pressable onPress={() => inRecentIconPress(film)} style={{ marginRight: 10, alignItems: 'center' }}>
-                                    <MaterialCommunityIcons name="plus-box-multiple" size={28} color={global.lightGray} />
-                                    <Text style={styles.detail_icon_text}>A régarder</Text>
-                                </Pressable>
-                            )
-                        */}
                     </View>
                     <Text style={styles.detail_overview}>
                         { film && film.overview }
