@@ -377,7 +377,7 @@ const styles = StyleSheet.create({
     },
     detail_similaire_image_container: {
         flexDirection: 'row',
-        flexWrap: 'wrap',
+        numColumns: 2,
     },
     detail_similaire_image: {
         marginBottom: 5,

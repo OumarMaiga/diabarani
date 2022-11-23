@@ -26,7 +26,8 @@ export default (state = initialState, action) => {
       nextState = {
         ...state,
         // inRecentsFilm: state.inRecentsFilm.unshift(payload),
-        inRecentsFilm: [...state.inRecentsFilm, state.inRecentsFilm.unshift(payload)],
+        inRecentsFilm: [...state.inRecentsFilm, payload],
+        //inRecentsFilm: [...state.inRecentsFilm, state.inRecentsFilm.unshift(payload)],
         loading: false
       }
       

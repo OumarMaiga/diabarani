@@ -126,7 +126,6 @@ const styles = StyleSheet.create({
         fontSize: 22,
         color: global.white,
         fontFamily: 'Helvetica',
-        flexWrap: 'wrap',
         paddingRight: 2,
     },
     item_time: {

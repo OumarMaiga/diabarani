@@ -71,6 +71,7 @@ const News = ({ navigation }) => {
                     </Text>
                 </View>
                 <FlatList
+                    numColumns={3}
                     contentContainerStyle={styles.new_image_container}
                     data={films}
                     renderItem={renderItem}
@@ -111,7 +112,6 @@ const styles = StyleSheet.create({
     new_image_container: {
         flex: 1,
         flexDirection: 'row',
-        flexWrap: 'wrap',
     },
     new_image: {
         minWidth: '30%',

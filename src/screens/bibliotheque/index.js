@@ -83,6 +83,7 @@ const Bibliotheque = ({ navigation }) => {
                     </Text>                        
                     <View style={styles.to_watch_container}>
                         <FlatList
+                            numColumns={3}
                             contentContainerStyle={styles.to_watch_container}
                             data={towatchsFilm}
                             renderItem={renderItem}
@@ -147,9 +148,8 @@ const styles = StyleSheet.create({
         backgroundColor: global.white
     },
     to_watch_container: {
-        //flex: 1,
+        flex: 1,
         flexDirection: 'row',
-        flexWrap: 'wrap',
         //marginLeft: 10,        
         //marginRight: 10,
     },
