@@ -52,14 +52,12 @@ const Bibliotheque = ({ navigation }) => {
                     <Text style={styles.subtitle_text}>
                         Recent
                     </Text>
-                    <View horizontal showsHorizontalScrollIndicator={false}>
-                        <FlatList
-                            data={inRecentsFilm}
-                            renderItem={renderRecentFilmsItem}
-                            keyExtractor={item => item.id}
-                            horizontal={true}
-                            showsHorizontalScrollIndicator={false} />
-                    </View>
+                    <FlatList
+                        data={inRecentsFilm}
+                        renderItem={renderRecentFilmsItem}
+                        keyExtractor={item => item.id}
+                        horizontal={true}
+                        showsHorizontalScrollIndicator={false} />
                 </View>
         )
     }
@@ -75,7 +73,7 @@ const Bibliotheque = ({ navigation }) => {
         <ToWatchItem film={item} handleItemPress={handleItemPress} />
     );
 
-    const ToWatch = () => {
+    /*const ToWatch = () => {
         return(
                 <View style={styles.section_container}>
                     <Text style={styles.subtitle_text}>
@@ -83,7 +81,7 @@ const Bibliotheque = ({ navigation }) => {
                     </Text>                        
                     <View style={styles.to_watch_container}>
                         <FlatList
-                            numColumns={3}
+                            //numColumns={3}
                             contentContainerStyle={styles.to_watch_container}
                             data={towatchsFilm}
                             renderItem={renderItem}
@@ -91,20 +89,33 @@ const Bibliotheque = ({ navigation }) => {
                     </View>
                 </View>
         )
-    }
+    }*/
 
     return (    
         <View style={styles.main_container}>
             <StatusBar barStyle="light-content" backgroundColor="#6a51ae" />
-            <ScrollView showsVerticalScrollIndicator={false}>
-                <View style={styles.title_container}>
-                    <Text style={styles.title}>
-                        Bibliotheque
-                    </Text>
-                </View>
-                <Historique/>
-                <ToWatch/>
-            </ScrollView>
+            <FlatList showsVerticalScrollIndicator={false}
+                ListHeaderComponent={
+                    <>
+                        <View style={styles.title_container}>
+                            <Text style={styles.title}>
+                                Bibliotheque
+                            </Text>
+                        </View>
+                        <Historique/>
+                        <View style={styles.section_container}>
+                            <Text style={styles.subtitle_text}>
+                                A regarder
+                            </Text>
+                        </View>
+                    </>
+                }
+                //contentContainerStyle={styles.to_watch_container}
+                data={towatchsFilm}
+                renderItem={renderItem}
+                keyExtractor={item => item.id}
+                numColumns={3}
+            />{/**/}
             <DisplayLoading/>
         </View>
     )

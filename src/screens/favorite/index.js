@@ -64,15 +64,15 @@ const Favorite = ({ navigation }) => {
     return (    
         <View style={styles.main_container}>
             <StatusBar barStyle="light-content" backgroundColor="#6a51ae" />
-            <ScrollView showsVerticalScrollIndicator={false}>
-                <Text style={styles.title}>
-                    Favorie
-                </Text>
-                <FlatList
-                    data={favoritesFilm}
-                    renderItem={renderItem}
-                    keyExtractor={item => item.id} />
-            </ScrollView>
+            <FlatList showsVerticalScrollIndicator={false}
+                ListHeaderComponent={
+                    <Text style={styles.title}>
+                        Favorie
+                    </Text>
+                }                
+                data={favoritesFilm}
+                renderItem={renderItem}
+                keyExtractor={item => item.id} />
             <DisplayLoading/>
         </View>
     )

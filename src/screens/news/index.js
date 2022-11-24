@@ -51,8 +51,8 @@ const News = ({ navigation }) => {
     const FilmItem = ({film, handleItemPress}) => (
         <Pressable onPress={() => handleItemPress(film.id) }>
             <View>
-            <Image style={styles.new_image}
-                source={{ uri: global.SERVER_ADDRESS+film.poster_path }} />
+                <Image style={styles.new_image}
+                    source={{ uri: global.SERVER_ADDRESS+film.poster_path }} />
             </View>
         </Pressable>
     );
@@ -64,19 +64,19 @@ const News = ({ navigation }) => {
     return (
         <View style={styles.main_container}>
             <StatusBar barStyle="light-content" backgroundColor="#6a51ae" />
-            <ScrollView showsVerticalScrollIndicator={false}>
-                <View style={styles.title_container}>
-                    <Text style={styles.title}>
-                        Nouveautés
-                    </Text>
-                </View>
-                <FlatList
+            <FlatList showsVerticalScrollIndicator={false}
+                ListHeaderComponent={
+                    <View style={styles.title_container}>
+                        <Text style={styles.title}>
+                            Nouveautés
+                        </Text>
+                    </View>
+                }
                     numColumns={3}
-                    contentContainerStyle={styles.new_image_container}
+                    //contentContainerStyle={styles.new_image_container}
                     data={films}
                     renderItem={renderItem}
                     keyExtractor={item => item.id} />
-            </ScrollView>
             <DisplayLoading/>
         </View>
     )

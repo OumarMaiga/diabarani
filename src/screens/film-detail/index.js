@@ -199,94 +199,96 @@ export default ({ route, navigation }) => {
     return (
         <View style={styles.main_container}>
             <StatusBar barStyle="light-content" backgroundColor="#6a51ae" />
-            <ScrollView style={{ flex: 1 }}>
-            { film && greaterThanToday(film.release_date)
-                ? (
-                    <Image style={styles.background_image}
-                        source={{
-                            uri: couverture_path
-                        }}
-                    />
-                ) : (
-                <Video style={styles.background_video}
-                    source={{
-                        uri: video_path
-                    }}
-                    ref={video}
-                    useNativeControls
-                    resizeMode="contain"
-                    //onPlaybackStatusUpdate={status => _onPlaybackStatusUpdatestatus(status)}
-                    onLoad={() => _onLoad()}
-                />
-                )
-            }
-               <View style={styles.detail_container}>
-                    <Text style={styles.detail_title}>
-                        { film && film.title }
-                    </Text>
-                    <Text style={styles.detail_time}>
-                        1h 22min
-                    </Text>
-                    <Text style={styles.detail_genre}>
-                        { film && film.genres.map(genre => genre.libelle).join(" - ") }
-                    </Text>
-                    <View style={{ flexDirection: "row", alignItems: 'center', marginTop: 5, marginBottom: 5 }}>
-                        <View style={styles.detail_rate}>
-                            <MaterialCommunityIcons name="star" size={28} color={global.white} />
-                            <Text style={styles.detail_rate_text}>
-                                6.4
+            <FlatList style={{ flex: 1 }}
+                ListHeaderComponent={
+                    <>
+                    { film && greaterThanToday(film.release_date)
+                        ? (
+                            <Image style={styles.background_image}
+                                source={{
+                                    uri: couverture_path
+                                }}
+                            />
+                        ) : (
+                        <Video style={styles.background_video}
+                            source={{
+                                uri: video_path
+                            }}
+                            ref={video}
+                            useNativeControls
+                            resizeMode="contain"
+                            //onPlaybackStatusUpdate={status => _onPlaybackStatusUpdatestatus(status)}
+                            onLoad={() => _onLoad()}
+                        />
+                        )
+                    }
+                        <View style={styles.detail_container}>
+                            <Text style={styles.detail_title}>
+                                { film && film.title }
+                            </Text>
+                            <Text style={styles.detail_time}>
+                                1h 22min
+                            </Text>
+                            <Text style={styles.detail_genre}>
+                                { film && film.genres.map(genre => genre.libelle).join(" - ") }
+                            </Text>
+                            <View style={{ flexDirection: "row", alignItems: 'center', marginTop: 5, marginBottom: 5 }}>
+                                <View style={styles.detail_rate}>
+                                    <MaterialCommunityIcons name="star" size={28} color={global.white} />
+                                    <Text style={styles.detail_rate_text}>
+                                        6.4
+                                    </Text>
+                                </View>
+                                <MaterialCommunityIcons name="eye" size={28} color={global.lightGray} />
+                                <Text style={styles.detail_view_count}>6.015</Text>
+                            </View>
+                            <View style={{ flexDirection: "row", marginTop: 10 }}>
+                                { film && isFavorite(film.id)
+                                    ? (
+                                        <Pressable onPress={() => favoriteIconPress(film)} style={{ marginRight: 10, alignItems: 'center' }}>
+                                            <MaterialCommunityIcons name="heart" size={28} color={global.Yellow} />
+                                            <Text style={styles.detail_icon_text}>J'aime pas</Text>
+                                        </Pressable>
+                                    ) : (
+                                        <Pressable onPress={() => favoriteIconPress(film)} style={{ marginRight: 10, alignItems: 'center' }}>
+                                            <MaterialCommunityIcons name="heart" size={28} color={global.lightGray} />
+                                            <Text style={styles.detail_icon_text}>J'aime</Text>
+                                        </Pressable>
+                                    )
+                                }
+                                <Pressable onPress={() => onShare(film)} style={{ marginRight: 10, alignItems: 'center' }}>
+                                    <MaterialCommunityIcons name="share" size={28} color={global.lightGray} />
+                                    <Text style={styles.detail_icon_text}>Partager</Text>
+                                </Pressable>
+                                { film && isToWatch(film.id)
+                                    ? (
+                                        <Pressable onPress={() => toWatchIconPress(film)} style={{ marginRight: 10, alignItems: 'center' }}>
+                                            <MaterialCommunityIcons name="plus-box-multiple" size={28} color={global.Yellow} />
+                                            <Text style={styles.detail_icon_text}>A régarder</Text>
+                                        </Pressable>
+                                    ) : (
+                                        <Pressable onPress={() => toWatchIconPress(film)} style={{ marginRight: 10, alignItems: 'center' }}>
+                                            <MaterialCommunityIcons name="plus-box-multiple" size={28} color={global.lightGray} />
+                                            <Text style={styles.detail_icon_text}>A régarder</Text>
+                                        </Pressable>
+                                    )
+                                }
+                            </View>
+                            <Text style={styles.detail_overview}>
+                                { film && film.overview }
                             </Text>
                         </View>
-                        <MaterialCommunityIcons name="eye" size={28} color={global.lightGray} />
-                        <Text style={styles.detail_view_count}>6.015</Text>
-                    </View>
-                    <View style={{ flexDirection: "row", marginTop: 10 }}>
-                        { film && isFavorite(film.id)
-                            ? (
-                                <Pressable onPress={() => favoriteIconPress(film)} style={{ marginRight: 10, alignItems: 'center' }}>
-                                    <MaterialCommunityIcons name="heart" size={28} color={global.Yellow} />
-                                    <Text style={styles.detail_icon_text}>J'aime pas</Text>
-                                </Pressable>
-                            ) : (
-                                <Pressable onPress={() => favoriteIconPress(film)} style={{ marginRight: 10, alignItems: 'center' }}>
-                                    <MaterialCommunityIcons name="heart" size={28} color={global.lightGray} />
-                                    <Text style={styles.detail_icon_text}>J'aime</Text>
-                                </Pressable>
-                            )
-                        }
-                        <Pressable onPress={() => onShare(film)} style={{ marginRight: 10, alignItems: 'center' }}>
-                            <MaterialCommunityIcons name="share" size={28} color={global.lightGray} />
-                            <Text style={styles.detail_icon_text}>Partager</Text>
-                        </Pressable>
-                        { film && isToWatch(film.id)
-                            ? (
-                                <Pressable onPress={() => toWatchIconPress(film)} style={{ marginRight: 10, alignItems: 'center' }}>
-                                    <MaterialCommunityIcons name="plus-box-multiple" size={28} color={global.Yellow} />
-                                    <Text style={styles.detail_icon_text}>A régarder</Text>
-                                </Pressable>
-                            ) : (
-                                <Pressable onPress={() => toWatchIconPress(film)} style={{ marginRight: 10, alignItems: 'center' }}>
-                                    <MaterialCommunityIcons name="plus-box-multiple" size={28} color={global.lightGray} />
-                                    <Text style={styles.detail_icon_text}>A régarder</Text>
-                                </Pressable>
-                            )
-                        }
-                    </View>
-                    <Text style={styles.detail_overview}>
-                        { film && film.overview }
-                    </Text>
-                    <View style={styles.detail_simulaire_container}>
-                        <Text style={styles.detail_simulaire_title}>Film simulaires</Text>
-                        <View style={styles.detail_similaire_image_container}>
-                            <FlatList
-                              contentContainerStyle={styles.detail_similaire_image_container}
-                              data={filmSimulaire}
-                              renderItem={renderFilmSimilaireItem}
-                              keyExtractor={item => item.id} />
+                        <View style={styles.detail_simulaire_container}>
+                            <Text style={styles.detail_simulaire_title}>Film simulaires</Text>
                         </View>
-                    </View>
-                </View>
-            </ScrollView>
+                    </>
+                }
+                //contentContainerStyle={styles.detail_similaire_image_container}
+                data={filmSimulaire}
+                renderItem={renderFilmSimilaireItem}
+                keyExtractor={item => item.id}
+                numColumns={3}
+                />
             <DisplayLoading />
         </View>
     );
@@ -377,7 +379,6 @@ const styles = StyleSheet.create({
     },
     detail_similaire_image_container: {
         flexDirection: 'row',
-        numColumns: 2,
     },
     detail_similaire_image: {
         marginBottom: 5,

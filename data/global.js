@@ -42,7 +42,7 @@ global.currentUser = {
 
 /* backend */
 /* Wi-fi */
-global.SERVER_ADDRESS = 'http://192.168.1.6/diabarani-api/public/';
+global.SERVER_ADDRESS = 'http://192.168.1.35/diabarani-api/public/';
 
 /* Phone */
 //global.SERVER_ADDRESS = 'http://172.20.10.8/diabarani-api/public/';

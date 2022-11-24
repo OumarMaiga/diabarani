@@ -210,23 +210,32 @@ const Accueil = ({ navigation }) => {
 
     const Genre = () => {
 		return (
-            <FlatList
-                data={genresFilms}
-                renderItem={renderGenresFilmsItem}
-                keyExtractor={item => item.id}
-                showsHorizontalScrollIndicator={false} />
+            <View>
+                <FlatList
+                    data={genresFilms}
+                    renderItem={renderGenresFilmsItem}
+                    keyExtractor={item => item.id}
+                    showsHorizontalScrollIndicator={false} />
+            </View>
 		)
     }
 
-    return (    
+    return (
         <SafeAreaView style={styles.main_container}>
             <StatusBar barStyle="light-content" backgroundColor="#6a51ae" />
-            <ScrollView showsVerticalScrollIndicator={false}>
-                <UpComing/>
-                <Historique/>
-                <New/>
-                {/**/}<Genre/>
-            </ScrollView>
+            <FlatList showsVerticalScrollIndicator={false}
+                ListHeaderComponent={
+                    <>
+                        <UpComing/>
+                        <Historique/>
+                        <New/>
+                    </>
+                }
+                data={genresFilms}
+                renderItem={renderGenresFilmsItem}
+                keyExtractor={item => item.id}
+                showsHorizontalScrollIndicator={false}
+            />{/**/}
             <DisplayLoading/>
         </SafeAreaView>
     )
