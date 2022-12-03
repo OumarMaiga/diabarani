@@ -71,8 +71,8 @@ const Favorite = ({ navigation }) => {
                     </Text>
                 }                
                 data={favoritesFilm}
-                renderItem={renderItem}
-                keyExtractor={item => item.id} />
+                keyExtractor={(item,index) => index}
+                renderItem={renderItem} />
             <DisplayLoading/>
         </View>
     )

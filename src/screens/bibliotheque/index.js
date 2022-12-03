@@ -55,7 +55,7 @@ const Bibliotheque = ({ navigation }) => {
                     <FlatList
                         data={inRecentsFilm}
                         renderItem={renderRecentFilmsItem}
-                        keyExtractor={item => item.id}
+                        keyExtractor={(item,index) => index}
                         horizontal={true}
                         showsHorizontalScrollIndicator={false} />
                 </View>
@@ -84,8 +84,9 @@ const Bibliotheque = ({ navigation }) => {
                             //numColumns={3}
                             contentContainerStyle={styles.to_watch_container}
                             data={towatchsFilm}
+                            keyExtractor={(item,index) => index}
                             renderItem={renderItem}
-                            keyExtractor={item => item.id} />
+                         />
                     </View>
                 </View>
         )
@@ -113,7 +114,7 @@ const Bibliotheque = ({ navigation }) => {
                 //contentContainerStyle={styles.to_watch_container}
                 data={towatchsFilm}
                 renderItem={renderItem}
-                keyExtractor={item => item.id}
+                keyExtractor={(item,index) => index}
                 numColumns={3}
             />{/**/}
             <DisplayLoading/>

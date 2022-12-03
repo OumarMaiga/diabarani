@@ -76,7 +76,7 @@ const News = ({ navigation }) => {
                     //contentContainerStyle={styles.new_image_container}
                     data={films}
                     renderItem={renderItem}
-                    keyExtractor={item => item.id} />
+                    keyExtractor={(item,index) => index} />
             <DisplayLoading/>
         </View>
     )

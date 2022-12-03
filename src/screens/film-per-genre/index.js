@@ -106,8 +106,8 @@ const FilmPerGenre = ({ route, navigation }) => {
                 </Text>
                 <FlatList
                     data={films}
-                    renderItem={renderItem}
-                    keyExtractor={item => item.id} />
+                    keyExtractor={(item,index) => index}
+                    renderItem={renderItem} />
             </ScrollView>
             <DisplayLoading/>
         </View>

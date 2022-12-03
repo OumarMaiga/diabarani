@@ -202,14 +202,21 @@ export default ({ route, navigation }) => {
             <FlatList style={{ flex: 1 }}
                 ListHeaderComponent={
                     <>
-                    { film && greaterThanToday(film.release_date)
+                    {/*{ film && greaterThanToday(film.release_date)
                         ? (
-                            <Image style={styles.background_image}
+                            <Video style={styles.background_video}
                                 source={{
-                                    uri: couverture_path
+                                    uri: video_path
                                 }}
+                                ref={video}
+                                useNativeControls
+                                resizeMode="contain"
+                                posterSource={{uri: couverture_path}}
+                                usePoster={true}
+                                //onPlaybackStatusUpdate={status => _onPlaybackStatusUpdatestatus(status)}
+                                onLoad={() => _onLoad()}
                             />
-                        ) : (
+                            ) : (*/}
                         <Video style={styles.background_video}
                             source={{
                                 uri: video_path
@@ -217,11 +224,13 @@ export default ({ route, navigation }) => {
                             ref={video}
                             useNativeControls
                             resizeMode="contain"
+                            posterSource={{uri: couverture_path}}
+                            //usePoster={true}
                             //onPlaybackStatusUpdate={status => _onPlaybackStatusUpdatestatus(status)}
                             onLoad={() => _onLoad()}
                         />
-                        )
-                    }
+                        {/*)
+                    }*/}
                         <View style={styles.detail_container}>
                             <Text style={styles.detail_title}>
                                 { film && film.title }
@@ -286,7 +295,7 @@ export default ({ route, navigation }) => {
                 //contentContainerStyle={styles.detail_similaire_image_container}
                 data={filmSimulaire}
                 renderItem={renderFilmSimilaireItem}
-                keyExtractor={item => item.id}
+                keyExtractor={(item,index) => index}
                 numColumns={3}
                 />
             <DisplayLoading />

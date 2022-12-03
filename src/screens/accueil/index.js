@@ -167,7 +167,7 @@ const Accueil = ({ navigation }) => {
                 <FlatList
                     data={upcomingFilms}
                     renderItem={renderUpcomingFilmsItem}
-                    keyExtractor={item => item.id}
+                    keyExtractor={(item,index) => index}
                     horizontal={true}
                     showsHorizontalScrollIndicator={false} />
             </View>
@@ -183,7 +183,7 @@ const Accueil = ({ navigation }) => {
                     <FlatList
                         data={inRecentsFilm}
                         renderItem={renderRecentFilmsItem}
-                        keyExtractor={item => item.id}
+                        keyExtractor={(item,index) => index}
                         horizontal={true}
                         showsHorizontalScrollIndicator={false} />
                 </View>
@@ -201,7 +201,7 @@ const Accueil = ({ navigation }) => {
                 <FlatList
                     data={newFilms}
                     renderItem={renderNewFilmsItem}
-                    keyExtractor={item => item.id}
+                    keyExtractor={(item,index) => index}
                     horizontal={true}
                     showsHorizontalScrollIndicator={false} />
             </View>
@@ -214,7 +214,7 @@ const Accueil = ({ navigation }) => {
                 <FlatList
                     data={genresFilms}
                     renderItem={renderGenresFilmsItem}
-                    keyExtractor={item => item.id}
+                    keyExtractor={(item,index) => index}
                     showsHorizontalScrollIndicator={false} />
             </View>
 		)
@@ -228,14 +228,14 @@ const Accueil = ({ navigation }) => {
                     <>
                         <UpComing/>
                         <Historique/>
-                        <New/>
+                        <New/>{/**/}
                     </>
                 }
                 data={genresFilms}
                 renderItem={renderGenresFilmsItem}
                 keyExtractor={item => item.id}
                 showsHorizontalScrollIndicator={false}
-            />{/**/}
+            />
             <DisplayLoading/>
         </SafeAreaView>
     )
