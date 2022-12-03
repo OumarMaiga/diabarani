@@ -100,15 +100,15 @@ const FilmPerGenre = ({ route, navigation }) => {
     return (    
         <View style={styles.main_container}>
             <StatusBar barStyle="light-content" backgroundColor="#6a51ae" />
-            <ScrollView showsVerticalScrollIndicator={false}>
-                <Text style={styles.title}>
-                    { genre && genre.libelle }
-                </Text>
-                <FlatList
+                <FlatList showsVerticalScrollIndicator={false}
+                    ListHeaderComponent={
+                        <Text style={styles.title}>
+                            { genre && genre.libelle }
+                        </Text>
+                    }        
                     data={films}
                     keyExtractor={(item,index) => index}
                     renderItem={renderItem} />
-            </ScrollView>
             <DisplayLoading/>
         </View>
     )
