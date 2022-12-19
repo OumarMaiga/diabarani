@@ -6,6 +6,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getUser, updateUser } from '../../../API/DiabaraniApi';
 import { useDispatch, useSelector } from "react-redux";
+import * as ImagePicker from 'expo-image-picker';
 import * as GLOBAL from '../../../data/global';
 import '../../../data/global';
 
@@ -21,7 +22,7 @@ const EditProfil = ({ navigation }) => {
     const [isLoading, setIsLoading] = useState(false);
     const { width, height } = Dimensions.get('window');
     const [rightPosition, setRightPosition] = useState(() => (width/2)-67.5);
-        
+    const [image, setImage] = useState("./assets/movie-6.jpg");      
 
     useEffect(() => {
 
@@ -33,10 +34,25 @@ const EditProfil = ({ navigation }) => {
                 setLast_name(user.last_name);
                 setEmail(user.email);
                 setPhone(user.phone);
-            }
-        
+            }       
 
     }, []);
+
+    const pickImage = async () => {
+        // No permissions request is necessary for launching the image library
+        let result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.All,
+          allowsEditing: true,
+          aspect: [4, 3],
+          quality: 1,
+        });
+    
+        console.log(result);
+    
+        if (!result.canceled) {
+          setImage(result.assets[0].uri);
+        }
+    };
 
     const DisplayLoading = () => {
         if(isLoading) {
@@ -98,10 +114,12 @@ const EditProfil = ({ navigation }) => {
                             </Text>
                         </View>
                         <View style={styles.profil_image_section}>
-                            <Image style={styles.profil_image}
-                            source={require("../../../assets/movie-6.jpg")} />
-                            <MaterialCommunityIcons style={[styles.icon_camera, {right: rightPosition}]} 
-                                name="camera" size={36} color="#B8B8B8" />
+                            {image &&<Image style={styles.profil_image}
+                                source={{uri: image}} />}
+                            <Pressable onPress={pickImage}>
+                                <MaterialCommunityIcons style={styles.icon_camera} 
+                                    name="camera" size={36} color={global.gray} />
+                            </Pressable>
                         </View>
                         <View style={styles.form_container}>
                                 <TextInput placeholder="Prenom"
@@ -167,7 +185,8 @@ const styles = StyleSheet.create({
     },
     icon_camera: {
         position: 'absolute',
-        bottom: -5,
+        bottom: -15,
+        left: 25,
     },
     form_container: {
         marginTop: 20,

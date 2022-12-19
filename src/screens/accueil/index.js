@@ -71,7 +71,7 @@ const Accueil = ({ navigation }) => {
             idFilm: idFilm
         });
     };
-
+    
     const UpcomingFilmItem = ({film, handleFilmItemPress}) => (
         <Pressable onPress={() => handleFilmItemPress(film.id) }>
             <Image style={styles.upcoming_image}

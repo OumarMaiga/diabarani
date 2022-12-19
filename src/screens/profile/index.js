@@ -33,9 +33,7 @@ const Profile = ({ navigation }) => {
                     <View style={styles.info_user_section}>
                         <View style={styles.profil_image_section}>
                             <Image style={styles.profil_image}
-                            source={require("../../../assets/movie-6.jpg")} />
-                            <MaterialCommunityIcons style={styles.icon_camera} 
-                                name="camera" size={36} color={global.gray} />
+                                source={require("../../../assets/movie-6.jpg")} />
                         </View>
                         <View style={styles.info_user}>
                             <Text style={styles.username}>
@@ -116,11 +114,6 @@ const styles = StyleSheet.create({
         width: 120,
         borderRadius: 75,
         backgroundColor: global.white
-    },
-    icon_camera: {
-        position: 'absolute',
-        bottom: -5,
-        right: -5,
     },
     user_info: {
         marginLeft: 10,
