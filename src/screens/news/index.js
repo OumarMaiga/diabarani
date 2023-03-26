@@ -3,7 +3,7 @@ import { ScrollView, View, Text, Image, Pressable, StyleSheet, StatusBar,
     ActivityIndicator, FlatList } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { getNewFilms } from '../../../API/DiabaraniApi';
+import { getNewFilms } from '../../../services/film';
 import * as GLOBAL from '../../../data/global';
 import '../../../data/global';
 

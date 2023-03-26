@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { ScrollView, View, Text, Image, TextInput, Pressable, StyleSheet, ActivityIndicator , StatusBar,
-    KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native'
+    KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
-import { login } from '../../../../API/DiabaraniApi'
-import { useDispatch, useSelector } from "react-redux"
-import * as GLOBAL from '../../../../data/global'
+import { login } from '../../../../services/auth';
+import { useDispatch, useSelector } from "react-redux";
+import * as GLOBAL from '../../../../data/global';
 import '../../../../data/global';
 
 
@@ -28,8 +28,15 @@ const Connexion = ({navigation}) => {
         }
 
         setIsLoading(true);
-        let data = await login({username, password})
+        let data = await login({username, password}).catch((error) => {   
+            alert("Erreur inattendu survenue sur le serveur.");
+            console.error(error);
+            return;
+        })
         if (global.debug >= GLOBAL.LOG.ROOT)  console.log("Connexion:onLoginPress()::data "+JSON.stringify(data));
+
+        if (data == undefined) {
+        }
 
         if(data.code == 1) 
         {

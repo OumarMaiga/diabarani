@@ -4,7 +4,7 @@ import { TextInput, View, Text, Image, Pressable, StyleSheet, StatusBar, Dimensi
 import SafeAreaView from 'react-native-safe-area-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getUser, updateUser } from '../../../API/DiabaraniApi';
+import { getUser, updateUser } from '../../../services/user';
 import { useDispatch, useSelector } from "react-redux";
 import * as ImagePicker from 'expo-image-picker';
 import * as GLOBAL from '../../../data/global';
@@ -22,7 +22,7 @@ const EditProfil = ({ navigation }) => {
     const [isLoading, setIsLoading] = useState(false);
     const { width, height } = Dimensions.get('window');
     const [rightPosition, setRightPosition] = useState(() => (width/2)-67.5);
-    const [image, setImage] = useState("./assets/movie-6.jpg");      
+    const [image, setImage] = useState("./assets/avatar.jpg");      
 
     useEffect(() => {
 

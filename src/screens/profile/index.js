@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react'
-import { ScrollView, View, Text, Image, Pressable, StyleSheet, StatusBar, TouchableOpacity } from 'react-native'
-import SafeAreaView from 'react-native-safe-area-view'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import { logout } from "../../../API/DiabaraniApi"
-import { useDispatch, useSelector } from "react-redux"
-import { getUser } from "../../../API/DiabaraniApi";
-import * as GLOBAL from '../../../data/global'
-import '../../../data/global'
+import React, { useState, useEffect } from 'react';
+import { ScrollView, View, Text, Image, Pressable, StyleSheet, StatusBar, TouchableOpacity } from 'react-native';
+import SafeAreaView from 'react-native-safe-area-view';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useDispatch, useSelector } from "react-redux";
+import { getUser } from '../../../services/user';
+import { logout } from '../../../services/auth';
+import * as GLOBAL from '../../../data/global';
+import '../../../data/global';
 
 
 const Profile = ({ navigation }) => {

@@ -24,7 +24,7 @@ export const SERVER_STATUS_CODE = {
 /* GLOBAL VARIABLES */
 /* general */
 global.appName = 'Diabarani';
-global.debug = LOG.TRACE;
+global.debug = LOG.ROOT;
 global.users = [];
 global.user = null;
 global.currentUser = {
@@ -42,10 +42,14 @@ global.currentUser = {
 
 /* backend */
 /* Wi-fi */
-global.SERVER_ADDRESS = 'http://192.168.1.24/diabarani-api/public/';
+//global.SERVER_ADDRESS = 'http://192.168.1.23/diabarani-api/';
+
+global.SERVER_ADDRESS = 'https://d072-197-155-175-182.eu.ngrok.io/diabarani-api/';
+
+//global.SERVER_ADDRESS = 'localhost/diabarani-api/';
 
 /* Phone */
-//global.SERVER_ADDRESS = 'http://172.20.10.8/diabarani-api/public/';
+//global.SERVER_ADDRESS = 'http://172.20.10.8/diabarani-api/';
 
 
 global.server_off = false;

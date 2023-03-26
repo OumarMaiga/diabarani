@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { ScrollView, View, Text, Image, TextInput, Pressable, StyleSheet, ActivityIndicator, StatusBar,
-    KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native'
+    KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
-import { register } from '../../../../API/DiabaraniApi'
-import { useDispatch } from "react-redux"
-import * as GLOBAL from '../../../../data/global'
-import '../../../../data/global'
+import { register } from '../../../../services/auth';
+import { useDispatch } from "react-redux";
+import * as GLOBAL from '../../../../data/global';
+import '../../../../data/global';
 
 const Inscription = ({ navigation }) => {
     

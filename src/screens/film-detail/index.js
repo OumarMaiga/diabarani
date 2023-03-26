@@ -4,7 +4,7 @@ import { ScrollView, StatusBar, StyleSheet, View, Image, Text, ActivityIndicator
 import { SafeAreaView } from 'react-native-safe-area-context';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Video, AVPlaybackStatus } from 'expo-av';
-import { getFilm, getSomeGenresFilms } from '../../../API/DiabaraniApi';
+import { getFilm, getSomeGenresFilms } from '../../../services/film';
 import { useDispatch, useSelector } from "react-redux";
 import * as GLOBAL from '../../../data/global';
 import '../../../data/global';

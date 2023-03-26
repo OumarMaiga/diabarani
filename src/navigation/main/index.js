@@ -16,6 +16,7 @@ const Tab = createBottomTabNavigator()
 const Navigation = () => {
     
     const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
+    //const isAuthenticated = true;
 
     return (
         <NavigationContainer>

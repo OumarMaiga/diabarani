@@ -3,7 +3,7 @@ import { ScrollView, View, Text, Image, Pressable, StyleSheet, StatusBar,
     ActivityIndicator, FlatList } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { getUpcomingFilms, getNewFilms, getGenresFilms } from '../../../API/DiabaraniApi';
+import { getUpcomingFilms, getNewFilms, getGenresFilms } from '../../../services/film';
 import { useDispatch, useSelector } from "react-redux";
 import * as GLOBAL from '../../../data/global';
 import '../../../data/global';

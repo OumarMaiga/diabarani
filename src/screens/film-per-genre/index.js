@@ -5,7 +5,7 @@ import SafeAreaView from 'react-native-safe-area-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useDispatch } from "react-redux";
 import { useSelector } from 'react-redux';
-import { getGenreFilms, getGenre } from '../../../API/DiabaraniApi';
+import { getGenreFilms, getGenre } from '../../../services/film';
 import * as GLOBAL from '../../../data/global';
 import '../../../data/global';
 
