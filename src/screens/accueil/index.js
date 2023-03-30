@@ -4,6 +4,10 @@ import { ScrollView, View, Text, Image, Pressable, StyleSheet, StatusBar,
 import SafeAreaView from 'react-native-safe-area-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { getUpcomingFilms, getNewFilms, getGenresFilms } from '../../../services/film';
+import { UpcomingFilmsComponent } from '../../components/film';
+import { NewFilm } from '../../components/new-film';
+import { NewSerie } from '../../components/new-serie';
+import { Historique } from '../../components/historique';
 import { useDispatch, useSelector } from "react-redux";
 import * as GLOBAL from '../../../data/global';
 import '../../../data/global';
@@ -72,39 +76,13 @@ const Accueil = ({ navigation }) => {
         });
     };
     
-    const UpcomingFilmItem = ({film, handleFilmItemPress}) => (
-        <Pressable onPress={() => handleFilmItemPress(film.id) }>
-            <Image style={styles.upcoming_image}
-                source={{ uri: global.SERVER_ADDRESS+film.poster_path }} />
-        </Pressable>
-    );
-
-    const renderUpcomingFilmsItem = ({ item }) => (
-        <UpcomingFilmItem film={item} handleFilmItemPress={handleFilmItemPress} />
-    );
-
-    const NewFilmItem = ({film, handleFilmItemPress}) => (
-        <Pressable onPress={() => handleFilmItemPress(film.id) }>
-            <Image style={styles.new_image}
-                source={{ uri: global.SERVER_ADDRESS+film.poster_path }} />
-        </Pressable>
-    );
-
-    const renderNewFilmsItem = ({ item }) => (
-        <NewFilmItem film={item} handleFilmItemPress={handleFilmItemPress} />
-    );
-
-    const RecentFilmItem = ({film, handleFilmItemPress}) => (
-        <Pressable onPress={() => handleFilmItemPress(film.id) }>
-            <Image style={styles.historique_image}
-                source={{ uri: global.SERVER_ADDRESS+film.poster_path }} />
-        </Pressable>
-    );
-
-    const renderRecentFilmsItem = ({ item }) => (
-        <RecentFilmItem film={item} handleFilmItemPress={handleFilmItemPress} />
-    );
-
+    const handleSerieItemPress = (idSerie) => {
+        console.log("Serie Item press serie => "+idSerie)
+        /*navigation.navigate('FilmDetail', {
+            idFilm: idSerie
+        });*/
+    };
+    
     const handleGenresItemPress = (genre_id) => {
         navigation.navigate('FilmPerGenre', {
             genre_id: genre_id
@@ -158,55 +136,6 @@ const Accueil = ({ navigation }) => {
         } else return null
     };
 
-    const UpComing = () => {
-		return (
-            <View style={styles.section_container}>
-                <Text style={styles.coming_title}>
-                    Bientôt
-                </Text>
-                <FlatList
-                    data={upcomingFilms}
-                    renderItem={renderUpcomingFilmsItem}
-                    keyExtractor={(item,index) => index}
-                    horizontal={true}
-                    showsHorizontalScrollIndicator={false} />
-            </View>
-		)
-    }
-    const Historique = () => {
-		return (
-            <View style={styles.section_container}>
-                <Text style={styles.subtitle_text}>
-                    Continuer à regarder
-                </Text>
-                <View horizontal showsHorizontalScrollIndicator={false}>
-                    <FlatList
-                        data={inRecentsFilm}
-                        renderItem={renderRecentFilmsItem}
-                        keyExtractor={(item,index) => index}
-                        horizontal={true}
-                        showsHorizontalScrollIndicator={false} />
-                </View>
-            </View>
-		)
-    }
-
-
-    const New = () => {
-		return (
-            <View style={styles.section_container}>
-                <Text style={styles.subtitle_text}>
-                    Nouveautés
-                </Text>
-                <FlatList
-                    data={newFilms}
-                    renderItem={renderNewFilmsItem}
-                    keyExtractor={(item,index) => index}
-                    horizontal={true}
-                    showsHorizontalScrollIndicator={false} />
-            </View>
-		)
-    }
 
     const Genre = () => {
 		return (
@@ -226,9 +155,10 @@ const Accueil = ({ navigation }) => {
             <FlatList showsVerticalScrollIndicator={false}
                 ListHeaderComponent={
                     <>
-                        <UpComing/>
-                        <Historique/>
-                        <New/>{/**/}
+                        <UpcomingFilmsComponent upcomingFilms={upcomingFilms} handleFilmItemPress={handleFilmItemPress} />
+                        <Historique inRecentsFilm={inRecentsFilm} handleFilmItemPress={handleFilmItemPress}/>
+                        <NewFilm newFilms={newFilms} handleFilmItemPress={handleFilmItemPress}/>
+                        <NewSerie newSeries={newFilms} handleSerieItemPress={handleSerieItemPress}/>
                     </>
                 }
                 data={genresFilms}
@@ -261,25 +191,6 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginBottom: 10,
     },
-    coming_title: {
-        marginLeft: 10,
-        marginRight: 10,
-        fontSize: 32,
-        color: global.white,
-        fontWeight: 'bold',
-        marginBottom: 10,
-    },
-    upcoming_image: {
-        marginLeft: 10,
-        marginRight: 10,
-        height: 190,
-        width: 160,
-        backgroundColor: global.white
-    },
-    image_container: {
-        flex: 1,
-        flexDirection: 'row',
-    },
       subtitle: {
         flexDirection: 'row',
       }, 
@@ -296,23 +207,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#707070',
         textAlign: 'right',
-      },
-      historique_image: {
-          marginLeft: 10,
-          marginRight: 10,
-          height: 90,
-          width: 140,
-          borderRadius: 7,
-          backgroundColor: global.white
-      },
-      new_image: {
-          marginLeft: 10,
-          marginRight: 10,
-          height: 80,
-          width: 80,
-          borderRadius: 50,
-          backgroundColor: global.white
-
       },
       genre_image: {
           marginLeft: 10,

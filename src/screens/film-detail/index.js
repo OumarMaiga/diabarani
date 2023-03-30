@@ -21,8 +21,6 @@ export default ({ route, navigation }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [film, setFilm] = useState(undefined);
     const [filmSimulaire, setFilmSimulaire] = useState([]);
-    const [video_path, setVideo_path] = useState('');
-    const [couverture_path, setCouverture_path] = useState('');
     const video = React.useRef(null);
     const [status, setStatus] = React.useState({});
     const date = new Date();
@@ -59,8 +57,6 @@ export default ({ route, navigation }) => {
         let data = await getFilm(idFilm); 
         if (data.code == 1) {
             setFilm(data.film);
-            data.film.videos.map(video => setVideo_path(global.SERVER_ADDRESS+video.path));
-            setCouverture_path(global.SERVER_ADDRESS+data.film.couverture_path);
             const genre_ids = data.film.genres.map(genre => genre.id).join();
             fetchSomeGenresFilms(genre_ids);
         }
@@ -206,12 +202,12 @@ export default ({ route, navigation }) => {
                         ? (
                             <Video style={styles.background_video}
                                 source={{
-                                    uri: video_path
+                                    uri: global.SERVER_ADDRESS+film?.video_path
                                 }}
                                 ref={video}
                                 useNativeControls
                                 resizeMode="contain"
-                                posterSource={{uri: couverture_path}}
+                                posterSource={{uri: global.SERVER_ADDRESS+film?.couverture_path}}
                                 usePoster={true}
                                 //onPlaybackStatusUpdate={status => _onPlaybackStatusUpdatestatus(status)}
                                 onLoad={() => _onLoad()}
@@ -219,12 +215,12 @@ export default ({ route, navigation }) => {
                             ) : (*/}
                         <Video style={styles.background_video}
                             source={{
-                                uri: video_path
+                                uri: film && global.SERVER_ADDRESS+film.video_path
                             }}
                             ref={video}
                             useNativeControls
                             resizeMode="contain"
-                            posterSource={{uri: couverture_path}}
+                            posterSource={{uri: film && global.SERVER_ADDRESS+film.couverture_path}}
                             //usePoster={true}
                             //onPlaybackStatusUpdate={status => _onPlaybackStatusUpdatestatus(status)}
                             onLoad={() => _onLoad()}
@@ -233,7 +229,7 @@ export default ({ route, navigation }) => {
                     }*/}
                         <View style={styles.detail_container}>
                             <Text style={styles.detail_title}>
-                                { film && film.title }
+                                { film?.title }
                             </Text>
                             <Text style={styles.detail_time}>
                                 1h 22min
@@ -284,7 +280,7 @@ export default ({ route, navigation }) => {
                                 }
                             </View>
                             <Text style={styles.detail_overview}>
-                                { film && film.overview }
+                                { film?.overview }
                             </Text>
                         </View>
                         <View style={styles.detail_simulaire_container}>
