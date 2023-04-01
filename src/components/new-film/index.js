@@ -1,3 +1,3 @@
-import { NewFilm } from "./NewFilm";
+import { NewFilms } from "./NewFilms";
 
-export { NewFilm };
+export { NewFilms };

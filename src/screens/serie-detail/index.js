@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StatusBar, StyleSheet, View, ActivityIndicator, 
     FlatList, Share } from 'react-native';
-import { FilmDetail } from '../../components/film';
+import { SerieDetail } from '../../components/film';
 import { FilmSimilaireItem } from '../../components/film';
 import { getFilm, getSomeGenresFilms } from '../../../services/film';
 import { useDispatch, useSelector } from "react-redux";
@@ -161,32 +161,13 @@ export default ({ route, navigation }) => {
           alert(error.message);
         }
       };
-
-      const _onPlaybackStatusUpdatestatus = (status) => {
-        setStatus(status);
-        if (status.isLoaded) {
-            status.isBuffering ? console.log('isBuffering') : console.log('');
-            status.isPlaying ? console.log('isPlaying') : console.log('');
-            status.shouldPlay ? console.log('shouldPlay') : console.log('');
-
-            if (status.isPlaying) {
-                console.log('status');
-                handleInRecent(film);
-            }
-        }
-      };
       
-      const _onLoad = () => {
-        if (global.debug >= GLOBAL.LOG.INFO) console.log("FilmDetail::_onLoad()");
-        handleInRecent(film);
-      };
-
     return (
         <View style={styles.main_container}>
             <StatusBar barStyle="light-content" backgroundColor="#6a51ae" />
             <FlatList style={{ flex: 1 }}
                 ListHeaderComponent={
-                    <FilmDetail film={film} _onLoad={_onLoad} favoriteIconPress={handleFavoriteIconPress} isFavorite={isFavorite} onShare={onShare} />
+                    <SerieDetail film={film} favoriteIconPress={handleFavoriteIconPress} isFavorite={isFavorite} onShare={onShare} />
                 }
                 data={filmSimulaire}
                 renderItem={({item}) => <FilmSimilaireItem film={item} handleFilmSimilaireItemPress={handleFilmSimilaireItemPress} />}

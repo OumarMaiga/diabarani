@@ -2,10 +2,10 @@ import React from 'react';
 import { Pressable, Image, StyleSheet } from 'react-native';
 import '../../../data/global';
 
-export const NewSerieItem = ({film, handleSerieItemPress}) => (
-    <Pressable onPress={() => handleSerieItemPress(film.id) }>
+export const NewSerieItem = ({serie, serieItemPress}) => (
+    <Pressable onPress={() => serieItemPress(serie.id) }>
         <Image style={styles.new_image}
-            source={{ uri: global.SERVER_ADDRESS+film.poster_path }} />
+            source={{ uri: global.SERVER_ADDRESS+serie.poster_path }} />
     </Pressable>
 )
 const styles = StyleSheet.create({

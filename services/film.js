@@ -59,7 +59,7 @@ export const getUpcomingFilms = () => {
 
     if (global.debug >= GLOBAL.LOG.INFO) console.log("FilmService::getUpcomingFilms()");
 
-    return fetch(`${global.SERVER_ADDRESS}`+'index.php?action=upcoming-film', {
+    return fetch(`${global.SERVER_ADDRESS}`+'index.php?action=upcoming-films', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'

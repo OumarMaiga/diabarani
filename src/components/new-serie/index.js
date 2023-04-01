@@ -1,3 +1,3 @@
-import { NewSerie } from "./NewSerie";
+import { NewSeries } from "./NewSeries";
 
-export { NewSerie };
+export { NewSeries };

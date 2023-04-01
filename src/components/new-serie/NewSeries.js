@@ -1,16 +1,16 @@
 import React from 'react';
 import { View, Text, FlatList, StyleSheet } from 'react-native';
-import { NewFilmItem } from './NewFilmItem';
+import { NewSerieItem } from './NewSerieItem';
 
-export const NewFilm = ({newFilms, handleFilmItemPress}) => {
+export const NewSeries = ({newSeries, serieItemPress}) => {
     return (
         <View style={styles.section_container}>
             <Text style={styles.subtitle_text}>
-                Nouveaux films
+                Nouvelles series
             </Text>
             <FlatList
-                data={newFilms}
-                renderItem={({item}) => <NewFilmItem film={item} handleFilmItemPress={handleFilmItemPress} />}
+                data={newSeries}
+                renderItem={({item}) => <NewSerieItem serie={item} serieItemPress={serieItemPress} />}
                 keyExtractor={(item,index) => index}
                 horizontal={true}
                 showsHorizontalScrollIndicator={false} />

@@ -5,10 +5,10 @@ import SafeAreaView from 'react-native-safe-area-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { getUpcomingFilms, getNewFilms, getGenresFilms } from '../../../services/film';
 import { UpcomingFilmsComponent } from '../../components/film';
-import { NewFilm } from '../../components/new-film';
-import { NewSerie } from '../../components/new-serie';
+import { NewFilms } from '../../components/new-film';
+import { NewSeries } from '../../components/new-serie';
 import { Historique } from '../../components/historique';
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import * as GLOBAL from '../../../data/global';
 import '../../../data/global';
 
@@ -18,8 +18,8 @@ const Accueil = ({ navigation }) => {
 
     const [isLoading, setIsLoading] = useState(true);
     const [upcomingFilms, setUpComingFilms] = useState([]);
-    const [films, setFilms] = useState([]);
     const [newFilms, setNewFilms] = useState([]);
+    const [newSeries, setNewSeries] = useState([]);
     const [genresFilms, setGenresFilms] = useState([]);
 
     const fetchUpcomingFilms = async () => {
@@ -43,7 +43,19 @@ const Accueil = ({ navigation }) => {
         }
         setIsLoading(false);
 
-        if (global.debug >= GLOBAL.LOG.ROOT)  console.log("Accueil::useEffect()::fetchNewFilms()::data "+JSON.stringify(data));
+        if (global.debug >= GLOBAL.LOG.ROOT)  console.log("fetchNewFilms()::data "+JSON.stringify(data));
+    }
+
+    const fetchNewSeries = async () => {
+        if (global.debug >= GLOBAL.LOG.INFO) console.log("Accueil::fetchNewSeries()");
+        setIsLoading(true);
+        let data = await getNewSeries(); 
+        if (data.code == 1) {
+            setNewFilms(data.series);
+        }
+        setIsLoading(false);
+
+        if (global.debug >= GLOBAL.LOG.ROOT)  console.log("fetchNewSeries()::data "+JSON.stringify(data));
     }
     
     const fetchGenresFilms = async () => {
@@ -65,6 +77,8 @@ const Accueil = ({ navigation }) => {
         fetchUpcomingFilms();
 
         fetchNewFilms();
+
+        fetchNewSeries();
         
         fetchGenresFilms();
 
@@ -77,10 +91,9 @@ const Accueil = ({ navigation }) => {
     };
     
     const handleSerieItemPress = (idSerie) => {
-        console.log("Serie Item press serie => "+idSerie)
-        /*navigation.navigate('FilmDetail', {
-            idFilm: idSerie
-        });*/
+        navigation.navigate('SerieDetail', {
+            idSerie: idSerie
+        });
     };
     
     const handleGenresItemPress = (genre_id) => {
@@ -155,10 +168,10 @@ const Accueil = ({ navigation }) => {
             <FlatList showsVerticalScrollIndicator={false}
                 ListHeaderComponent={
                     <>
-                        <UpcomingFilmsComponent upcomingFilms={upcomingFilms} handleFilmItemPress={handleFilmItemPress} />
-                        <Historique inRecentsFilm={inRecentsFilm} handleFilmItemPress={handleFilmItemPress}/>
-                        <NewFilm newFilms={newFilms} handleFilmItemPress={handleFilmItemPress}/>
-                        <NewSerie newSeries={newFilms} handleSerieItemPress={handleSerieItemPress}/>
+                        <UpcomingFilmsComponent upcomingFilms={upcomingFilms} filmItemPress={handleFilmItemPress} />
+                        <Historique inRecentsFilm={inRecentsFilm} filmItemPress={handleFilmItemPress}/>
+                        <NewFilms newFilms={newFilms} filmItemPress={handleFilmItemPress}/>
+                        <NewSeries newSeries={newSeries} serieItemPress={handleSerieItemPress}/>
                     </>
                 }
                 data={genresFilms}
