@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, FlatList, StyleSheet } from 'react-native';
 import { UpcomingFilmItem } from './UpcomingFilmItem';
 
-export const UpcomingFilmsComponent = ({upcomingFilms, handleFilmItemPress}) => {
+export const UpcomingFilmsComponent = ({upcomingFilms, filmItemPress}) => {
     return (
         <View style={styles.section_container}>
             <Text style={styles.coming_title}>
@@ -10,7 +10,7 @@ export const UpcomingFilmsComponent = ({upcomingFilms, handleFilmItemPress}) => 
             </Text>
             <FlatList
                 data={upcomingFilms}
-                renderItem={({item}) => <UpcomingFilmItem film={item} handleFilmItemPress={handleFilmItemPress} />}
+                renderItem={({item}) => <UpcomingFilmItem film={item} filmItemPress={filmItemPress} />}
                 keyExtractor={(item,index) => index}
                 horizontal={true}
                 showsHorizontalScrollIndicator={false} />

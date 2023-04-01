@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, FlatList, StyleSheet } from 'react-native';
 import { RecentFilmItem } from './RecentFilmItem';
 
-export const Historique = ({inRecentsFilm, handleFilmItemPress}) => {
+export const Historique = ({inRecentsFilm, filmItemPress}) => {
     return (
         <View style={styles.section_container}>
             <Text style={styles.subtitle_text}>
@@ -11,7 +11,7 @@ export const Historique = ({inRecentsFilm, handleFilmItemPress}) => {
             <View horizontal showsHorizontalScrollIndicator={false}>
                 <FlatList
                     data={inRecentsFilm}
-                    renderItem={({item}) => <RecentFilmItem film={item} handleFilmItemPress={handleFilmItemPress} />}
+                    renderItem={({item}) => <RecentFilmItem film={item} filmItemPress={filmItemPress} />}
                     keyExtractor={(item,index) => index}
                     horizontal={true}
                     showsHorizontalScrollIndicator={false} />
