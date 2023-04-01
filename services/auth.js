@@ -9,8 +9,7 @@ export const login = async (value) => {
     if (global.debug >= GLOBAL.LOG.INFO) console.log("AuthService:login()");
 
     try {
-        let url = `${global.SERVER_ADDRESS}`+'index.php?action=login';
-        const res = await fetch(url, {
+        const res = await fetch(`${global.SERVER_ADDRESS}`+'index.php?action=login', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -48,8 +47,7 @@ export const logout = () => async (dispatch) => {
 export const register = (value) => {
     if (global.debug >= GLOBAL.LOG.INFO) console.log("AuthService::register()");
 
-        url = `${global.SERVER_ADDRESS}`+'index.php?action=register';
-    return fetch(url, {
+    return fetch(`${global.SERVER_ADDRESS}`+'index.php?action=register', {
         method: 'POST',
         headers: {
             Accept: 'application/json',

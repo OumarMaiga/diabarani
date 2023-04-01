@@ -8,8 +8,7 @@ export const getUser = (token, id) => {
 
     if (global.debug >= GLOBAL.LOG.INFO) console.log("UserService::getUser()");
 
-    url = `${global.SERVER_ADDRESS}`+'index.php?action=get-user&id='+id;
-    return fetch(url, {
+    return fetch(`${global.SERVER_ADDRESS}`+'index.php?action=get-user&id='+id, {
         method: 'GET',
         headers: {
             Authorization: token,
@@ -27,8 +26,7 @@ export function updateUser(token, id, value) {
     
     if (global.debug >= GLOBAL.LOG.INFO) console.log("UserService::getUser()");
     
-    url = `${global.SERVER_ADDRESS}`+'index.php?action=update-user&id='+id;
-    return fetch(url, {
+    return fetch(`${global.SERVER_ADDRESS}`+'index.php?action=update-user&id='+id, {
         method: 'PUT',
         headers: {
             Authorization: token,

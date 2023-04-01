@@ -8,8 +8,7 @@ export const getFilms = () => {
 
     if (global.debug >= GLOBAL.LOG.INFO) console.log("FilmService::getFilms()");
 
-    url = `${global.SERVER_ADDRESS}`+'index.php?action=films';
-    return fetch(url, {
+    return fetch(`${global.SERVER_ADDRESS}`+'index.php?action=films', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -26,8 +25,7 @@ export const getFilm = (idFilm) => {
 
     if (global.debug >= GLOBAL.LOG.INFO) console.log("FilmService::getFilm()");
 
-    url = `${global.SERVER_ADDRESS}`+'index.php?action=film&id='+idFilm;
-    return fetch(url, {
+    return fetch(`${global.SERVER_ADDRESS}`+'index.php?action=film&id='+idFilm, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -44,8 +42,7 @@ export const getNewFilms = () => {
 
     if (global.debug >= GLOBAL.LOG.INFO) console.log("FilmService::getNewFilms()");
 
-    url = `${global.SERVER_ADDRESS}`+'index.php?action=new-film';
-    return fetch(url, {
+    return fetch(`${global.SERVER_ADDRESS}`+'index.php?action=new-films', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -62,8 +59,7 @@ export const getUpcomingFilms = () => {
 
     if (global.debug >= GLOBAL.LOG.INFO) console.log("FilmService::getUpcomingFilms()");
 
-    url = `${global.SERVER_ADDRESS}`+'index.php?action=upcoming-film';
-    return fetch(url, {
+    return fetch(`${global.SERVER_ADDRESS}`+'index.php?action=upcoming-film', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -80,8 +76,7 @@ export const getGenresFilms = () => {
 
     if (global.debug >= GLOBAL.LOG.INFO) console.log("FilmService::getGenresFilms()");
 
-    url = `${global.SERVER_ADDRESS}`+'index.php?action=genres-films';
-    return fetch(url, {
+    return fetch(`${global.SERVER_ADDRESS}`+'index.php?action=genres-films', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -98,8 +93,7 @@ export const getGenreFilms = (genre_id) => {
     
     if (global.debug >= GLOBAL.LOG.INFO) console.log("FilmService::getGenreFilms()");
 
-    url = `${global.SERVER_ADDRESS}`+'index.php?action=genre-films&genre_id=' + genre_id;
-    return fetch(url, {
+    return fetch(`${global.SERVER_ADDRESS}`+'index.php?action=genre-films&genre_id=' + genre_id, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -116,8 +110,7 @@ export const getSomeGenresFilms = (genre_ids) => {
 
     if (global.debug >= GLOBAL.LOG.INFO) console.log("FilmService::getSomeGenresFilms()");
 
-    url = `${global.SERVER_ADDRESS}`+'index.php?action=some-genres-films&genre_ids=' + genre_ids;
-    return fetch(url, {
+    return fetch(`${global.SERVER_ADDRESS}`+'index.php?action=some-genres-films&genre_ids=' + genre_ids, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -134,8 +127,7 @@ export const getGenres = () => {
 
     if (global.debug >= GLOBAL.LOG.INFO) console.log("FilmService::getGenres()");
 
-    url = `${global.SERVER_ADDRESS}`+'index.php?action=genres';
-    return fetch(url, {
+    return fetch(`${global.SERVER_ADDRESS}`+'index.php?action=genres', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -152,8 +144,7 @@ export const getGenre = (id) => {
 
     if (global.debug >= GLOBAL.LOG.INFO) console.log("FilmService::getGenre()");
 
-    url = `${global.SERVER_ADDRESS}`+'index.php?action=genre&id=' + id;
-    return fetch(url, {
+    return fetch(`${global.SERVER_ADDRESS}`+'index.php?action=genre&id=' + id, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
