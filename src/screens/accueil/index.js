@@ -4,10 +4,12 @@ import { ScrollView, View, Text, Image, Pressable, StyleSheet, StatusBar,
 import SafeAreaView from 'react-native-safe-area-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { getUpcomingFilms, getNewFilms, getGenresFilms } from '../../../services/film';
+import { getUpcomingSeries, getNewSeries } from '../../../services/serie';
 import { UpcomingFilmsComponent } from '../../components/film';
 import { NewFilms } from '../../components/new-film';
 import { NewSeries } from '../../components/new-serie';
 import { Historique } from '../../components/historique';
+import { Loading } from '../../components/Loading';
 import { useSelector } from "react-redux";
 import * as GLOBAL from '../../../data/global';
 import '../../../data/global';
@@ -51,7 +53,7 @@ const Accueil = ({ navigation }) => {
         setIsLoading(true);
         let data = await getNewSeries(); 
         if (data.code == 1) {
-            setNewFilms(data.series);
+            setNewSeries(data.series);
         }
         setIsLoading(false);
 
@@ -138,17 +140,6 @@ const Accueil = ({ navigation }) => {
     const renderGenresFilmsItem = ({ item }) => (
         <GenreFilmItem genre={item} handleFilmItemPress={handleFilmItemPress} handleGenresItemPress={handleGenresItemPress} />
     );
-    
-    const DisplayLoading = () => {
-        if(isLoading) {
-            return (
-                <View style={styles.loading_container}>
-                    <ActivityIndicator size="large"/>
-                </View>
-            )
-        } else return null
-    };
-
 
     const Genre = () => {
 		return (
@@ -179,7 +170,7 @@ const Accueil = ({ navigation }) => {
                 keyExtractor={item => item.id}
                 showsHorizontalScrollIndicator={false}
             />
-            <DisplayLoading/>
+            <Loading isLoading={isLoading}/>
         </SafeAreaView>
     )
 }

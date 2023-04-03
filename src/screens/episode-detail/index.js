@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { StatusBar, StyleSheet, View, 
+import { StatusBar, StyleSheet, View, ActivityIndicator, 
     FlatList, Share } from 'react-native';
-import { Loading } from '../../components/Loading';
-import { SerieDetail } from '../../components/serie';
+import { EpisodeDetail } from '../../components/episode';
 import { SerieSimilaireItem } from '../../components/serie';
-import { Episodes } from '../../components/episode';
-import { getSerie, getSomeGenresSeries } from '../../../services/serie';
-import { getSaisons } from '../../../services/saison';
-import { getEpisodes } from '../../../services/episode';
+import { Loading } from '../../components/Loading';
+import { getEpisode, getSomeGenresSeries } from '../../../services/episode';
 import { useDispatch, useSelector } from "react-redux";
 import * as GLOBAL from '../../../data/global';
 import '../../../data/global';
@@ -16,43 +13,47 @@ export default ({ route, navigation }) => {
     
     const dispatch = useDispatch();
 
-    const favoritesSerie = useSelector((state) => state.favoriteSerie.favoritesSerie);
+    const favoritesEpisode = useSelector((state) => state.favorite.favoritesEpisode);
     
-    const { idSerie } = route.params;
+    const { idEpisode } = route.params;
     const [isLoading, setIsLoading] = useState(true);
+    const [episode, setEpisode] = useState(undefined);
     const [serie, setSerie] = useState(undefined);
+    const [saison, setSaison] = useState(undefined);
     const [saisons, setSaisons] = useState([]);
-    const [episodes, setEpisodes] = useState([]);
     const [serieSimulaire, setSerieSimulaire] = useState([]);
 
     useEffect(() => {
 
-        if (global.debug >= GLOBAL.LOG.INFO) console.log("SerieDetail::useEffect()");
+        if (global.debug >= GLOBAL.LOG.INFO) console.log("EpisodeDetail::useEffect()");
 
-        fetchSerie();
-        fetchSaisons();
+        fetchEpisode();
+
     }, []);
 
-    const fetchSerie = async () => {
+    const fetchEpisode = async () => {
         
-        if (global.debug >= GLOBAL.LOG.INFO) console.log("SerieDetail::fetchSerie()");
+        if (global.debug >= GLOBAL.LOG.INFO) console.log("EpisodeDetail::fetchEpisode()");
         
         setIsLoading(true);
-        let data = await getSerie(idSerie);
+        let data = await getEpisode(idEpisode); 
         if (data.code == 1) {
-            setSerie(data.serie);
-            const genre_ids = data.serie.genres.map(genre => genre.id).join();
-            if(genre_ids.length > 0)
+            setEpisode(data.episode);
+            setSerie(data.episode.serie);
+            setSaison(data.episode.saison);
+            fetchSaisons(data.episode.serie_id);
+            const genre_ids = data.episode.serie.genres.map(genre => genre.id).join();
+            if(genre_ids.lenght > 0)
                 fetchSomeGenresSeries(genre_ids);
         }
         setIsLoading(false);
 
-        if (global.debug >= GLOBAL.LOG.ROOT)  console.log("SerieDetail::useEffect()::fetchSeries()::data " + JSON.stringify(data));
+        if (global.debug >= GLOBAL.LOG.ROOT)  console.log("EpisodeDetail::useEffect()::fetchEpisodes()::data " + JSON.stringify(data));
     }
     
-    const fetchSaisons = async () => {
+    const fetchSaisons = async (idSerie) => {
         
-        if (global.debug >= GLOBAL.LOG.INFO) console.log("SaisonDetail::fetchSaisons()");
+        if (global.debug >= GLOBAL.LOG.INFO) console.log("EpisodeDetail::fetchSaisons()");
 
         setIsLoading(true);
         let data = await getSaisons(idSerie);
@@ -63,74 +64,58 @@ export default ({ route, navigation }) => {
 
         if (global.debug >= GLOBAL.LOG.ROOT)  console.log("SaisonsDetail::useEffect()::fetchSaisons()::data " + JSON.stringify(data));
     }
-    
-    const fetchEpisodes = async (idSaison) => {
-        
-        if (global.debug >= GLOBAL.LOG.INFO) console.log("EpisodeDetail::fetchEpisodes()");
-
-        setIsLoading(true);
-        let data = await getEpisodes(idSerie, idSaison);
-        if (data.code == 1) {
-            setEpisodes(data.episodes);
-        }
-        setIsLoading(false);
-
-        if (global.debug >= GLOBAL.LOG.ROOT)  console.log("EpisodesDetail::useEffect()::fetchEpisodes()::data " + JSON.stringify(data));
-    }
 
     const fetchSomeGenresSeries = async (genre_ids) => {
         
-        if (global.debug >= GLOBAL.LOG.INFO) console.log("SerieDetail::fetchSomeGenresSeries()");
+        if (global.debug >= GLOBAL.LOG.INFO) console.log("EpisodeDetail::fetchSomeGenresSeries()");
 
         setIsLoading(true);
         let data = await getSomeGenresSeries(genre_ids); 
         if (data.code == 1) {
-            setSerieSimulaire(data.series);
+            setSerieSimulaire(data.episodes);
         }
         setIsLoading(false);
 
-        if (global.debug >= GLOBAL.LOG.ROOT)  console.log("SerieDetail::fetchSomeGenresSeries()::data " + JSON.stringify(data));
+        if (global.debug >= GLOBAL.LOG.ROOT)  console.log("EpisodeDetail::fetchSomeGenresSeries()::data " + JSON.stringify(data));
     }
+
     
-    const handleSerieSimilaireItemPress = (idSerie) => {
+    const handleSerieSimilaireItemPress = (idEpisode) => {
         navigation.setParams({
-            idSerie: idSerie
+            idEpisode: idEpisode
         });
-        fetchSerie();
-        fetchSaisons();
-    };
-    
-    const handleEpisodeItemPress = (idEpisode) => {
-        console.log('Episode id => '+idEpisode);
-        /*navigation.setParams({
-            idSerie: idSerie
-        });
-        fetchSerie();*/
+        fetchEpisode();
     };
 
-    const handleFavoriteIconPress = (serie) => {
+    const handleFavoriteIconPress = (episode) => {
       dispatch({
-            type: "TOGGLE_FAVORITE_SERIE",
-            payload: serie
+            type: "TOGGLE_FAVORITE",
+            payload: episode
+        });
+    }
+
+    const handleInRecent = (episode) => {
+      dispatch({
+            type: "ADD_INRECENT",
+            payload: episode
         });
     }
 
     const handleSaisonItemSelected = (idSaison) => {
-        if (global.debug >= GLOBAL.LOG.INFO) console.log("SerieDetail::handleSaisonItemSelected()=> "+idSaison);
-        if(idSaison > 0)
-            fetchEpisodes(idSaison)
+        if (global.debug >= GLOBAL.LOG.INFO) console.log("EpisodeDetail::handleSaisonItemSelected()=> "+idSaison);
+        //fetchEpisodes(idSaison)
     }
 
-    const isFavorite = (serie_id) => {
-        const favoriteSerieIndex = favoritesSerie.findIndex(item => item.id === serie_id)
-        return favoriteSerieIndex !== -1 ? true : false;
+    const isFavorite = (episode_id) => {
+        const favoriteEpisodeIndex = favoritesEpisode.findIndex(item => item.id === episode_id)
+        return favoriteEpisodeIndex !== -1 ? true : false;
     }
     
-    const onShare = async (serie) => {
+    const onShare = async (episode) => {
         try {
           const result = await Share.share({
             message:
-              'Diabarani | Je vous partage un serie interressant ' + global.SERVER_ADDRESS+serie.id,
+              'Diabarani | Je vous partage un episode interressant ' + global.SERVER_ADDRESS+episode.id,
           });
           if (result.action === Share.sharedAction) {
             if (result.activityType) {
@@ -149,22 +134,24 @@ export default ({ route, navigation }) => {
         }
       };
       
+      const _onLoad = () => {
+        if (global.debug >= GLOBAL.LOG.INFO) console.log("EpisodeDetail::_onLoad()");
+        handleInRecent(episode);
+      };
+
     return (
         <View style={styles.main_container}>
             <StatusBar barStyle="light-content" backgroundColor="#6a51ae" />
             <FlatList style={{ flex: 1 }}
                 ListHeaderComponent={
-                    <>
-                        <SerieDetail serie={serie} saisons={saisons} favoriteIconPress={handleFavoriteIconPress} isFavorite={isFavorite} onShare={onShare} saisonItemSelected={handleSaisonItemSelected} />
-                        <Episodes episodes={episodes} episodeItemPress={handleEpisodeItemPress} />
-                    </>
+                    <EpisodeDetail episode={episode} serie={serie} saison={saison}  saisons={saisons} _onLoad={_onLoad} favoriteIconPress={handleFavoriteIconPress} isFavorite={isFavorite} onShare={onShare} saisonItemSelected={handleSaisonItemSelected} />
                 }
                 data={serieSimulaire}
-                renderItem={({item}) => <SerieSimilaireItem serie={item} handleSerieSimilaireItemPress={handleSerieSimilaireItemPress} />}
+                renderItem={({item}) => <SerieSimilaireItem episode={item} handleSerieSimilaireItemPress={handleSerieSimilaireItemPress} />}
                 keyExtractor={(item,index) => index}
                 numColumns={3}
-            />
-            <Loading isLoading={isLoading} />
+                />
+            <Loading isLoading={isLoading}/>
         </View>
     );
 }
@@ -242,5 +229,14 @@ const styles = StyleSheet.create({
         marginTop: 10,
         fontSize: 18,
         color: global.lightGray,
+    },
+    detail_simulaire_container: {
+        marginTop: 30,
+    },
+    detail_simulaire_title: {
+        fontSize: 22,
+        fontFamily: 'Helvetica',
+        color: global.white,
+        marginBottom: 5
     }
 });

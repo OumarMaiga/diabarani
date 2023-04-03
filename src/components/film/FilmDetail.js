@@ -10,12 +10,10 @@ export const FilmDetail = ({film, _onLoad, favoriteIconPress, isFavorite, onShar
         source={{
             uri: film && global.SERVER_ADDRESS+film.video_path
         }}
-        //ref={video}
         useNativeControls
         resizeMode="contain"
         posterSource={{uri: film && global.SERVER_ADDRESS+film.cover_path}}
         usePoster={true}
-        //onPlaybackStatusUpdate={status => _onPlaybackStatusUpdatestatus(status)}
         onLoad={() => _onLoad()}
         />
         <View style={styles.detail_container}>

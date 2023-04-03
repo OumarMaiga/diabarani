@@ -13,8 +13,6 @@ export default ({ route, navigation }) => {
     const dispatch = useDispatch();
 
     const favoritesFilm = useSelector((state) => state.favorite.favoritesFilm);
-    const towatchsFilm = useSelector((state) => state.toWatch.towatchsFilm);
-    const inRecentsFilm = useSelector((state) => state.inRecent.inRecentsFilm);
     
     const { idFilm } = route.params;
     const [isLoading, setIsLoading] = useState(true);
@@ -57,7 +55,8 @@ export default ({ route, navigation }) => {
         if (data.code == 1) {
             setFilm(data.film);
             const genre_ids = data.film.genres.map(genre => genre.id).join();
-            fetchSomeGenresFilms(genre_ids);
+            if(genre_ids.lenght > 0)
+                fetchSomeGenresFilms(genre_ids);
         }
         setIsLoading(false);
 
@@ -100,13 +99,6 @@ export default ({ route, navigation }) => {
         });
     }
 
-    const toWatchIconPress = (film) => {
-      dispatch({
-            type: "TOGGLE_TOWATCH",
-            payload: film
-        });
-    }
-
     const handleInRecent = (film) => {
       dispatch({
             type: "ADD_INRECENT",
@@ -117,16 +109,6 @@ export default ({ route, navigation }) => {
     const isFavorite = (film_id) => {
         const favoriteFilmIndex = favoritesFilm.findIndex(item => item.id === film_id)
         return favoriteFilmIndex !== -1 ? true : false;
-    }
-    
-    const isToWatch = (film_id) => {
-        const toWatchFilmIndex = towatchsFilm.findIndex(item => item.id === film_id)
-        return toWatchFilmIndex !== -1 ? true : false;
-    }
-    
-    const inRecent = (film_id) => {
-        const inRecentFilmIndex = inRecentsFilm.findIndex(item => item.id === film_id)
-        return inRecentFilmIndex !== -1 ? true : false;
     }
     
     const DisplayLoading = () => {
@@ -159,20 +141,6 @@ export default ({ route, navigation }) => {
           }
         } catch (error) {
           alert(error.message);
-        }
-      };
-
-      const _onPlaybackStatusUpdatestatus = (status) => {
-        setStatus(status);
-        if (status.isLoaded) {
-            status.isBuffering ? console.log('isBuffering') : console.log('');
-            status.isPlaying ? console.log('isPlaying') : console.log('');
-            status.shouldPlay ? console.log('shouldPlay') : console.log('');
-
-            if (status.isPlaying) {
-                console.log('status');
-                handleInRecent(film);
-            }
         }
       };
       
