@@ -18,33 +18,6 @@ export default ({ route, navigation }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [film, setFilm] = useState(undefined);
     const [filmSimulaire, setFilmSimulaire] = useState([]);
-    const video = React.useRef(null);
-    const [status, setStatus] = React.useState({});
-    const date = new Date();
-    let annee = date.getFullYear();
-    let mois = date.getMonth()+1;
-    let jour = date.getDate();
-    
-    const today = annee+'-'+mois+'-'+jour;
-
-    /**
-     * Methode pour verifier si la date recuperé est 
-     * superieure ou egale à aujourd'hui 
-     * @param {DateTime} date 
-     * @returns boolean
-     */
-    const greaterThanToday = (date) => 
-    {
-        var todayUpdated = new Date(today.replace(/-/g,'/'));
-        var dateUpdated = new Date(date.replace(/-/g,'/'));
-
-        if(dateUpdated > todayUpdated) {
-            return true;
-        }
-        if(dateUpdated <= todayUpdated) {
-            return false;
-        }
-    }
 
     const fetchFilm = async () => {
         
@@ -94,7 +67,7 @@ export default ({ route, navigation }) => {
 
     const handleFavoriteIconPress = (film) => {
       dispatch({
-            type: "TOGGLE_FAVORITE",
+            type: "TOGGLE_FAVORITE_FILM",
             payload: film
         });
     }

@@ -1,10 +1,11 @@
-import React, {useState, useEffect} from 'react';
-import { View, Text, Pressable, Image, StyleSheet } from 'react-native';
+import React from 'react';
+import { View, Text, Pressable, StyleSheet } from 'react-native';
+import { Video } from 'expo-av';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import RNPickerSelect from "react-native-picker-select";
 import '../../../data/global';
 
-export const EpisodeDetail = ({episode, serie, saison, saisons, favoriteIconPress, isFavorite, onShare, saisonItemSelected}) => (
+export const EpisodeDetail = ({episode, serie, saison, saisons, _onLoad, favoriteIconPress, isFavorite, onShare, saisonItemSelected}) => (
     <>
         <Video style={styles.background_video}
             source={{
@@ -30,7 +31,7 @@ export const EpisodeDetail = ({episode, serie, saison, saisons, favoriteIconPres
                     </Text>
                 </View>
                 <MaterialCommunityIcons name="eye" size={28} color={global.lightGray} />
-                <Text style={styles.detail_view_count}>6.015</Text>
+                <Text style={styles.detail_view_count}>605</Text>
             </View>
             <View style={{ flexDirection: "row", marginTop: 10 }}>
                 <Pressable onPress={() => favoriteIconPress(episode)} style={{ marginRight: 10, alignItems: 'center' }}>
@@ -47,7 +48,7 @@ export const EpisodeDetail = ({episode, serie, saison, saisons, favoriteIconPres
             </Text>
         </View>
         <RNPickerSelect  //style={styles.saison_select}
-            //selectedValue={selectedItem}
+            value={saisons[0]?.id}
             onValueChange={(item) =>
                 saisonItemSelected(item)
             }

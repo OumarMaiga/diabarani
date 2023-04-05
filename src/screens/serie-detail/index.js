@@ -16,7 +16,7 @@ export default ({ route, navigation }) => {
     
     const dispatch = useDispatch();
 
-    const favoritesSerie = useSelector((state) => state.favoriteSerie.favoritesSerie);
+    const favoritesSerie = useSelector((state) => state.favorite.favoritesSerie);
     
     const { idSerie } = route.params;
     const [isLoading, setIsLoading] = useState(true);
@@ -102,10 +102,9 @@ export default ({ route, navigation }) => {
     
     const handleEpisodeItemPress = (idEpisode) => {
         console.log('Episode id => '+idEpisode);
-        /*navigation.setParams({
-            idSerie: idSerie
+        navigation.navigate('EpisodeDetail', {
+            idEpisode: idEpisode
         });
-        fetchSerie();*/
     };
 
     const handleFavoriteIconPress = (serie) => {

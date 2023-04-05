@@ -8,6 +8,7 @@ import Abonnement from '../../screens/abonnement'
 import Paiement from '../../screens/paiement'
 import FilmDetail from '../../screens/film-detail'
 import SerieDetail from '../../screens/serie-detail'
+import EpisodeDetail from '../../screens/episode-detail'
 import FilmPerGenre from '../../screens/film-per-genre'
 import EditProfile from '../../screens/edit-profile'
 
@@ -19,6 +20,7 @@ export const HomeStackScreen = () => {
             <HomeStack.Screen name="Accueil" component={Accueil} options={{ headerShown: false }} />
             <HomeStack.Screen name="FilmDetail" component={FilmDetail} options={{ headerShown: false }} />
             <HomeStack.Screen name="SerieDetail" component={SerieDetail} options={{ headerShown: false }} />
+            <HomeStack.Screen name="EpisodeDetail" component={EpisodeDetail} options={{ headerShown: false }} />
             <HomeStack.Screen name="FilmPerGenre" component={FilmPerGenre} options={{ headerShown: false }} />
         </HomeStack.Navigator>
     )

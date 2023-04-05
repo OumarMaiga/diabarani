@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StatusBar, StyleSheet, View, ActivityIndicator, 
+import { StatusBar, StyleSheet, View,  
     FlatList, Share } from 'react-native';
 import { EpisodeDetail } from '../../components/episode';
 import { SerieSimilaireItem } from '../../components/serie';
@@ -89,7 +89,7 @@ export default ({ route, navigation }) => {
 
     const handleFavoriteIconPress = (episode) => {
       dispatch({
-            type: "TOGGLE_FAVORITE",
+            type: "TOGGLE_FAVORITE_EPISODE",
             payload: episode
         });
     }
