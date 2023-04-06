@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as ImagePicker from 'expo-image-picker';
 import * as GLOBAL from '../../../data/global';
 import '../../../data/global';
+import { Loading } from '../../components/Loading';
 
 const EditProfil = ({ navigation }) => {
     
@@ -54,16 +55,6 @@ const EditProfil = ({ navigation }) => {
         }
     };
 
-    const DisplayLoading = () => {
-        if(isLoading) {
-            return(
-                <View style={styles.loading_container}>
-                    <ActivityIndicator size="large"/>
-                </View>
-            )
-        } else return null
-    };
-    
             /* Sign Up with Backend API */
             /*await signUp({firstname: firstName, lastname: lastName, username: userName,
                 email: email, password: password, birthday: birthday, gender: genderBackend});*/
@@ -151,7 +142,7 @@ const EditProfil = ({ navigation }) => {
                     </ScrollView>
                 </TouchableWithoutFeedback>
             </KeyboardAvoidingView>
-            <DisplayLoading/>
+            <Loading isLoading={isLoading}/>
         </SafeAreaView>
     );
 }

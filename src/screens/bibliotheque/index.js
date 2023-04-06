@@ -4,6 +4,7 @@ import { ScrollView, View, Text, Image, StyleSheet, StatusBar, TouchableOpacity,
 import SafeAreaView from 'react-native-safe-area-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useDispatch, useSelector } from "react-redux";
+import { Loading } from '../../components/Loading';
 
 const Bibliotheque = ({ navigation }) => {
 
@@ -30,16 +31,6 @@ const Bibliotheque = ({ navigation }) => {
         <RecentFilmItem film={item} handleFilmItemPress={handleFilmItemPress} />
     );
 
-    const DisplayLoading = () => {
-        if(isLoading) {
-            return (
-                <View style={styles.loading_container}>
-                    <ActivityIndicator size="large"/>
-                </View>
-            )
-        } else return null
-    };
-    
     const handleItemPress = (idFilm) => {
         navigation.navigate('FilmDetail', {
             idFilm: idFilm
@@ -117,7 +108,7 @@ const Bibliotheque = ({ navigation }) => {
                 keyExtractor={(item,index) => index}
                 numColumns={3}
             />{/**/}
-            <DisplayLoading/>
+            <Loading isLoading={isLoading}/>
         </View>
     )
 }

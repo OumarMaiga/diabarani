@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import { getGenreFilms, getGenre } from '../../../services/film';
 import * as GLOBAL from '../../../data/global';
 import '../../../data/global';
+import { Loading } from '../../components/Loading';
 
 
 const FilmPerGenre = ({ route, navigation }) => {
@@ -48,18 +49,6 @@ const FilmPerGenre = ({ route, navigation }) => {
         fetchGenre();
 
     }, []);
-
-
-
-    const DisplayLoading = () => {
-        if(isLoading) {
-            return (
-                <View style={styles.loading_container}>
-                    <ActivityIndicator size="large"/>
-                </View>
-            )
-        } else return null
-    };
     
     const handleItemPress = (idFilm) => {
         navigation.navigate('FilmDetail', {
@@ -109,7 +98,7 @@ const FilmPerGenre = ({ route, navigation }) => {
                     data={films}
                     keyExtractor={(item,index) => index}
                     renderItem={renderItem} />
-            <DisplayLoading/>
+            <Loading isLoading={isLoading}/>
         </View>
     )
 }

@@ -6,6 +6,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { getNewFilms } from '../../../services/film';
 import * as GLOBAL from '../../../data/global';
 import '../../../data/global';
+import { Loading } from '../../components/Loading';
 
 const News = ({ navigation }) => {
     
@@ -31,16 +32,6 @@ const News = ({ navigation }) => {
         fetchNewFilms();
 
     }, []);
-
-    const DisplayLoading = () => {
-        if(isLoading) {
-            return (
-                <View style={styles.loading_container}>
-                    <ActivityIndicator size="large"/>
-                </View>
-            )
-        } else return null
-    };
     
     const handleItemPress = (idFilm) => {
         navigation.navigate('FilmDetail', {
@@ -77,7 +68,7 @@ const News = ({ navigation }) => {
                     data={films}
                     renderItem={renderItem}
                     keyExtractor={(item,index) => index} />
-            <DisplayLoading/>
+            <Loading isLoading={isLoading}/>
         </View>
     )
 }

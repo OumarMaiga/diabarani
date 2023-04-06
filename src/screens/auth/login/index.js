@@ -4,6 +4,7 @@ import { ScrollView, View, Text, Image, TextInput, Pressable, StyleSheet, Activi
 import SafeAreaView from 'react-native-safe-area-view';
 import { login } from '../../../../services/auth';
 import { useDispatch, useSelector } from "react-redux";
+import { Loading } from '../../../components/Loading';
 import * as GLOBAL from '../../../../data/global';
 import '../../../../data/global';
 
@@ -53,16 +54,6 @@ const Connexion = ({navigation}) => {
         setIsLoading(false);
     }
     
-    const DisplayLoading = () => {
-        if(isLoading) {
-            return(
-                <View style={styles.loading_container}>
-                    <ActivityIndicator size="large"/>
-                </View>
-            )
-        } else return null
-    }
-
     const DisplayError = () => {
         if(errorMessage.length > 0) {
             return(
@@ -115,7 +106,7 @@ const Connexion = ({navigation}) => {
                     </ScrollView>
                 </TouchableWithoutFeedback>
             </KeyboardAvoidingView>
-            <DisplayLoading/>
+            <Loading isLoading={isLoading}/>
         </SafeAreaView>
     );
 }

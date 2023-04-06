@@ -6,6 +6,7 @@ import { register } from '../../../../services/auth';
 import { useDispatch } from "react-redux";
 import * as GLOBAL from '../../../../data/global';
 import '../../../../data/global';
+import { Loading } from '../../../components/Loading';
 
 const Inscription = ({ navigation }) => {
     
@@ -53,17 +54,6 @@ const Inscription = ({ navigation }) => {
         setIsLoading(false);
 
     }
-
-    const DisplayLoading = () => {
-        if(isLoading) {
-            return(
-                <View style={styles.loading_container}>
-                    <ActivityIndicator size="large"/>
-                </View>
-            )
-        } else return null
-    }
-
 
     return (
         <SafeAreaView style={styles.main_container}>
@@ -115,7 +105,7 @@ const Inscription = ({ navigation }) => {
                     </ScrollView>
                 </TouchableWithoutFeedback>
             </KeyboardAvoidingView>
-            <DisplayLoading/>
+            <Loading isLoading={isLoading}/>
         </SafeAreaView>
     )
 }

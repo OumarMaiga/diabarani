@@ -7,23 +7,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { getFilms } from '../../../services/film';
 import * as GLOBAL from '../../../data/global';
 import '../../../data/global';
+import { Loading } from '../../components/Loading';
 
 
 const Favorite = ({ navigation }) => {
 
     const favoritesFilm = useSelector((state) => state.favorite.favoritesFilm);
     const [isLoading, setIsLoading] = useState();
-    
-    const DisplayLoading = () => {
-        if(isLoading) {
-            return (
-                <View style={styles.loading_container}>
-                    <ActivityIndicator size="large"/>
-                </View>
-            )
-        } else return null
-    };
-    
+        
     const handleItemPress = (idFilm) => {
         navigation.navigate('FilmDetail', {
             idFilm: idFilm
@@ -73,7 +64,7 @@ const Favorite = ({ navigation }) => {
                 data={favoritesFilm}
                 keyExtractor={(item,index) => index}
                 renderItem={renderItem} />
-            <DisplayLoading/>
+            <Loading isLoading={isLoading}/>
         </View>
     )
 }

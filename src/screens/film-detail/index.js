@@ -7,6 +7,7 @@ import { getFilm, getSomeGenresFilms } from '../../../services/film';
 import { useDispatch, useSelector } from "react-redux";
 import * as GLOBAL from '../../../data/global';
 import '../../../data/global';
+import { Loading } from '../../components/Loading';
 
 export default ({ route, navigation }) => {
     
@@ -83,16 +84,6 @@ export default ({ route, navigation }) => {
         const favoriteFilmIndex = favoritesFilm.findIndex(item => item.id === film_id)
         return favoriteFilmIndex !== -1 ? true : false;
     }
-    
-    const DisplayLoading = () => {
-        if(isLoading) {
-            return (
-                <View style={styles.loading_container}>
-                    <ActivityIndicator size="large"/>
-                </View>
-            )
-        } else return null
-    };
 
     const onShare = async (film) => {
         try {
@@ -134,7 +125,7 @@ export default ({ route, navigation }) => {
                 keyExtractor={(item,index) => index}
                 numColumns={3}
                 />
-            <DisplayLoading />
+            <Loading isLoading={isLoading} />
         </View>
     );
 }

@@ -45,7 +45,7 @@ global.currentUser = {
 //global.SERVER_ADDRESS = 'http://192.168.1.23/diabarani-api/';
 
 /* ngrok */
-global.SERVER_ADDRESS = 'https://98f1-197-155-157-157.eu.ngrok.io/diabarani-api/';
+global.SERVER_ADDRESS = 'https://c2a3-197-155-157-157.eu.ngrok.io/diabarani-api/';
 
 //global.SERVER_ADDRESS = 'http://localhost/diabarani-api/';
 

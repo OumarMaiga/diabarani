@@ -2,20 +2,11 @@ import React, { useState } from 'react'
 import { View, Text, TextInput, Pressable, StyleSheet, StatusBar,
     KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import SafeAreaView from 'react-native-safe-area-view';
+import { Loading } from '../../../components/Loading';
 
 const MotDePasseOublie = ({ navigation }) => {
     
     const [isLoading, setIsLoading] = useState(false);
-
-    const DisplayLoading = () => {
-        if(isLoading) {
-            return(
-                <View style={styles.loading_container}>
-                    <ActivityIndicator size="large"/>
-                </View>
-            )
-        } else return null
-    }
 
     return (
         <SafeAreaView style={styles.main_container}>
@@ -34,7 +25,7 @@ const MotDePasseOublie = ({ navigation }) => {
                     </View>
                 </TouchableWithoutFeedback>
             </KeyboardAvoidingView>
-            <DisplayLoading/>
+            <Loading isLoading={isLoading}/>
         </SafeAreaView>
     )
 }
