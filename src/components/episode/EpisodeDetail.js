@@ -14,7 +14,7 @@ export const EpisodeDetail = ({episode, serie, saison, saisons, _onLoad, favorit
             useNativeControls
             resizeMode="contain"
             posterSource={{uri: episode && global.SERVER_ADDRESS+episode.cover_path}}
-            usePoster={true}
+            //usePoster={true}
             onLoad={() => _onLoad()} />
         <View style={styles.detail_container}>
             <Text style={styles.detail_title}>

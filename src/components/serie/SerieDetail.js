@@ -1,8 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import { View, Text, Pressable, Image, StyleSheet } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import RNPickerSelect from "react-native-picker-select";
-import * as GLOBAL from '../../../data/global';
 import '../../../data/global';
 
 export const SerieDetail = ({serie, saisons, favoriteIconPress, isFavorite, onShare, saisonItemSelected}) => (

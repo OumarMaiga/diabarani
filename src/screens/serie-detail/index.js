@@ -16,7 +16,7 @@ export default ({ route, navigation }) => {
     
     const dispatch = useDispatch();
 
-    const favoritesSerie = useSelector((state) => state.favorite.favoritesSerie);
+    const favoritesSerie = useSelector((state) => state.favoriteSerie.favoritesSerie);
     
     const { idSerie } = route.params;
     const [isLoading, setIsLoading] = useState(true);
@@ -52,7 +52,7 @@ export default ({ route, navigation }) => {
     
     const fetchSaisons = async () => {
         
-        if (global.debug >= GLOBAL.LOG.INFO) console.log("SaisonDetail::fetchSaisons()");
+        if (global.debug >= GLOBAL.LOG.INFO) console.log("SerieDetail::fetchSaisons()");
 
         setIsLoading(true);
         let data = await getSaisons(idSerie);
@@ -61,12 +61,12 @@ export default ({ route, navigation }) => {
         }
         setIsLoading(false);
 
-        if (global.debug >= GLOBAL.LOG.ROOT)  console.log("SaisonsDetail::useEffect()::fetchSaisons()::data " + JSON.stringify(data));
+        if (global.debug >= GLOBAL.LOG.ROOT)  console.log("SerieDetail::useEffect()::fetchSaisons()::data " + JSON.stringify(data));
     }
     
     const fetchEpisodes = async (idSaison) => {
         
-        if (global.debug >= GLOBAL.LOG.INFO) console.log("EpisodeDetail::fetchEpisodes()");
+        if (global.debug >= GLOBAL.LOG.INFO) console.log("SerieDetail::fetchEpisodes()");
 
         setIsLoading(true);
         let data = await getEpisodes(idSerie, idSaison);
@@ -75,7 +75,7 @@ export default ({ route, navigation }) => {
         }
         setIsLoading(false);
 
-        if (global.debug >= GLOBAL.LOG.ROOT)  console.log("EpisodesDetail::useEffect()::fetchEpisodes()::data " + JSON.stringify(data));
+        if (global.debug >= GLOBAL.LOG.ROOT)  console.log("SerieDetail::useEffect()::fetchEpisodes()::data " + JSON.stringify(data));
     }
 
     const fetchSomeGenresSeries = async (genre_ids) => {
@@ -101,7 +101,9 @@ export default ({ route, navigation }) => {
     };
     
     const handleEpisodeItemPress = (idEpisode) => {
-        console.log('Episode id => '+idEpisode);
+        
+        if (global.debug >= GLOBAL.LOG.INFO) console.log('SerieDetail::handleEpisodeItemPress => '+idEpisode);
+
         navigation.navigate('EpisodeDetail', {
             idEpisode: idEpisode
         });
