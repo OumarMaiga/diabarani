@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StatusBar, StyleSheet, View, 
-    FlatList, Share } from 'react-native';
+    FlatList, Share, Text } from 'react-native';
 import { Loading } from '../../components/Loading';
 import { SerieDetail } from '../../components/serie';
 import { SerieSimilaireItem } from '../../components/serie';
@@ -17,6 +17,7 @@ export default ({ route, navigation }) => {
     const dispatch = useDispatch();
 
     const favoritesSerie = useSelector((state) => state.favoriteSerie.favoritesSerie);
+    const favoritesEpisode = useSelector((state) => state.favoriteEpisode.favoritesEpisode);
     
     const { idSerie } = route.params;
     const [isLoading, setIsLoading] = useState(true);
@@ -126,6 +127,11 @@ export default ({ route, navigation }) => {
         const favoriteSerieIndex = favoritesSerie.findIndex(item => item.id === serie_id)
         return favoriteSerieIndex !== -1 ? true : false;
     }
+
+    const isFavoriteEpisode = (episode_id) => {
+        const favoriteEpisodeIndex = favoritesEpisode.findIndex(item => item.id === episode_id)
+        return favoriteEpisodeIndex !== -1 ? true : false;
+    }
     
     const onShare = async (serie) => {
         try {
@@ -157,7 +163,12 @@ export default ({ route, navigation }) => {
                 ListHeaderComponent={
                     <>
                         <SerieDetail serie={serie} saisons={saisons} favoriteIconPress={handleFavoriteIconPress} isFavorite={isFavorite} onShare={onShare} saisonItemSelected={handleSaisonItemSelected} />
-                        <Episodes episodes={episodes} episodeItemPress={handleEpisodeItemPress} />
+                        <Episodes episodes={episodes} episodeItemPress={handleEpisodeItemPress} isFavorite={isFavoriteEpisode} />
+                        {serieSimulaire.length > 0 &&
+                        <View style={styles.serie_simulaire_container}>
+                            <Text style={styles.serie_simulaire_title}>Series simulaires</Text>
+                        </View>
+                        }
                     </>
                 }
                 data={serieSimulaire}
@@ -195,53 +206,16 @@ const styles = StyleSheet.create({
         width: '100%',
         backgroundColor: global.gray
     },
-    detail_container: {
+    serie_simulaire_container: {
+        marginTop: 30,
         marginLeft: 10,
         marginRight: 10,
-        marginTop: 10,
         marginBottom: 10,
     },
-    detail_title: {
-        fontWeight: 'bold',
-        fontSize: 24,
-        color: global.white,
-        fontFamily: "Helvetica",
-    },
-    detail_time: {
-        color: global.lightGray,
-    },
-    detail_genre: {
-        color: global.Yellow,
+    serie_simulaire_title: {
+        fontSize: 22,
         fontFamily: 'Helvetica',
-        fontSize: 14,
-        marginTop: 5,
-    },
-    detail_rate: {
-        flexDirection: "row",
-        alignItems: 'center',
-        backgroundColor: global.darkYellow,
-        padding: 2,
-        marginRight: 10
-    },
-    detail_rate_text: {
         color: global.white,
-        paddingRight: 4,
-        paddingLeft: 2,
-        fontSize: 18,
-    },
-    detail_view_count: {
-        marginLeft: 5,
-        color: global.lightGray,
-        fontSize: 18,
-        fontWeight: 'bold',
-    },
-    detail_icon_text: {
-        fontSize: 14,
-        color: global.lightGray,
-    },
-    detail_overview: {
-        marginTop: 10,
-        fontSize: 18,
-        color: global.lightGray,
+        marginBottom: 5
     }
 });

@@ -3,7 +3,7 @@ import { View, Text, Pressable, Image, StyleSheet } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import '../../../data/global';
 
-export const EpisodeItem = ({episode, episodeItemPress}) => (
+export const EpisodeItem = ({episode, episodeItemPress, isFavorite}) => (
     <Pressable onPress={() => episodeItemPress(episode.id) }>
         <View style={styles.item_container}>
             <Image style={styles.item_image} source={{ uri: global.SERVER_ADDRESS+episode.poster_path }} />
@@ -12,18 +12,14 @@ export const EpisodeItem = ({episode, episodeItemPress}) => (
                     <Text style={styles.item_title}>
                         {episode.title}
                     </Text>
-                    <MaterialCommunityIcons name="heart" size={24} color={global.darkYellow} />
+                    <MaterialCommunityIcons name="heart" size={24} color={episode && isFavorite(episode.id) ? global.Yellow : global.lightGray} />
                 </View>
-                <Text style={styles.item_time}>
-                    1h 22min
+                <Text style={styles.item_date}>
+                    22/12/2022
                 </Text>
-                <Text style={styles.item_genre}>
-                    { /*episode?.serie.genres.map(genre => genre.libelle).join(" - ")*/ }
-                </Text>
-                <View style={styles.item_rate}>
-                    <MaterialCommunityIcons name="star" size={28} color={global.white} />
-                    <Text style={styles.item_rate_text}>
-                        6.4
+                <View style={styles.overview_container}>
+                    <Text style={styles.overview_text} numberOfLines={3}>
+                        { episode.overview }
                     </Text>
                 </View>
             </View>
@@ -34,13 +30,12 @@ const styles = StyleSheet.create({
     item_container: {
         margin: 10,
         flex: 1,
-        flexDirection: 'row',
-
+        flexDirection: 'row'
     },
     item_image: {
         backgroundColor: global.lightGray,
-        width: 120,
-        height: 180,
+        width: 90,
+        height: 120,
     },
     item_content: {
         marginLeft: 20,
@@ -57,7 +52,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Helvetica',
         paddingRight: 2,
     },
-    item_time: {
+    item_date: {
         color: global.lightGray,
     },
     item_genre: {
@@ -79,5 +74,15 @@ const styles = StyleSheet.create({
         paddingRight: 4,
         paddingLeft: 2,
         fontSize: 18,
-    }
+    },
+    overview_container: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 2,
+    },
+    overview_text: {
+        marginTop: 10,
+        fontSize: 18,
+        color: global.lightGray,
+    },
 });

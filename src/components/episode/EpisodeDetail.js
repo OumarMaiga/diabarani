@@ -1,63 +1,71 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { Video } from 'expo-av';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import RNPickerSelect from "react-native-picker-select";
 import '../../../data/global';
 
-export const EpisodeDetail = ({episode, serie, saison, saisons, _onLoad, favoriteIconPress, isFavorite, onShare, saisonItemSelected}) => (
-    <>
-        <Video style={styles.background_video}
-            source={{
-                uri: episode && global.SERVER_ADDRESS+episode.video_path
-            }}
-            useNativeControls
-            resizeMode="contain"
-            posterSource={{uri: episode && global.SERVER_ADDRESS+episode.cover_path}}
-            //usePoster={true}
-            onLoad={() => _onLoad()} />
-        <View style={styles.detail_container}>
-            <Text style={styles.detail_title}>
-                { episode?.title }
-            </Text>
-            <Text style={styles.detail_genre}>
-                { serie && serie.genres.map(genre => genre.libelle).join(" - ") }
-            </Text>
-            <View style={{ flexDirection: "row", alignItems: 'center', marginTop: 5, marginBottom: 5 }}>
-                <View style={styles.detail_rate}>
-                    <MaterialCommunityIcons name="star" size={28} color={global.white} />
-                    <Text style={styles.detail_rate_text}>
-                        6.4
-                    </Text>
+export const EpisodeDetail = ({episode, serie, saison, saisons, _onLoad, favoriteIconPress, isFavorite, onShare, saisonItemSelected}) => {
+    const [itemSelected, setItemSelected] = useState(saison?.id);
+    return(
+        <>
+            <Video style={styles.background_video}
+                source={{
+                    uri: episode && global.SERVER_ADDRESS+episode.video_path
+                }}
+                useNativeControls
+                resizeMode="contain"
+                posterSource={{uri: episode && global.SERVER_ADDRESS+episode.cover_path}}
+                //usePoster={true}
+                onLoad={() => _onLoad()} />
+            <View style={styles.detail_container}>
+                <Text style={styles.detail_title}>
+                    { episode?.title }
+                </Text>
+                <Text style={styles.detail_genre}>
+                    { serie && serie.genres.map(genre => genre.libelle).join(" - ") }
+                </Text>
+                <View style={{ flexDirection: "row", alignItems: 'center', marginTop: 5, marginBottom: 5 }}>
+                    <View style={styles.detail_rate}>
+                        <MaterialCommunityIcons name="star" size={28} color={global.white} />
+                        <Text style={styles.detail_rate_text}>
+                            6.4
+                        </Text>
+                    </View>
+                    <MaterialCommunityIcons name="eye" size={28} color={global.lightGray} />
+                    <Text style={styles.detail_view_count}>605</Text>
                 </View>
-                <MaterialCommunityIcons name="eye" size={28} color={global.lightGray} />
-                <Text style={styles.detail_view_count}>605</Text>
+                <View style={{ flexDirection: "row", marginTop: 10 }}>
+                    <Pressable onPress={() => favoriteIconPress(episode)} style={{ marginRight: 10, alignItems: 'center' }}>
+                        <MaterialCommunityIcons name="heart" size={28} color={episode && isFavorite(episode.id) ? global.Yellow : global.lightGray} />
+                        <Text style={styles.detail_icon_text}>{episode && isFavorite(episode.id) ? "J'aime" : "J'aime"}</Text>
+                    </Pressable>
+                    <Pressable onPress={() => onShare(episode)} style={{ marginRight: 10, alignItems: 'center' }}>
+                        <MaterialCommunityIcons name="share" size={28} color={global.lightGray} />
+                        <Text style={styles.detail_icon_text}>Partager</Text>
+                    </Pressable>
+                </View>
+                <Text style={styles.detail_overview}>
+                    { episode?.overview }
+                </Text>
+                <View style={styles.inputSelectContainer}>
+                    <RNPickerSelect  style={pickerSelectStyles}
+                        placeholder={{}}
+                        value={itemSelected}
+                        onValueChange={(item) => {
+                            setItemSelected(item)
+                            saisonItemSelected(item)
+                        }
+                        }
+                        items={saisons.map((item) => ({ label: item.title, value: item.id}) ) }
+                        Icon={() => {
+                            return <MaterialCommunityIcons name='chevron-down' size={36} color={global.black} style={{marginTop:20,marginRight:10,}} />;
+                        }} />
+                </View>
             </View>
-            <View style={{ flexDirection: "row", marginTop: 10 }}>
-                <Pressable onPress={() => favoriteIconPress(episode)} style={{ marginRight: 10, alignItems: 'center' }}>
-                    <MaterialCommunityIcons name="heart" size={28} color={episode && isFavorite(episode.id) ? global.Yellow : global.lightGray} />
-                    <Text style={styles.detail_icon_text}>{episode && isFavorite(episode.id) ? "J'aime" : "J'aime pas"}</Text>
-                </Pressable>
-                <Pressable onPress={() => onShare(episode)} style={{ marginRight: 10, alignItems: 'center' }}>
-                    <MaterialCommunityIcons name="share" size={28} color={global.lightGray} />
-                    <Text style={styles.detail_icon_text}>Partager</Text>
-                </Pressable>
-            </View>
-            <Text style={styles.detail_overview}>
-                { episode?.overview }
-            </Text>
-        </View>
-        <RNPickerSelect  //style={styles.saison_select}
-            value={saisons[0]?.id}
-            onValueChange={(item) =>
-                saisonItemSelected(item)
-            }
-            items={saisons.map((item) => ({ label: item.title, value: item.id}) ) } />
-        <View style={styles.detail_simulaire_container}>
-            <Text style={styles.detail_simulaire_title}>Series simulaires</Text>
-        </View>
-    </>
-)
+        </>
+    )
+}
 const styles = StyleSheet.create({
     background_video: {
         height: 220,
@@ -65,10 +73,7 @@ const styles = StyleSheet.create({
         backgroundColor: global.gray
     },
     detail_container: {
-        marginLeft: 10,
-        marginRight: 10,
-        marginTop: 10,
-        marginBottom: 10,
+        margin: 10
     },
     detail_title: {
         fontWeight: 'bold',
@@ -121,5 +126,36 @@ const styles = StyleSheet.create({
         fontFamily: 'Helvetica',
         color: global.white,
         marginBottom: 5
+    },
+    inputSelectContainer: {
+        flexDirection: 'row',
+        flexWrap: 'wrap'
     }
 });
+
+const pickerSelectStyles = StyleSheet.create({
+    inputIOS: {
+      marginTop: 20,
+      fontSize: 16,
+      paddingVertical: 8,
+      paddingHorizontal: 10,
+      borderWidth: 1,
+      borderColor: global.gray,
+      backgroundColor: global.white,
+      borderRadius: 50,
+      color: global.black,
+      paddingRight: 50, // to ensure the text is never behind the icon
+    },
+    inputAndroid: {
+      marginTop: 20,
+      fontSize: 16,
+      paddingVertical: 8,
+      paddingHorizontal: 10,
+      borderWidth: 0.5,
+      borderColor: 'purple',
+      backgroundColor: global.white,
+      borderRadius: 50,
+      color: global.black,
+      paddingRight: 50, // to ensure the text is never behind the icon
+    },
+  });

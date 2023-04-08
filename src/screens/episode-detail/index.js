@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StatusBar, StyleSheet, View,  
-    FlatList, Share } from 'react-native';
+    FlatList, Share, Text } from 'react-native';
 import { EpisodeDetail, Episodes } from '../../components/episode';
 import { SerieSimilaireItem } from '../../components/serie';
 import { Loading } from '../../components/Loading';
@@ -11,7 +11,7 @@ import * as GLOBAL from '../../../data/global';
 import '../../../data/global';
 
 export default ({ route, navigation }) => {
-    
+
     const dispatch = useDispatch();
 
     const favoritesEpisode = useSelector((state) => state.favoriteEpisode.favoritesEpisode);
@@ -85,7 +85,7 @@ export default ({ route, navigation }) => {
         setIsLoading(true);
         let data = await getSomeGenresSeries(genre_ids); 
         if (data.code == 1) {
-            setSerieSimulaire(data.episodes);
+            setSerieSimulaire(data.series);
         }
         setIsLoading(false);
 
@@ -121,7 +121,7 @@ export default ({ route, navigation }) => {
 
     const handleSaisonItemSelected = (idSaison) => {
         if (global.debug >= GLOBAL.LOG.INFO) console.log("EpisodeDetail::handleSaisonItemSelected()=> "+idSaison);
-        //fetchEpisodes(idSaison)
+        fetchEpisodes(idSaison)
     }
 
     const isFavorite = (episode_id) => {
@@ -164,11 +164,16 @@ export default ({ route, navigation }) => {
                 ListHeaderComponent={
                     <>
                         <EpisodeDetail episode={episode} serie={serie} saison={saison}  saisons={saisons} _onLoad={_onLoad} favoriteIconPress={handleFavoriteIconPress} isFavorite={isFavorite} onShare={onShare} saisonItemSelected={handleSaisonItemSelected} />
-                        <Episodes episodes={episodes} episodeItemPress={handleEpisodeItemPress} />
+                        <Episodes episodes={episodes} episodeItemPress={handleEpisodeItemPress} isFavorite={isFavorite}  />
+                        {serieSimulaire.length > 0 &&
+                        <View style={styles.detail_simulaire_container}>
+                            <Text style={styles.detail_simulaire_title}>Series simulaires</Text>
+                        </View>
+                        }
                     </>
                 }
                 data={serieSimulaire}
-                renderItem={({item}) => <SerieSimilaireItem episode={item} handleSerieSimilaireItemPress={handleSerieSimilaireItemPress} />}
+                renderItem={({item}) => <SerieSimilaireItem serie={item} handleSerieSimilaireItemPress={handleSerieSimilaireItemPress} />}
                 keyExtractor={(item,index) => index}
                 numColumns={3}
                 />

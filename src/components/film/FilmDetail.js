@@ -39,7 +39,7 @@ export const FilmDetail = ({film, _onLoad, favoriteIconPress, isFavorite, onShar
         <View style={{ flexDirection: "row", marginTop: 10 }}>
             <Pressable onPress={() => favoriteIconPress(film)} style={{ marginRight: 10, alignItems: 'center' }}>
                 <MaterialCommunityIcons name="heart" size={28} color={film && isFavorite(film.id) ? global.Yellow : global.lightGray} />
-                <Text style={styles.detail_icon_text}>{film && isFavorite(film.id) ? "J'aime" : "J'aime pas"}</Text>
+                <Text style={styles.detail_icon_text}>{film && isFavorite(film.id) ? "J'aime" : "J'aime"}</Text>
             </Pressable>
             <Pressable onPress={() => onShare(film)} style={{ marginRight: 10, alignItems: 'center' }}>
                 <MaterialCommunityIcons name="share" size={28} color={global.lightGray} />
