@@ -120,8 +120,8 @@ export default ({ route, navigation }) => {
     }
 
     const handleSaisonItemSelected = (idSaison) => {
-        if (global.debug >= GLOBAL.LOG.INFO) console.log("EpisodeDetail::handleSaisonItemSelected()=> "+idSaison);
-        fetchEpisodes(idSaison)
+        if (global.debug >= GLOBAL.LOG.INFO) console.log("EpisodeDetail::handleSaisonItemSelected()");
+        fetchEpisodes(serie.id, idSaison)
     }
 
     const isFavorite = (episode_id) => {

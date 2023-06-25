@@ -14,6 +14,7 @@ export const FilmDetail = ({film, _onLoad, favoriteIconPress, isFavorite, onShar
         resizeMode="contain"
         posterSource={{uri: film && global.SERVER_ADDRESS+film.cover_path}}
         usePoster={true}
+        shouldPlay={true}
         onLoad={() => _onLoad()}
         />
         <View style={styles.detail_container}>

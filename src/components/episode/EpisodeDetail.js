@@ -6,7 +6,8 @@ import RNPickerSelect from "react-native-picker-select";
 import '../../../data/global';
 
 export const EpisodeDetail = ({episode, serie, saison, saisons, _onLoad, favoriteIconPress, isFavorite, onShare, saisonItemSelected}) => {
-    const [itemSelected, setItemSelected] = useState(saison?.id);
+    const [itemSelected, setItemSelected] = useState(episode?.saison_id);
+    
     return(
         <>
             <Video style={styles.background_video}
@@ -16,7 +17,8 @@ export const EpisodeDetail = ({episode, serie, saison, saisons, _onLoad, favorit
                 useNativeControls
                 resizeMode="contain"
                 posterSource={{uri: episode && global.SERVER_ADDRESS+episode.cover_path}}
-                //usePoster={true}
+                usePoster={true}
+                shouldPlay={true}
                 onLoad={() => _onLoad()} />
             <View style={styles.detail_container}>
                 <Text style={styles.detail_title}>
