@@ -159,7 +159,9 @@ const Accueil = ({ navigation }) => {
             <FlatList showsVerticalScrollIndicator={false}
                 ListHeaderComponent={
                     <>
-                        <UpcomingFilmsComponent upcomingFilms={upcomingFilms} filmItemPress={handleFilmItemPress} />
+                        {upcomingFilms.length > 0 &&
+                            <UpcomingFilmsComponent upcomingFilms={upcomingFilms} filmItemPress={handleFilmItemPress} />
+                        }
                         <Historique inRecentsFilm={inRecentsFilm} filmItemPress={handleFilmItemPress}/>
                         <NewFilms newFilms={newFilms} filmItemPress={handleFilmItemPress}/>
                         <NewSeries newSeries={newSeries} serieItemPress={handleSerieItemPress}/>

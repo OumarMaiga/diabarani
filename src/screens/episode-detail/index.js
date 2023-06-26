@@ -4,7 +4,8 @@ import { StatusBar, StyleSheet, View,
 import { EpisodeDetail, Episodes } from '../../components/episode';
 import { SerieSimilaireItem } from '../../components/serie';
 import { Loading } from '../../components/Loading';
-import { getEpisode, getEpisodes, getSomeGenresSeries } from '../../../services/episode';
+import { getEpisode, getEpisodes } from '../../../services/episode';
+import { getSomeGenresSeries } from '../../../services/serie';
 import { getSaisons } from '../../../services/saison';
 import { useDispatch, useSelector } from "react-redux";
 import * as GLOBAL from '../../../data/global';
@@ -38,8 +39,8 @@ export default ({ route, navigation }) => {
                 setSaison(data.episode.saison);
                 fetchEpisodes(data.episode.serie_id, data.episode.saison_id)
                 fetchSaisons(data.episode.serie_id);
-                const genre_ids = data.episode.serie.genres.map(genre => genre.id).join();
-                if(genre_ids.lenght > 0)
+                const genre_ids = data.episode.serie.genres;
+                if(genre_ids.length > 0)
                     fetchSomeGenresSeries(genre_ids);
             }
         }); 
@@ -57,7 +58,8 @@ export default ({ route, navigation }) => {
         setIsLoading(true);
         let data = await getEpisodes(idSerie, idSaison);
         if (data.code == 1) {
-            setEpisodes(data.episodes);
+            const episodes = data.episodes.filter((item) => item.id !== idEpisode)
+            setEpisodes(episodes);
         }
         setIsLoading(false);
 
@@ -83,9 +85,10 @@ export default ({ route, navigation }) => {
         if (global.debug >= GLOBAL.LOG.INFO) console.log("EpisodeDetail::fetchSomeGenresSeries()");
 
         setIsLoading(true);
-        let data = await getSomeGenresSeries(genre_ids); 
+        let data = await getSomeGenresSeries(genre_ids.map(genre => genre.id).join()); 
         if (data.code == 1) {
-            setSerieSimulaire(data.series);
+            const serieSimulaires = data.series.filter((item) => item.id !== serie.id)
+            setSerieSimulaire(serieSimulaires);
         }
         setIsLoading(false);
 

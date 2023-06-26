@@ -28,8 +28,8 @@ export default ({ route, navigation }) => {
         let data = await getFilm(idFilm); 
         if (data.code == 1) {
             setFilm(data.film);
-            const genre_ids = data.film.genres.map(genre => genre.id).join();
-            if(genre_ids.lenght > 0)
+            const genre_ids = data.film.genres;
+            if(genre_ids.length > 0)
                 fetchSomeGenresFilms(genre_ids);
         }
         setIsLoading(false);
@@ -42,9 +42,10 @@ export default ({ route, navigation }) => {
         if (global.debug >= GLOBAL.LOG.INFO) console.log("FilmDetail::fetchSomeGenresFilms()");
 
         setIsLoading(true);
-        let data = await getSomeGenresFilms(genre_ids); 
+        let data = await getSomeGenresFilms(genre_ids.map(genre => genre.id).join()); 
         if (data.code == 1) {
-            setFilmSimulaire(data.films);
+            const filmSimulaires = data.films.filter((item) => item.id !== idFilm)
+            setFilmSimulaire(filmSimulaires);
         }
         setIsLoading(false);
 

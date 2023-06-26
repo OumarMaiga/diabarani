@@ -118,7 +118,7 @@ export default ({ route, navigation }) => {
     }
 
     const handleSaisonItemSelected = (idSaison) => {
-        if (global.debug >= GLOBAL.LOG.INFO) console.log("SerieDetail::handleSaisonItemSelected()=> "+idSaison);
+        if (global.debug >= GLOBAL.LOG.INFO) console.log("SerieDetail::handleSaisonItemSelected()");
         if(idSaison > 0)
             fetchEpisodes(idSaison)
     }
